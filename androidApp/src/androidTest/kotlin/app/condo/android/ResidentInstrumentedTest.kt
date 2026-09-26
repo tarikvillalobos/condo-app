@@ -91,6 +91,9 @@ class ResidentInstrumentedTest {
     }
 
     private fun field(label: String) = compose.onNode(hasSetTextAction() and hasText(label))
+    private fun closeSoftKeyboard(button: String) {
+        compose.onNode(hasText(button) and hasClickAction()).performScrollTo()
+            .performSemanticsAction(SemanticsActions.RequestFocus) { it() }
         compose.runOnIdle {
             val activity = compose.activity
             val view = activity.currentFocus ?: activity.window.decorView
