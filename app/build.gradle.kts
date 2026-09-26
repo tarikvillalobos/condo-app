@@ -58,3 +58,23 @@ kotlin {
             implementation(compose.material3)
             implementation(compose.components.resources)
             implementation(libs.ktor.core)
+            implementation(libs.serialization.json)
+            implementation(libs.qrcode)
+        }
+        androidMain.dependencies { implementation(libs.ktor.okhttp) }
+        iosMain.dependencies { implementation(libs.ktor.darwin) }
+        val desktopMain by getting {
+            dependencies {
+                implementation(compose.desktop.currentOs)
+                implementation(libs.ktor.cio)
+            }
+        }
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+            implementation(libs.coroutines.test)
+            implementation(libs.ktor.mock)
+        }
+        val desktopTest by getting {
+            dependencies {
+                implementation(compose.desktop.uiTestJUnit4)
+                implementation(libs.zxing)
