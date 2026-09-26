@@ -19,6 +19,8 @@
 - [x] Framework iOS físico release compilado.
 - [x] Marca Viva: APK e teste de renderização aprovados, 58 capturas geradas; início azul e bloqueio de câmeras conferidos.
 - [x] XCTest aprovado e capturas de início/detalhes revisadas em simulador iPad Pro 11 (M5).
+- [x] CI: testes desktop Linux e builds Android demo/produção/Viva aprovados; compilação Windows aprovada.
+- [x] Aplicativo macOS empacotado iniciou sem erros no smoke test de processo.
 - [ ] Validar execução/distribuição nativa Windows e Linux e distribuição assinada móvel/macOS.
 - [ ] Auditar leitores de tela, dispositivos físicos e condições nativas não cobertas pelas capturas.
 - [ ] Contrato da API externa: solicitado ao usuário; não disponível.
