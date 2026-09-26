@@ -191,4 +191,7 @@ class ControllerTest {
         assertEquals(1, controller.state.value.snapshot!!.vehicles.count { it.plate == "ABC1D23" })
         assertEquals("", controller.formValue("vehicle.model"))
         controller.submitVehicle()
+        advanceUntilIdle()
+        assertEquals(1, controller.state.value.snapshot!!.vehicles.count { it.plate == "ABC1D23" })
+    }
 }
