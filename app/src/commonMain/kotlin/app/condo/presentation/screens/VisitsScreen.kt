@@ -38,3 +38,23 @@ fun VisitsScreen(controller: AppController, state: AppState) {
             Heading(visit.name)
             Muted("${if (visit.provider) "Prestador" else "Visitante"} · ${visit.purpose}")
             Text("${visit.startsAt.fullLabel()} até ${visit.expiresAt.fullLabel()}")
+            StatusChip(visit.statusLabel(now), visit.status == VisitStatus.AT_GATE)
+            if (visit.status == VisitStatus.AT_GATE) {
+                PrimaryButton("Liberar entrada", !state.submitting) {
+                    controller.execute(Command.SetVisitStatus(visit.id, VisitStatus.AUTHORIZED), "Autorização registrada no simulador.")
+                }
+                SecondaryButton("Recusar") { controller.execute(Command.SetVisitStatus(visit.id, VisitStatus.DENIED)) }
+            }
+            if (visit.status in setOf(VisitStatus.SCHEDULED, VisitStatus.AUTHORIZED) && visit.expiresAt > now) {
+                PrimaryButton("Ver convite", !state.submitting && !state.stale) { controller.execute(Command.IssueVisitCode(visit.id)) }
+                SecondaryButton("Editar visita") { controller.beginVisit(visit) }
+                TextButton({ controller.execute(Command.SetVisitStatus(visit.id, VisitStatus.REVOKED), "Convite revogado na demonstração.") }) { Text("Revogar convite") }
+            }
+        }
+    }
+    Heading("Visitantes frequentes")
+    snapshot.visits.filter { it.frequent }.distinctBy { it.name }.forEach { visit ->
+        MenuRow(visit.name, visit.purpose, Glyph.PEOPLE) {
+            controller.beginVisit(visit.copy(id = "", startsAt = now, expiresAt = now + kotlin.time.Duration.parse("2h")))
+        }
+    }
