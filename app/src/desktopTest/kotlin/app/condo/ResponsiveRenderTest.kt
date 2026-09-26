@@ -47,7 +47,6 @@ class ResponsiveRenderTest {
                 data.close()
             } finally { scene.close() }
         }
-        render("login", 390, 844)
         controller.login("alex@condo.demo", "Demo1234!", false)
         yield()
         assertNotNull(controller.state.value.snapshot)
