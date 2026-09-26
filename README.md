@@ -5,6 +5,13 @@ Kotlin Multiplatform e Compose Multiplatform para Android, iOS e desktop.
 
 ## Status real
 
+Em desenvolvimento. As nove telas de referência e seus fluxos auxiliares
+usam repositórios demonstrativos persistentes executados dentro do app.
+**Não existe backend próprio. Nenhum fluxo foi integrado à API real.**
+A documentação, autenticação e o ambiente de homologação externos ainda
+precisam ser fornecidos. O build de produção exclui o módulo demonstrativo
+e apresenta a indisponibilidade da integração; não faz fallback para dados fictícios.
+Consulte [validações](docs/VALIDATION.md) e [pendências](docs/PROGRESS.md).
 
 Planned features include:
 
