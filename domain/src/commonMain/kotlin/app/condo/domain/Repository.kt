@@ -5,6 +5,8 @@ import kotlin.time.Instant
 sealed interface Command {
     data class ReportCollected(val parcelId: String) : Command
     data class IssuePickupCode(val parcelId: String) : Command
+    data class ConsumePickupCode(val payload: String) : Command
+    data class DepositParcel(val eventId: String, val parcel: Parcel) : Command
     data class ApplyLockerEvent(val event: LockerEvent) : Command
     data class SaveVisit(val visit: Visit) : Command
     data class SetVisitStatus(val visitId: String, val status: VisitStatus) : Command
