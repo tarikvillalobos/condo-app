@@ -111,4 +111,24 @@ class ControllerTest {
         advanceUntilIdle()
         assertEquals("bia", controller.state.value.session?.account?.id)
         assertNotNull(controller.state.value.snapshot)
+        assertTrue(services.vault.read()!!.startsWith("demo|bia|"))
+    }
+    @Test fun navigationDiscardsLateCodesEvenWhenReturningToTheSamePage() = runTest {
+        val services = TestServices()
+        val controller = AppController(DemoRepository(services.store, clock, 100), services, clock, this,
+            StandardTestDispatcher(testScheduler))
+        controller.login("alex@condo.demo", "Demo1234!", false)
+        advanceUntilIdle()
+        controller.navigate(Route.PARCEL_DETAIL, "p1")
+        controller.execute(Command.IssuePickupCode("p1"))
+        runCurrent()
+        controller.navigate(Route.HOME)
+        controller.navigate(Route.PARCEL_DETAIL, "p1")
+        advanceUntilIdle()
+        assertEquals(Destination(Route.PARCEL_DETAIL, "p1"), controller.state.value.destination)
+        assertNull(controller.state.value.code)
+        assertFalse(controller.state.value.showCode)
+    }
+    @Test fun navigationPreservesNewPageWhilePublishingCompletedChanges() = runTest {
+        val services = TestServices()
 }
