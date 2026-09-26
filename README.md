@@ -146,7 +146,6 @@ Inclua os avisos de bibliotecas e das fontes em qualquer distribuição.
 Cada commit desta implementação altera exatamente um arquivo, com no máximo 20
 linhas adicionadas + removidas. Arquivos são construídos incrementalmente.
 `scripts/commit-file.py caminho 'feat: descrição específica'` auxilia o processo.
-O histórico inicial do README é preservado como baseline da auditoria.
 
 ## Licença
 
