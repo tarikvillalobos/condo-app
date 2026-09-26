@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.dp
 fun CondoApp(controller: AppController) {
     val state by controller.state.collectAsState()
     CondoTheme {
-        Surface(Modifier.fillMaxSize(), color = Tokens.background) {
             BoxWithConstraints(Modifier.fillMaxSize().safeDrawingPadding().imePadding()) {
                 val wide = maxWidth >= Tokens.compact
                 val expanded = maxWidth >= Tokens.expanded
