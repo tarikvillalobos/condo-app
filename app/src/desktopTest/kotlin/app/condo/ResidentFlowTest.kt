@@ -33,6 +33,9 @@ class ResidentFlowTest {
             compose.waitUntil(5000) { controller.state.value.snapshot != null }
             compose.onNodeWithText("Olá, Alex").assertExists()
         } finally {
+            compose.runOnIdle { controller.close() }
+        }
+    }
     @Test fun residentCanLoginOpenParcelAndReportCollection() {
         val platform = TestServices()
         val clock = AppClock { Instant.parse("2026-09-26T12:00:00Z") }
