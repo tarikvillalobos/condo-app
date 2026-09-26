@@ -41,7 +41,6 @@ Os launchers verificam o SHA-256 da distribuição Gradle e das fontes Manrope/S
 JAR do wrapper e fontes binárias não são versionados, respeitando a regra de commits.
 Os assets são obtidos automaticamente na primeira execução.
 
-Branding, visual identity, available modules, and content may vary depending on the deployment.
 
 ## Status
 
