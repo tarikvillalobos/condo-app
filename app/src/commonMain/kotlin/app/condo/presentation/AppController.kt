@@ -149,7 +149,6 @@ class AppController(
         activeId = null
         if (repository.isDemo) repository.scenario(DemoScenario.NORMAL)
         mutable.value = AppState()
-        scope.launch { repository.logout() }
     }
     private fun runAction(block: suspend () -> Unit) {
         if (state.value.submitting) return
