@@ -13,6 +13,13 @@ pluginManagement {
 }
 dependencyResolutionManagement {
     repositories {
+        google {
+            content {
+                includeGroupByRegex("androidx\\..*")
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+            }
+        }
         mavenCentral()
     }
 }
