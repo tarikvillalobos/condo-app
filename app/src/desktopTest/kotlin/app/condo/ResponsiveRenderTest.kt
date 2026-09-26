@@ -18,3 +18,23 @@ class ResponsiveRenderTest {
         val platform = TestServices()
         val controller = AppController(DemoRepository(platform.store, clock, 0), platform, clock)
         val folder = File("build/validation").apply { mkdirs() }
+        fun render(name: String, width: Int, height: Int, scale: Float = 1f) {
+            val scene = ImageComposeScene(width, height, Density(1f, scale)) { CondoApp(controller) }
+            try {
+                repeat(3) { scene.render(it * 16_000_000L) }
+                val image = scene.render(64_000_000L)
+                val data = image.encodeToData()!!
+                File(folder, "$name-$width-$height-$scale.png").writeBytes(data.bytes)
+                assertEquals(width, image.width)
+                assertEquals(height, image.height)
+                image.close()
+                data.close()
+            } finally { scene.close() }
+        }
+        render("login", 390, 844)
+        controller.login("alex@condo.demo", "Demo1234!", false)
+        yield()
+        assertNotNull(controller.state.value.snapshot)
+        val routes = listOf(Route.HOME, Route.PARCELS, Route.PARCEL_DETAIL, Route.CAMERAS,
+            Route.VISITS, Route.PETS, Route.BOOKINGS, Route.PROFILE)
+        for (width in listOf(320, 390, 430, 600, 840, 1200)) {
