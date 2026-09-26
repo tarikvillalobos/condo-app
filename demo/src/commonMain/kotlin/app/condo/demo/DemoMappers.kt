@@ -98,3 +98,23 @@ internal fun List<DemoRow>.restore(seed: Snapshot): Snapshot = seed.copy(
             locker = it.s("locker"),
             compartment = it.s("compartment"),
             receivedAt = it.time("receivedAt"),
+            deadline = it.time("deadline"),
+            status = ParcelStatus.valueOf(it.s("status")),
+            collectedAt = it.s("collectedAt").takeIf(String::isNotEmpty)?.let(Instant::parse),
+        )
+    },
+    visits = filter { it.type == "visits" }.map {
+        Visit(
+            id = it.s("id"),
+            name = it.s("name"),
+            purpose = it.s("purpose"),
+            provider = it.flag("provider"),
+            startsAt = it.time("startsAt"),
+            expiresAt = it.time("expiresAt"),
+            status = VisitStatus.valueOf(it.s("status")),
+            frequent = it.flag("frequent"),
+        )
+    },
+    pets = filter { it.type == "pets" }.map {
+        Pet(
+            id = it.s("id"),
