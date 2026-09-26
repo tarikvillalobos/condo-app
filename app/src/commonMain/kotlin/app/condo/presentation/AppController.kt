@@ -118,6 +118,7 @@ class AppController(
         loadingJob?.cancel()
         activeId = null
         platform.vault.clear()
+        if (repository.isDemo) repository.scenario(DemoScenario.NORMAL)
         mutable.value = AppState()
         scope.launch { repository.logout() }
     }
