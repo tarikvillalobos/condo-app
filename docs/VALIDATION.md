@@ -17,6 +17,9 @@ não equivale a liberar uma versão para produção.
 | Android em configuração de tablet | 2 testes instrumentais aprovados | Credenciais/retirada informada e formulário de visita após recriação da Activity. |
 | Android em configuração de celular | 2 testes instrumentais aprovados | AVD com resolução nativa 390 × 844 e densidade 160 dpi, serial `emulator-5592`. |
 | Distribuição macOS | `:app:createDistributable` aprovado | Aplicativo `.app` gerado; sem assinatura Developer ID ou notarização validadas. |
+| Inicialização macOS | Executável do pacote iniciou sem erros no log | Smoke test de processo; não é uma auditoria manual completa da UI nativa. |
+| Compilação Windows na CI | `:app:desktopJar` aprovado | Runner Windows; execução da interface e instalador MSI ainda não validados. |
+| Linux e Android na CI | Testes desktop e builds Android aprovados | Ubuntu com Xvfb: demo, produção e compilação da marca Viva; não valida instalador DEB. |
 | Framework iOS de simulador | Debug compilado | Target `iosSimulatorArm64`. |
 | Host Swift e UI iPhone | Compilação e 1 XCTest aprovados | iPhone 17 Pro, iOS 26.2: login, encomenda e troca de condomínio. |
 | UI iPad | 1 XCTest aprovado e capturas revisadas | iPad Pro 11 (M5), iOS 26.2: login, encomenda e troca de condomínio. |
