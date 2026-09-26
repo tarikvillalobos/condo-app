@@ -98,3 +98,5 @@ class DemoRepositoryTest {
         assertFailsWith<AppFailure> { r.load("aurora") }
         r.scenario(DemoScenario.SESSION_EXPIRED)
         assertFailsWith<AppFailure> { r.load("aurora") }
+    }
+}
