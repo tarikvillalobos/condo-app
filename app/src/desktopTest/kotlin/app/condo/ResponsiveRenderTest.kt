@@ -38,3 +38,23 @@ class ResponsiveRenderTest {
         val routes = listOf(Route.HOME, Route.PARCELS, Route.PARCEL_DETAIL, Route.CAMERAS,
             Route.VISITS, Route.PETS, Route.BOOKINGS, Route.PROFILE)
         for (width in listOf(320, 390, 430, 600, 840, 1200)) {
+            for (route in routes) {
+                controller.navigate(route, if (route == Route.PARCEL_DETAIL) "p1" else null)
+                render(route.name.lowercase(), width, 844)
+            }
+        }
+        controller.navigate(Route.HOME)
+        render("home-font200", 390, 844, 2f)
+        controller.navigate(Route.PROFILE)
+        render("profile-font200", 390, 844, 2f)
+        controller.navigate(Route.BOOKINGS)
+        render("bookings-landscape", 844, 390)
+        controller.beginVisit()
+        controller.field("visit.name", "Visitante com nome extenso para testar quebra de texto e preservação")
+        render("visit-form", 390, 844)
+        render("visit-form-wide", 1200, 844)
+        assertTrue(controller.formValue("visit.name").startsWith("Visitante com nome"))
+        controller.scenario(DemoScenario.EMPTY)
+        yield()
+        controller.navigate(Route.PARCELS)
+        render("parcels-empty", 390, 844)
