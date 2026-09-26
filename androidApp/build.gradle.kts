@@ -4,6 +4,7 @@ plugins {
 }
 android {
     namespace = "app.condo.android"
+    compileSdk = 37
     defaultConfig {
         applicationId = if (providers.gradleProperty("brand").get() == "viva") {
             "app.vivamorar.resident"
