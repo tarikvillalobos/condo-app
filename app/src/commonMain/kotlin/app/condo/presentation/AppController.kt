@@ -144,6 +144,8 @@ class AppController(
         contextVersion++
         navigationVersion++
         loadingJob?.cancel()
+        val pendingActions = actionJobs.toList()
+        pendingActions.forEach { it.cancel() }
         activeId = null
         platform.vault.clear()
         if (repository.isDemo) repository.scenario(DemoScenario.NORMAL)
