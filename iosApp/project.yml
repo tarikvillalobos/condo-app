@@ -32,7 +32,6 @@ targets:
         basedOnDependencyAnalysis: false
         script: |
           cd "$SRCROOT/.."
-          ./gradlew :app:embedAndSignAppleFrameworkForXcode
 schemes:
   CondoApp:
     build:
