@@ -18,3 +18,23 @@ internal class DemoMutation(
         when (command) {
             is Command.ReportCollected -> reportCollected(command.parcelId)
             is Command.IssuePickupCode -> code = pickupCode(command.parcelId)
+            is Command.ApplyLockerEvent -> lockerEvent(command.event)
+            is Command.SaveVisit -> saveVisit(command.visit)
+            is Command.SetVisitStatus -> visitStatus(command.visitId, command.status)
+            is Command.IssueVisitCode -> code = visitCode(command.visitId)
+            is Command.ConsumeVisitCode -> consumeVisit(command.payload)
+            is Command.SavePet -> {
+                val pet = command.pet
+                requireInput(pet.name.isNotBlank() && pet.species.isNotBlank(), "Informe nome e espécie.")
+                requireInput(pet.weight.toDoubleOrNull()?.let { it > 0 } == true, "Informe um peso válido.")
+                val saved = pet.copy(id = pet.id.ifBlank { id("pet") })
+                snapshot = snapshot.copy(pets = snapshot.pets.filterNot { it.id == saved.id } + saved)
+            }
+            is Command.ReportPet -> {
+                requireInput(command.description.length in 8..1000, "Descreva o pet e o local (8 a 1000 caracteres).")
+                snapshot = snapshot.copy(petAlerts = snapshot.petAlerts + PetAlert(id("alert"), command.description, now))
+            }
+            is Command.Reserve -> reserve(command)
+            is Command.CancelBooking -> {
+                val booking = snapshot.bookings.find { it.id == command.bookingId } ?: missing()
+                requireInput(booking.startsAt > now, "Uma reserva passada não pode ser cancelada.")
