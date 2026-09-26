@@ -29,7 +29,6 @@ Consulte [validações](docs/VALIDATION.md) e [pendências](docs/PROGRESS.md).
 
 ## Pré-requisitos
 
-JDK 21, Python 3, acesso inicial à internet e Git. Para Android: SDK 36,
 build-tools 36 e `ANDROID_HOME` ou `local.properties` com `sdk.dir`.
 Para iOS: macOS, Xcode e XcodeGen (`brew install xcodegen`).
 O catálogo `gradle/libs.versions.toml` centraliza Kotlin 2.4.20, Compose 1.12.0,
