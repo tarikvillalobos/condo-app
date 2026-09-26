@@ -80,3 +80,23 @@ xcodebuild -project iosApp/CondoApp.xcodeproj -scheme CondoApp \
 
 Use **Entrar na demonstração**, ou `alex@condo.demo` / `Demo1234!`.
 A segunda conta fictícia é `bia@condo.demo`, com a mesma senha.
+O CPF fictício `00000000000` é apenas um identificador alternativo de Alex.
+Convites demonstrativos: `PRIMEIRO-DEMO` para ativação e `VINCULAR-DEMO` para outro condomínio.
+A alteração de senha é válida somente durante a execução demonstrativa.
+
+1. Abra uma encomenda e gere o código. O QR é decodificável e tem validade curta.
+2. Use **Já retirei**: o estado fica aguardando confirmação física.
+3. Use **Simular leitura no locker** ou **Simular evento de retirada** para um evento fictício.
+4. Cadastre uma visita; gere e compartilhe o convite; simule uso único ou revogue.
+5. Reserve um espaço; tente o mesmo horário; confira o histórico e cancele.
+6. Cadastre um pet, veículo ou solicitação. Reinicie o app para conferir persistência.
+7. Troque de condomínio ou conta: os registros são isolados.
+8. Toque na faixa **Demonstração** para cenários de vazio, erro, expiração e acesso negado.
+
+Dados demonstrativos são armazenados localmente e não acionam hardware ou terceiros.
+No desktop ficam em `~/.condo-app/<marca>/<ambiente>/`; no Android/iOS, no armazenamento do app.
+Logout apaga a credencial e todo o estado de apresentação; os registros fictícios
+permanecem no armazenamento demonstrativo, separados por conta e condomínio.
+
+## Testes e builds
+
