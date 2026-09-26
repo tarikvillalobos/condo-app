@@ -49,6 +49,9 @@ definir applicationId/bundle identifier e substituir assets de marca.
 A logo nativa atual é vetorial. A fonte é obtida por download com integridade verificada.
 Condo e Viva são configurações fictícias. Contatos `.invalid` não enviam mensagens.
 
+No Android, `-Pbrand=viva` altera o applicationId e o nome exibido. No iOS, personalize
+PRODUCT_BUNDLE_IDENTIFIER/CFBundleDisplayName no XcodeGen e defina CONDO_BRAND=viva.
+CONDO_ENVIRONMENT seleciona demo/staging/production e é repassado ao Gradle pelo host.
 A troca de marca é configuração de distribuição; a seleção de condomínio acontece em runtime.
 
 ## Adaptação visual
