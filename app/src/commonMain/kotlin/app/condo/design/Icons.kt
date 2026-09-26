@@ -38,3 +38,13 @@ enum class Glyph(val path: String) {
     EDIT("M3 17 L17 3 L21 7 L7 21 L3 21 Z M14 6 L18 10"),
 }
 @Composable
+fun AppIcon(glyph: Glyph, description: String? = null, modifier: Modifier = Modifier, tint: Color = LocalBrand.current.primary) {
+    val vector = remember(glyph) {
+        ImageVector.Builder(glyph.name, 24.dp, 24.dp, 24f, 24f).addPath(
+            pathData = PathParser().parsePathString(glyph.path).toNodes(),
+            stroke = SolidColor(Color.Black), strokeLineWidth = 1.7f,
+            strokeLineCap = StrokeCap.Round, strokeLineJoin = StrokeJoin.Round,
+        ).build()
+    }
+    Icon(vector, description, modifier, tint = tint)
+}
