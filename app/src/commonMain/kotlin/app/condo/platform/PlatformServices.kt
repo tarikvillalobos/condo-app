@@ -18,3 +18,13 @@ interface VideoAdapter {
     fun close()
 }
 sealed interface VideoState {
+    data object Connecting : VideoState
+    data object Playing : VideoState
+    data class Unavailable(val reason: String) : VideoState
+}
+class UnconfiguredVideoAdapter : VideoAdapter {
+    override suspend fun connect(authorizedStreamUrl: String) = VideoState.Unavailable(
+        "Nenhum fornecedor de vídeo foi configurado pela API externa.",
+    )
+    override fun close() = Unit
+}
