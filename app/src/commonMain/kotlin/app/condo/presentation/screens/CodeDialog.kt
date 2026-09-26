@@ -58,3 +58,7 @@ fun QrCode(payload: String) {
     }) {
         val cell = size.minDimension / (matrix.size + 8)
         matrix.forEachIndexed { y, row -> row.forEachIndexed { x, dark ->
+            if (dark) drawRect(Color.Black, Offset((x + 4) * cell, (y + 4) * cell), Size(cell, cell))
+        } }
+    }
+}
