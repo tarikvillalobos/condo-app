@@ -60,6 +60,7 @@ fun PetsScreen(controller: AppController, state: AppState) {
     }
 }
 @Composable
+private fun PetCard(pet: Pet, now: kotlin.time.Instant) {
     Panel {
         AppIcon(Glyph.PAW)
         Heading(pet.name)
