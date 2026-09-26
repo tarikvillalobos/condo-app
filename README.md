@@ -15,15 +15,6 @@ Consulte [validações](docs/VALIDATION.md) e [pendências](docs/PROGRESS.md).
 
 ## Recursos
 
-- Package management
-- Smart locker integration
-- Security camera access
-- Common area reservations
-- Event and facility scheduling
-- Pet management
-- Resident information
-- Notifications and announcements
-- Condominium services and requests
 
 Additional features may be added depending on each client's needs.
 
