@@ -58,3 +58,23 @@ fun ProfileScreen(controller: AppController, state: AppState) {
         Route.MEMBERS -> {
             Text(snapshot.membership.unit)
             snapshot.members.forEach { MenuRow(it.name, it.relationship, Glyph.USER) {
+                controller.message("${it.name} · ${it.relationship}. Alterações de moradores exigem aprovação da administração pela API.")
+            } }
+        }
+        Route.VEHICLES -> {
+            snapshot.vehicles.forEach { vehicle ->
+                MenuRow(vehicle.model, vehicle.plate, Glyph.CAR) {
+                    controller.field("vehicle.id", vehicle.id)
+                    controller.field("vehicle.model", vehicle.model)
+                    controller.field("vehicle.plate", vehicle.plate)
+                }
+            }
+            Heading("Cadastrar ou editar veículo")
+            FormField(controller, "vehicle.model", "Modelo e cor")
+            FormField(controller, "vehicle.plate", "Placa")
+            PrimaryButton("Salvar veículo", !state.submitting) {
+                controller.execute(Command.SaveVehicle(Vehicle(state.forms["vehicle.id"].orEmpty(),
+                    state.forms["vehicle.model"].orEmpty(), state.forms["vehicle.plate"].orEmpty().uppercase())), "Veículo salvo na demonstração.")
+            }
+        }
+        Route.CONDOMINIUMS -> {
