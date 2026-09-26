@@ -38,3 +38,23 @@ não há fallback de credenciais em texto puro. Leia VALIDATION para plataformas
 A referência de sessão demo expira em sete dias e nunca é uma credencial de API.
 Renovação, revogação remota e login biométrico aguardam contrato externo.
 Preferência de push, permissão do sistema e serviço de push são apresentados separadamente.
+
+## Marca e ambiente
+
+Brands em `app/design/Brand.kt` centraliza nome, cores, módulos, monograma,
+contato, textos institucionais, termos, privacidade e mapa de URLs de ambiente.
+URLs permanecem vazias até serem fornecidas pelo cliente. Nunca insira segredos.
+Para adicionar marca: cadastrar Brand, permitir seu id na configuração Gradle,
+definir applicationId/bundle identifier e substituir assets de marca.
+A logo nativa atual é vetorial. A fonte é obtida por download com integridade verificada.
+Condo e Viva são configurações fictícias. Contatos `.invalid` não enviam mensagens.
+
+No Android, `-Pbrand=viva` altera o applicationId. No iOS, personalize
+PRODUCT_BUNDLE_IDENTIFIER/CFBundleDisplayName no XcodeGen e passe a mesma marca ao Gradle.
+A troca de marca é configuração de distribuição; a seleção de condomínio acontece em runtime.
+
+## Adaptação visual
+
+A largura disponível determina a navegação: abaixo de 600 dp há barra inferior;
+a partir de 600 dp há rail; a partir de 840 dp há menu lateral e lista/detalhe de encomendas.
+Conteúdo tem largura máxima de 1180 dp; formulários usam até 520 dp.
