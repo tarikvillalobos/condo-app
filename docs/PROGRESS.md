@@ -21,10 +21,10 @@
 - [x] XCTest aprovado e capturas de início/detalhes revisadas em simulador iPad Pro 11 (M5).
 - [x] CI: testes desktop Linux e builds Android demo/produção/Viva aprovados; compilação Windows aprovada.
 - [x] CI Apple: frameworks debug/release e host Swift aprovados após fixar a arquitetura ARM64 do simulador.
-- [x] Host iOS físico ARM64 compilado em debug sem assinatura; aparelho pareado e Modo Desenvolvedor ativo, instalação aguarda conta Apple e perfil.
+- [x] Host iOS físico ARM64 assinado para desenvolvimento, instalado e iniciado no iPhone 16 Pro Max com iOS 26.6.1.
 - [x] Aplicativo macOS empacotado iniciou sem erros no smoke test de processo.
 - [ ] Validar execução/distribuição nativa Windows e Linux e distribuição assinada móvel/macOS.
-- [ ] Auditar leitores de tela, dispositivos físicos e condições nativas não cobertas pelas capturas.
+- [ ] Auditar leitores de tela, fluxos manuais em dispositivos físicos e condições nativas não cobertas pelas capturas.
 - [ ] Contrato da API externa: solicitado ao usuário; não disponível.
 - [ ] Integração real e homologação: dependem do contrato e do ambiente.
 
