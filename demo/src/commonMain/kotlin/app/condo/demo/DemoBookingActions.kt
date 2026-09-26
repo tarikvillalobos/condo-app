@@ -18,3 +18,9 @@ internal fun DemoMutation.reserve(command: Command.Reserve) {
     requireInput(duration > 0.hours && duration <= 4.hours, "A duração máxima é de quatro horas.")
     if (snapshot.bookings.any {
         it.facilityId == command.facilityId && it.overlaps(command.startsAt, command.endsAt)
+    }) throw AppFailure(FailureKind.CONFLICT, "Horário indisponível. Escolha outra opção.")
+    requireInput(snapshot.bookings.count { !it.cancelled && it.startsAt > now } < 2, "Limite de duas reservas futuras por unidade.")
+    val booking = Booking(id("booking"), command.facilityId, command.startsAt, command.endsAt)
+    snapshot = snapshot.copy(bookings = snapshot.bookings + booking)
+    operations.add(signature)
+}
