@@ -1,5 +1,7 @@
 # Condo App
 
+Aplicação white-label privada para moradores de condomínios, construída com
+Kotlin Multiplatform e Compose Multiplatform para Android, iOS e desktop.
 
 The app provides residents with a centralized place to access services, information, and features related to their condominium.
 
