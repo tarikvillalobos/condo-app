@@ -60,6 +60,15 @@ fun AppController.submitRequest() = execute(Command.CreateRequest(
     formValue("request.category").ifBlank { "Solicitação" },
     formValue("request.subject"), formValue("request.body"),
 ), "Solicitação registrada localmente. Nenhuma mensagem foi enviada à administração.") { back() }
+fun AppController.submitVehicle() {
+    val id = formValue("vehicle.id").ifBlank { "vehicle-${clock.now().toEpochMilliseconds()}-${Random.nextLong()}" }
+    field("vehicle.id", id)
+    val submittedFields = state.value.forms
+    execute(Command.SaveVehicle(Vehicle(id, formValue("vehicle.model"), formValue("vehicle.plate").uppercase())),
+        "Veículo salvo na demonstração.") {
+        if (state.value.forms == submittedFields) listOf("id", "model", "plate").forEach { field("vehicle.$it", "") }
+    }
+}
 fun AppController.reserve(facility: String, date: String, hour: Int) = parseAction {
     val start = LocalDate.parse(date).atTime(hour, 0).toInstant(condominiumZone)
     val operation = "booking:$facility:$date:$hour"
