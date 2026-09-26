@@ -10,7 +10,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.shape.RoundedCornerShape
 import org.jetbrains.compose.resources.Font
-import condo_app.app.generated.resources.*
 
 object Tokens {
     val text = Color(0xFF10201C)
