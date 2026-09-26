@@ -122,6 +122,7 @@ class AppController(
     }
     fun activate(invitation: String, name: String, password: String) = runAction { version, _ ->
         val session = repository.activate(invitation, name, password)
+        if (version != contextVersion) return@runAction
         mutable.update { it.copy(session = session, forms = emptyMap(), destination = Destination()) }
         switchMembership(session.memberships.first().id)
     }
