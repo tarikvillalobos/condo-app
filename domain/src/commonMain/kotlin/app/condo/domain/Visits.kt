@@ -18,3 +18,15 @@ fun Visit.isUsable(now: Instant): Boolean =
         status in setOf(VisitStatus.SCHEDULED, VisitStatus.AUTHORIZED)
 
 data class Pet(
+    val id: String,
+    val name: String,
+    val species: String,
+    val breed: String,
+    val birthDate: String,
+    val size: String,
+    val weight: String,
+    val microchip: String,
+    val vaccine: String,
+    val vaccineDue: String,
+)
+data class PetAlert(val id: String, val description: String, val createdAt: Instant)
