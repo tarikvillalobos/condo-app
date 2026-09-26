@@ -38,3 +38,23 @@ fun BookingsScreen(controller: AppController, state: AppState) {
                 val occupied = snapshot.bookings.any { it.facilityId == facility.id && it.overlaps(starts, starts + 4.hours) }
                 FilterChip(hour == startHour, { controller.field("booking.hour", startHour.toString()) },
                     { Text("${startHour}h–${startHour + 4}h${if (occupied) " · ocupado" else ""}") }, enabled = !occupied)
+            }
+        }
+        Text(facility.rules, style = MaterialTheme.typography.bodySmall)
+        PrimaryButton("Confirmar reserva demonstrativa", !state.submitting && !state.stale) {
+            controller.reserve(facility.id, date.toString(), hour)
+        }
+        Muted("Disponibilidade local simulada. Reservas reais dependem de confirmação da API externa.")
+    }
+    Heading("Áreas comuns")
+    AdaptiveGrid(snapshot.facilities, minimum = 200.dp) { area ->
+        MenuRow(area.name, area.description, Glyph.CALENDAR) { controller.field("booking.facility", area.id) }
+    }
+    Heading("Minhas reservas")
+    val filter = state.filters["bookings"] ?: "Próximas"
+    FilterChips(listOf("Próximas", "Histórico"), filter) { controller.filter("bookings", it) }
+    val bookings = snapshot.bookings.filter {
+        if (filter == "Próximas") !it.cancelled && it.endsAt > controller.clock.now()
+        else it.cancelled || it.endsAt <= controller.clock.now()
+    }
+    if (bookings.isEmpty()) EmptyState("Nenhuma reserva neste período", "Escolha uma área e um horário para começar.", Glyph.CALENDAR)
