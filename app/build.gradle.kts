@@ -78,3 +78,20 @@ kotlin {
             dependencies {
                 implementation(compose.desktop.uiTestJUnit4)
                 implementation(libs.zxing)
+            }
+        }
+    }
+}
+tasks.matching { it.name.startsWith("compileKotlin") || it.name.startsWith("compileAndroidMain") }
+    .configureEach { dependsOn(generateConfig) }
+compose.desktop {
+    application {
+        mainClass = "app.condo.MainKt"
+        nativeDistributions {
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            packageName = if (brandName == "viva") "Viva Morar" else "Condo App"
+            packageVersion = "0.1.0"
+            copyright = "Private and proprietary"
+        }
+    }
+}
