@@ -38,3 +38,23 @@ fun PetsScreen(controller: AppController, state: AppState) {
                     Text("Microchip: ${pet.microchip.ifBlank { "Não informado" }}")
                     Text("Vacina: ${pet.vaccine.ifBlank { "Não informada" }}")
                     Text("Vencimento: ${pet.vaccineDue}")
+                }
+                PrimaryButton("Editar cadastro") { controller.beginPet(pet) }
+            }
+        }
+        else -> {
+            PrimaryButton("+ Cadastrar pet") { controller.beginPet() }
+            if (snapshot.pets.isEmpty()) EmptyState("Seu pet tem espaço aqui", "Cadastre para acompanhar informações e vacinas.", Glyph.PAW)
+            AdaptiveGrid(snapshot.pets) { pet ->
+                Column(verticalArrangement = Arrangement.spacedBy(Tokens.sm)) {
+                    PetCard(pet)
+                    SecondaryButton("Ver ${pet.name}") { controller.navigate(Route.PET_DETAIL, pet.id) }
+                }
+            }
+            Heading("No condomínio")
+            MenuRow("Pets perdidos e achados", "${snapshot.petAlerts.size} alertas ativos", Glyph.PAW) { controller.navigate(Route.PET_ALERTS) }
+            MenuRow("Regras para pets", "Áreas permitidas, coleira e elevador", Glyph.SHIELD) {
+                controller.message("Regras demonstrativas: use coleira nas áreas comuns, recolha os resíduos e utilize o elevador de serviço. Regras oficiais dependem do condomínio via API.")
+            }
+        }
+    }
