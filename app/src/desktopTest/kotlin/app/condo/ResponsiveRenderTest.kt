@@ -33,6 +33,7 @@ class ResponsiveRenderTest {
             }
         }
         val controller = AppController(repository, platform, clock, storageDispatcher = Dispatchers.Main.immediate)
+        val folder = File(if (BRAND_ID == "condo") "build/validation" else "build/validation-$BRAND_ID").apply { mkdirs() }
         fun render(name: String, width: Int, height: Int, scale: Float = 1f) {
             val scene = ImageComposeScene(width, height, Density(1f, scale)) { CondoApp(controller) }
             try {
