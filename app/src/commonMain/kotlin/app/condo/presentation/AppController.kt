@@ -126,9 +126,6 @@ class AppController(
         mutable.update { it.copy(session = session, forms = emptyMap(), destination = Destination()) }
         switchMembership(session.memberships.first().id)
     }
-    fun recover(identifier: String) = runAction { message(repository.recover(identifier)) }
-    fun password(current: String, replacement: String) = runAction {
-        message(repository.changePassword(current, replacement))
         mutable.update { it.copy(forms = emptyMap()) }
     }
     fun scenario(value: DemoScenario) {
