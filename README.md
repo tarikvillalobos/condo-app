@@ -52,6 +52,10 @@ Desktop (macOS, Windows e Linux):
 
 Android, com emulador ou dispositivo conectado:
 
+```sh
+./gradlew :androidApp:installDebug
+adb shell am start -n app.condo.resident/app.condo.android.MainActivity
+```
 
 ## License
 
