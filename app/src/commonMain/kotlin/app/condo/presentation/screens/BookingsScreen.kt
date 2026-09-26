@@ -24,6 +24,8 @@ fun BookingsScreen(controller: AppController, state: AppState) {
     Panel {
         Heading(facility.name)
         Muted("Selecione uma data · horário de Brasília")
+        FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            Text("${date.month.number.toString().padStart(2, '0')}/${date.year}", Modifier.align(Alignment.CenterVertically), style = MaterialTheme.typography.titleMedium, maxLines = 1)
             TextButton({ controller.field("booking.page", if (page == 0) "1" else "0") }) { Text(if (page == 0) "Próximas datas" else "Datas anteriores") }
         }
         AdaptiveGrid(dates, minimum = 52.dp, maximumColumns = 7) { day ->
