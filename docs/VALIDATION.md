@@ -205,6 +205,7 @@ Windows, testes desktop Linux, builds Android e frameworks/host Apple foram apro
 - Autenticação, autorização, expiração e cache de dados reais dependem do contrato da API externa.
 - Assinaturas, notarização, lojas e ambientes de homologação não foram validados.
 - O build `iphoneos` sem assinatura passou. Após ativar o Modo Desenvolvedor, Xcode alcançou o aparelho; a assinatura ainda falhou com `No Account for Team` e ausência de perfil de desenvolvimento.
+- A assinatura local usada nos testes de simulador do SmartLocker (`CODE_SIGN_IDENTITY=-`) foi testada para `iphoneos` e falhou: o app exige certificado de desenvolvimento. Ela não fornece provisioning para aparelho físico.
 
 Nenhum APK, `.app`, framework, screenshot ou outro binário faz parte desta
 documentação versionada. Consulte [o progresso](PROGRESS.md) e
