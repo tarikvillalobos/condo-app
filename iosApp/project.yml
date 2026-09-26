@@ -27,6 +27,7 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: app.condo.resident
+        PRODUCT_MODULE_NAME: CondoResident
     preBuildScripts:
       - name: Build shared Kotlin framework
         basedOnDependencyAnalysis: false
