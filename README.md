@@ -45,7 +45,6 @@ Os assets são obtidos automaticamente na primeira execução.
 
 Desktop (macOS, Windows e Linux):
 
-🚧 This project is currently under development.
 
 ## Getting Started
 
