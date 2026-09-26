@@ -18,3 +18,23 @@ class DemoRepositoryTest {
     private var now = Instant.parse("2026-09-26T12:00:00Z")
     private fun repo() = DemoRepository(store, AppClock { now }, 0)
     private suspend fun DemoRepository.signIn() = login("alex@condo.demo", "Demo1234!")
+
+    @Test fun authenticationAndMembershipIsolation() = runTest {
+        val r = repo()
+        assertFailsWith<AppFailure> { r.login("alex@condo.demo", "invalid!") }
+        r.signIn()
+        assertFailsWith<AppFailure> { r.load("not-linked") }
+        r.execute("aurora", Command.ReportCollected("p1"))
+        assertEquals(ParcelStatus.WAITING, r.load("aguas").parcels.first().status)
+        r.logout()
+        r.login("bia@condo.demo", "Demo1234!")
+        assertEquals(ParcelStatus.WAITING, r.load("aurora").parcels.first().status)
+    }
+    @Test fun manualReportDoesNotClaimHardwareCollectionAndPersists() = runTest {
+        val r = repo()
+        r.signIn()
+        r.execute("aurora", Command.ReportCollected("p1"))
+        val restored = repo()
+        restored.signIn()
+        val parcel = restored.load("aurora").parcels.first()
+        assertEquals(ParcelStatus.MANUAL_REPORT, parcel.status)
