@@ -60,7 +60,6 @@ class AppController(
         loadingJob?.cancel()
         activeId = id
         mutable.update { it.copy(snapshot = null, code = null, showCode = false, forms = emptyMap(),
-            filters = emptyMap(), history = emptyList(), destination = Destination(), error = null, stale = false) }
         refresh()
     }
     fun refresh() {
