@@ -53,6 +53,7 @@ fun BottomNavigation(controller: AppController, state: AppState, compactLabels: 
 }
 @Composable
 fun SideNavigation(controller: AppController, state: AppState, expanded: Boolean) {
+    val largeFont = LocalDensity.current.fontScale > 1.3f
     val destinations = mainDestinations + listOf(Route.PETS, Route.BOOKINGS, Route.EVENTS, Route.NOTICES, Route.SERVICES)
     Surface(Modifier.width(if (expanded) 212.dp else 96.dp).fillMaxHeight(), color = Color.White) {
         Column(Modifier.verticalScroll(rememberScrollState()).padding(Tokens.md), verticalArrangement = Arrangement.spacedBy(Tokens.sm)) {
