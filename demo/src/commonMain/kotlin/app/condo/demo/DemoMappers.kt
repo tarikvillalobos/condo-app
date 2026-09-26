@@ -138,3 +138,23 @@ internal fun List<DemoRow>.restore(seed: Snapshot): Snapshot = seed.copy(
     },
     bookings = filter { it.type == "bookings" }.map {
         Booking(
+            id = it.s("id"),
+            facilityId = it.s("facilityId"),
+            startsAt = it.time("startsAt"),
+            endsAt = it.time("endsAt"),
+            cancelled = it.flag("cancelled"),
+        )
+    },
+    requests = filter { it.type == "requests" }.map {
+        ServiceRequest(
+            id = it.s("id"),
+            category = it.s("category"),
+            subject = it.s("subject"),
+            description = it.s("description"),
+            createdAt = it.time("createdAt"),
+            status = it.s("status"),
+        )
+    },
+    notices = filter { it.type == "notices" }.map {
+        Notice(
+            id = it.s("id"),
