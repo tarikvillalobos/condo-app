@@ -22,6 +22,7 @@ fun CondoApp(controller: AppController) {
             BoxWithConstraints(Modifier.fillMaxSize().safeDrawingPadding().imePadding()) {
                 val wide = maxWidth >= Tokens.compact
                 val expanded = maxWidth >= Tokens.expanded
+                val compactLabels = maxWidth < 360.dp
                 Column {
                     if (controller.repository.isDemo) {
                         Surface(onClick = { controller.navigate(Route.DEMO) }, color = Tokens.tint) {
