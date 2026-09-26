@@ -26,7 +26,6 @@ fun Route.glyph(): Glyph = when (this) {
 fun AppState.allows(route: Route) = route.module == null ||
     route.module in snapshot?.membership?.modules.orEmpty().intersect(Brands.current.modules)
 @Composable
-fun BottomNavigation(controller: AppController, state: AppState) {
     val largeFont = LocalDensity.current.fontScale > 1.3f
     Surface(color = Color.White, shadowElevation = 2.dp) {
         Column {
