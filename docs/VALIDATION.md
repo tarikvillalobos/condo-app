@@ -167,8 +167,6 @@ passou no iPad Pro 11 (M5), iOS 26.2.
 Capturas de início e detalhes foram revisadas nos dois simuladores: iPhone
 1206 × 2622 pixels; iPad 1668 × 2420 pixels. Uma captura do iPad inclui um
 banner do sistema Apple Intelligence; isso não faz parte da interface do app.
-Não houve homologação em dispositivo iOS físico,
-TestFlight ou distribuição assinada. O Xcode local é 26.2; a diferença para a
 referência de compatibilidade 26.4 está registrada em [arquitetura](ARCHITECTURE.md).
 O comando de build define ARM64 explicitamente para evitar que o Xcode tente
 incluir x86_64, target não configurado. Esse comando foi revalidado localmente.
