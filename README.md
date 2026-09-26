@@ -29,7 +29,6 @@ Consulte [validações](docs/VALIDATION.md) e [pendências](docs/PROGRESS.md).
 
 ## Pré-requisitos
 
-## White Label
 
 This project is designed to support multiple condominiums, brands, and clients.
 
