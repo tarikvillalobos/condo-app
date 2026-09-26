@@ -58,3 +58,23 @@ class AppController(
         contextVersion++
         loadingJob?.cancel()
         activeId = id
+        mutable.update { it.copy(snapshot = null, code = null, showCode = false, forms = emptyMap(),
+            filters = emptyMap(), history = emptyList(), destination = Destination(), error = null, stale = false) }
+        refresh()
+    }
+    fun refresh() {
+        val id = activeId ?: return
+        val version = contextVersion
+        loadingJob?.cancel()
+        loadingJob = scope.launch {
+            mutable.update { it.copy(loading = true, error = null, code = null, showCode = false) }
+            try {
+                val snapshot = repository.load(id)
+                if (version == contextVersion) mutable.update { it.copy(snapshot = snapshot, stale = false) }
+            } catch (cancelled: CancellationException) { throw cancelled
+            } catch (failure: Exception) {
+                if (version == contextVersion) handle(failure)
+            } finally {
+                if (version == contextVersion) mutable.update { it.copy(loading = false) }
+            }
+        }
