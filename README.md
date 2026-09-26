@@ -3,6 +3,7 @@
 Aplicação white-label privada para moradores de condomínios, construída com
 Kotlin Multiplatform e Compose Multiplatform para Android, iOS e desktop.
 
+## Status real
 
 ## Features
 
