@@ -61,7 +61,6 @@ kotlin {
             implementation(libs.serialization.json)
             implementation(libs.qrcode)
         }
-        androidMain.dependencies { implementation(libs.ktor.okhttp) }
         iosMain.dependencies { implementation(libs.ktor.darwin) }
         val desktopMain by getting {
             dependencies {
