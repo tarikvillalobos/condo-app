@@ -99,7 +99,6 @@ class ResidentInstrumentedTest {
             val view = activity.currentFocus ?: activity.window.decorView
             val keyboard = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             keyboard.hideSoftInputFromWindow(view.windowToken, 0)
-            view.clearFocus()
         }
         compose.waitUntil(5_000) {
             compose.runOnIdle {
