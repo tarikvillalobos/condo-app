@@ -50,6 +50,11 @@ class AppController(
             it.copy(destination = Destination(route, id), history = it.history + it.destination, code = null, showCode = false)
         }
     }
+    fun back() {
+        navigationVersion++
+        mutable.update {
+            it.copy(destination = it.history.lastOrNull() ?: Destination(), history = it.history.dropLast(1), code = null, showCode = false)
+        }
     }
     fun login(identifier: String, password: String, remember: Boolean) = runAction {
         validateLogin(identifier, password)
