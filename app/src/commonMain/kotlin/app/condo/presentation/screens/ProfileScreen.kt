@@ -134,6 +134,12 @@ private fun PreferenceRow(title: String, subtitle: String, checked: Boolean, cha
 private fun DemoControls(controller: AppController) {
     Heading("Explore diferentes situações")
     Muted("Os cenários são executados dentro do app e não se conectam a um servidor.")
+    SecondaryButton("Simular depósito de encomenda") {
+        val now = controller.clock.now()
+        val id = "deposit-${now.toEpochMilliseconds()}"
+        controller.execute(Command.DepositParcel(id, Parcel(id, "Transportadora Demo", null,
+            "Portaria", "09 · M", now, now + kotlin.time.Duration.parse("2d"))), "Depósito simulado registrado.")
+    }
     listOf(
         DemoScenario.NORMAL to "Dados de exemplo",
         DemoScenario.EMPTY to "Listas vazias",
