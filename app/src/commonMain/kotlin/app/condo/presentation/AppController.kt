@@ -118,3 +118,23 @@ class AppController(
         activeId = null
         platform.vault.clear()
         mutable.value = AppState()
+        scope.launch { repository.logout() }
+    }
+    private fun runAction(block: suspend () -> Unit) {
+        if (state.value.submitting) return
+        scope.launch {
+            mutable.update { it.copy(submitting = true, error = null) }
+            try { block() } catch (cancelled: CancellationException) { throw cancelled
+            } catch (failure: Exception) { handle(failure)
+            } finally { mutable.update { it.copy(submitting = false) } }
+        }
+    }
+    private fun handle(failure: Exception) {
+        if (failure is AppFailure && failure.kind == FailureKind.EXPIRED) {
+            logout()
+            mutable.update { it.copy(error = failure.message) }
+        } else mutable.update { it.copy(error = (failure as? AppFailure)?.message
+            ?: "Não foi possível concluir. Tente novamente.", stale = it.snapshot != null, code = null, showCode = false) }
+    }
+    fun close() = scope.cancel()
+}
