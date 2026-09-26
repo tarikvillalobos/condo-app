@@ -78,3 +78,23 @@ class DemoRepositoryTest {
         assertFailsWith<AppFailure> { r.execute("aurora", Command.ConsumeVisitCode(expired.payload)) }
     }
     @Test fun lockerEventsAreIdempotentAndRejectOldEvents() = runTest {
+        val r = repo()
+        r.signIn()
+        val command = Command.ApplyLockerEvent(LockerEvent("event1", "p1", now, true))
+        r.execute("aurora", command)
+        r.execute("aurora", command)
+        assertEquals(ParcelStatus.COLLECTED, r.load("aurora").parcels.first().status)
+        assertFailsWith<AppFailure> { r.execute("aurora", Command.IssuePickupCode("p1")) }
+        assertFailsWith<AppFailure> {
+            r.execute("aurora", Command.ApplyLockerEvent(LockerEvent("old", "p2", now - 24.hours, true)))
+        }
+    }
+    @Test fun scenariosAreExplicitAndNeverFallbackAfterFailure() = runTest {
+        val r = repo()
+        r.signIn()
+        r.scenario(DemoScenario.EMPTY)
+        assertTrue(r.load("aurora").parcels.isEmpty())
+        r.scenario(DemoScenario.NETWORK_ERROR)
+        assertFailsWith<AppFailure> { r.load("aurora") }
+        r.scenario(DemoScenario.SESSION_EXPIRED)
+        assertFailsWith<AppFailure> { r.load("aurora") }
