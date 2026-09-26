@@ -58,6 +58,7 @@ class ControllerTest {
     @Test fun failuresKeepStaleDataAndInvalidateDisplayedCodes() = runTest {
         val services = TestServices()
         val repository = DemoRepository(services.store, clock, 0)
+        val controller = AppController(repository, services, clock, this, StandardTestDispatcher(testScheduler))
         controller.login("alex@condo.demo", "Demo1234!", false)
         advanceUntilIdle()
         controller.execute(Command.IssuePickupCode("p1"))
