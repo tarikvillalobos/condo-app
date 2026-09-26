@@ -162,8 +162,6 @@ Use simulador com dados demonstrativos limpos. No iPhone 17 Pro com iOS 26.2,
 o teste de login, encomenda e troca de condomínio passou, anexando screenshots
 ao resultado XCTest. O encerramento anterior foi resolvido com o `Info.plist`
 explícito e a chave `CADisableMinimumFrameDurationOnPhone` como booleano `true`.
-O framework `iosArm64` release também compilou, em 4min04s; isso não comprova
-execução em hardware real. O mesmo XCTest passou no iPad Pro 11 (M5), iOS 26.2.
 Capturas de início e detalhes foram revisadas nos dois simuladores: iPhone
 1206 × 2622 pixels; iPad 1668 × 2420 pixels. Uma captura do iPad inclui um
 banner do sistema Apple Intelligence; isso não faz parte da interface do app.
