@@ -18,7 +18,6 @@ jobs:
           java-version: '21'
       - uses: android-actions/setup-android@v3
       - uses: gradle/actions/setup-gradle@v4
-      - run: sdkmanager 'platforms;android-36' 'build-tools;36.0.0'
       - run: python3 scripts/check-history.py
       - run: xvfb-run -a ./gradlew :domain:desktopTest :demo:desktopTest :app:desktopTest :androidApp:assembleDebug
       - run: ./gradlew -PappEnvironment=production :app:compileKotlinDesktop :androidApp:assembleRelease
