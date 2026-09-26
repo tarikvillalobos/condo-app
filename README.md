@@ -27,6 +27,7 @@ Consulte [validações](docs/VALIDATION.md) e [pendências](docs/PROGRESS.md).
 - Avisos, notificações lidas/não lidas, solicitações e ocorrências.
 - Duas marcas configuráveis, com módulos por cliente e por condomínio.
 
+## Pré-requisitos
 
 ## White Label
 
