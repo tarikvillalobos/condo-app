@@ -33,6 +33,18 @@ targets:
         script: |
           cd "$SRCROOT/.."
           ./gradlew -Pbrand="$CONDO_BRAND" -PappEnvironment="$CONDO_ENVIRONMENT" :app:embedAndSignAppleFrameworkForXcode
+  CondoAppUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - Tests
+    dependencies:
+      - target: CondoApp
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: app.condo.resident.uitests
+        TEST_TARGET_NAME: CondoApp
+        OTHER_LDFLAGS: ""
 schemes:
   CondoApp:
     build:
