@@ -167,6 +167,16 @@ class AppController(
         if (state.value.submitting) return
         mutable.update { it.copy(submitting = true, error = null) }
         val version = contextVersion
+        val navigation = navigationVersion
+        val job = scope.launch(start = CoroutineStart.LAZY) {
+            try {
+                previousRestore?.join()
+                logoutJob?.join()
+                if (version == contextVersion) block(version, navigation)
+            } catch (cancelled: CancellationException) { throw cancelled
+            } catch (failure: Exception) {
+                if (version == contextVersion && (navigation == navigationVersion ||
+                        (failure as? AppFailure)?.kind == FailureKind.EXPIRED)) handle(failure)
             } finally { if (version == contextVersion) mutable.update { it.copy(submitting = false) } }
         }
     }
