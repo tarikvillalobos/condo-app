@@ -71,4 +71,24 @@ class ControllerTest {
         assertNull(controller.state.value.code)
         assertNotNull(controller.state.value.snapshot)
     }
+    @Test fun logoutDiscardsLateAuthenticationAndSerializesTheNextLogin() = runTest {
+        val services = TestServices()
+        val demo = DemoRepository(services.store, clock, 0)
+        val repository = object : CondoRepository by demo {
+            override suspend fun login(identifier: String, password: String) = withContext(NonCancellable) {
+                delay(100)
+                demo.login(identifier, password)
+            }
+        }
+        val controller = AppController(repository, services, clock, this, StandardTestDispatcher(testScheduler))
+        controller.login("alex@condo.demo", "Demo1234!", true)
+        runCurrent()
+        controller.logout()
+        advanceUntilIdle()
+        assertNull(controller.state.value.session)
+        assertNull(services.vault.read())
+        assertFailsWith<AppFailure> { demo.load("aurora") }
+        controller.login("bia@condo.demo", "Demo1234!", true)
+        advanceUntilIdle()
+        assertEquals("bia", controller.state.value.session?.account?.id)
 }
