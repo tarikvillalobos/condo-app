@@ -18,3 +18,20 @@ fun FormField(
     multiline: Boolean = false,
 ) {
     val state by controller.state.collectAsState()
+    var visible by remember { mutableStateOf(false) }
+    OutlinedTextField(
+        value = state.forms[key] ?: initial,
+        onValueChange = { controller.field(key, it) },
+        label = { Text(label) },
+        singleLine = !multiline,
+        minLines = if (multiline) 3 else 1,
+        modifier = Modifier.fillMaxWidth(),
+        shape = Tokens.controlCorner,
+        visualTransformation = if (secret && !visible) PasswordVisualTransformation() else VisualTransformation.None,
+        trailingIcon = if (secret) {
+            { IconButton({ visible = !visible }) {
+                AppIcon(Glyph.EYE, if (visible) "Ocultar senha" else "Mostrar senha")
+            } }
+        } else null,
+    )
+}
