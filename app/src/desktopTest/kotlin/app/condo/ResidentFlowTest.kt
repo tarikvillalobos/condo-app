@@ -18,3 +18,15 @@ class ResidentFlowTest {
         compose.setContent { CondoApp(controller) }
         compose.onNodeWithText("Entrar na demonstração").performScrollTo().performClick()
         compose.waitUntil(5000) { controller.state.value.snapshot != null }
+        compose.onNodeWithText("Olá, Alex").assertExists()
+        compose.onNodeWithText("Ver QR Code de retirada").performClick()
+        compose.onNodeWithText("Mercado Livre").performScrollTo().performClick()
+        compose.onNodeWithText("Já retirei a encomenda").performScrollTo().performClick()
+        compose.waitUntil(5000) {
+            controller.state.value.snapshot?.parcels?.first()?.status == ParcelStatus.MANUAL_REPORT
+        }
+        compose.onNodeWithText("Entendi").performClick()
+        compose.onNodeWithText("Retirada informada · aguardando locker").assertExists()
+        compose.runOnIdle { controller.close() }
+    }
+}
