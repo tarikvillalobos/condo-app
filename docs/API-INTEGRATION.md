@@ -58,3 +58,12 @@ Convite usa a janela cadastrada, até sete dias, com verificação no simulador.
 Reemissão substitui o código anterior; consumo e revogação impedem reutilização local.
 Um evento físico demonstrativo é sempre identificado como simulado na interface.
 Reserva usa janela de quatro horas, máximo de duas futuras e horizonte de trinta dias.
+Essas regras são fixtures para exercitar UI; não garantem segurança nem disponibilidade real.
+
+## Homologação pendente
+
+Após o contrato: testar contas de unidades distintas, expiração e revogação real,
+conflitos simultâneos entre clientes, códigos expirados/consumidos, paginação,
+falhas de rede, respostas atrasadas após troca de contexto, cache e logout.
+A aprovação dessas regras no cliente não substitui verificações no backend externo.
+Nenhum backend alternativo será criado para preencher lacunas da API.
