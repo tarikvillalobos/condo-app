@@ -138,3 +138,7 @@ private fun DemoControls(controller: AppController) {
         DemoScenario.NORMAL to "Dados de exemplo",
         DemoScenario.EMPTY to "Listas vazias",
         DemoScenario.NETWORK_ERROR to "Falha de conexão",
+        DemoScenario.ACCESS_DENIED to "Acesso negado",
+        DemoScenario.SESSION_EXPIRED to "Sessão expirada",
+    ).forEach { (scenario, label) -> SecondaryButton(label) { controller.scenario(scenario) } }
+}
