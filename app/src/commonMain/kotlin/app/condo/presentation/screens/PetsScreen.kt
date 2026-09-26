@@ -47,7 +47,6 @@ fun PetsScreen(controller: AppController, state: AppState) {
             if (snapshot.pets.isEmpty()) EmptyState("Seu pet tem espaço aqui", "Cadastre para acompanhar informações e vacinas.", Glyph.PAW)
             AdaptiveGrid(snapshot.pets) { pet ->
                 Column(verticalArrangement = Arrangement.spacedBy(Tokens.sm)) {
-                    PetCard(pet)
                     SecondaryButton("Ver ${pet.name}") { controller.navigate(Route.PET_DETAIL, pet.id) }
                 }
             }
