@@ -58,3 +58,23 @@ class DemoRepository(
         }
         createSession(parts[1])
     }
+    private fun membership(id: String): Membership = session?.memberships?.find { it.id == id }
+        ?: throw AppFailure(FailureKind.DENIED, "Condomínio não vinculado a esta conta.")
+    private fun key(id: String) = "demo.database.${session!!.account.id}.$id"
+    private fun document(id: String): Pair<Snapshot, DemoDocument> {
+        val member = membership(id)
+        val initial = DemoSeed.snapshot(member, clock.now())
+        val saved = store.read(key(id))?.let { demoJson.decodeFromString<DemoDocument>(it) }
+        requireInput(saved == null || saved.version == 1, "Dados locais incompatíveis. Contate o suporte.")
+        val doc = saved ?: DemoDocument(rows = initial.toRows())
+        return doc.rows.restore(initial) to doc
+    }
+    override suspend fun load(membershipId: String): Snapshot = mutex.withLock {
+        available()
+        val (snapshot, doc) = document(membershipId)
+        if (activeScenario == DemoScenario.EMPTY) return@withLock Snapshot(
+            membership = snapshot.membership, facilities = snapshot.facilities, updatedAt = clock.now(),
+        )
+        store.write(key(membershipId), demoJson.encodeToString(doc))
+        snapshot.copy(updatedAt = clock.now())
+    }
