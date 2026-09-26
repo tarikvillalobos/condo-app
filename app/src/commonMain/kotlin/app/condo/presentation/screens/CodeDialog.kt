@@ -38,3 +38,23 @@ fun CodeDialog(controller: AppController, state: AppState) {
                     }
                     if (code.ownerId.startsWith("visit")) {
                         SecondaryButton("Compartilhar convite") {
+                            controller.message(controller.platform.share("Convite demonstrativo · válido até ${code.expiresAt.fullLabel()} · ${code.payload}"))
+                        }
+                        SecondaryButton("Simular uso único na portaria") {
+                            controller.execute(Command.ConsumeVisitCode(code.payload), "Entrada registrada apenas na demonstração.")
+                        }
+                    }
+                } else Text("Código expirado ou sem validade confirmada. Feche e solicite um novo código.")
+            }
+        },
+        confirmButton = { TextButton(controller::dismissCode) { Text("Fechar") } },
+    )
+}
+@Composable
+fun QrCode(payload: String) {
+    val matrix = remember(payload) { encodeQr(payload) }
+    Canvas(Modifier.fillMaxWidth().aspectRatio(1f).background(Color.White).semantics {
+        contentDescription = "QR Code demonstrativo; código numérico disponível abaixo"
+    }) {
+        val cell = size.minDimension / (matrix.size + 8)
+        matrix.forEachIndexed { y, row -> row.forEachIndexed { x, dark ->
