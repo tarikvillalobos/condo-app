@@ -84,6 +84,7 @@ private fun AppHeader(controller: AppController, state: AppState, stacked: Boole
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Tokens.md)) {
         if (state.destination.route != Route.HOME) {
             IconButton(controller::back) { AppIcon(Glyph.BACK, "Voltar") }
+        } else AppIcon(LocalBrand.current.logo, modifier = Modifier.size(32.dp))
         if (stacked) Spacer(Modifier.weight(1f))
         else Text(title, Modifier.weight(1f), style = MaterialTheme.typography.titleMedium, color = LocalBrand.current.dark)
         IconButton({ controller.navigate(Route.NOTIFICATIONS) }) {
