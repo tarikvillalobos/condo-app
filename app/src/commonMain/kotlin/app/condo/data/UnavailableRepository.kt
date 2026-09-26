@@ -18,3 +18,6 @@ class UnavailableRepository : CondoRepository {
     override suspend fun activate(invitation: String, name: String, password: String): Session = unavailable()
     override suspend fun recover(identifier: String): String = unavailable()
     override suspend fun changePassword(current: String, replacement: String): String = unavailable()
+    override suspend fun logout() = Unit
+    override fun scenario(value: DemoScenario) = Unit
+}
