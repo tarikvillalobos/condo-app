@@ -26,7 +26,6 @@ não equivale a liberar uma versão para produção.
 | Framework iOS físico | Release compilado | Target `iosArm64`; a validação no aparelho ocorreu pelo host Swift em debug. |
 | Host iOS físico | Debug `iphoneos` ARM64 assinado, instalado e iniciado | iPhone 16 Pro Max, iOS 26.6.1: assinatura de desenvolvimento, instalação e processo ativo confirmados; fluxos manuais ainda não homologados. |
 | Frameworks Apple na CI | Debug simulador e release físico aprovados | Runner macOS ARM64; resultado dos frameworks é separado do host Swift. |
-| Host Swift na CI | `xcodebuild` aprovado | Simulador ARM64; distribuição assinada e execução física continuam pendentes. |
 | Produção | 7 testes e Android release aprovados | Inspeção do DEX do APK confirma ausência de `Lapp/condo/demo` e presença de `UnavailableRepository`. |
 | Marca Viva | APK debug e teste de renderização aprovados | 58 PNGs; navegação para câmeras bloqueada; início azul e sem módulo de câmeras revisado. |
 
