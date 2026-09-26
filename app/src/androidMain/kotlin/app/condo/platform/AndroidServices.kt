@@ -22,6 +22,7 @@ class AndroidServices(private val context: Context) : PlatformServices {
         override fun write(key: String, value: String) { check(preferences.edit().putString(key, value).commit()) }
         override fun remove(key: String) { preferences.edit().remove(key).commit() }
     }
+    override val vault: SessionVault = AndroidVault(store)
     override val biometricStatus = "Biometria depende de cadastro no sistema e integração de sessão com a API."
     override val notificationStatus: String get() {
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
