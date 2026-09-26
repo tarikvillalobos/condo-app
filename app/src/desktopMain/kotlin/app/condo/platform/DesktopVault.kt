@@ -12,8 +12,6 @@ class DesktopVault(private val service: String) : SessionVault {
     private fun command(arguments: List<String>, input: String? = null): Pair<Int, String> = runCatching {
         val process = ProcessBuilder(arguments).redirectError(ProcessBuilder.Redirect.DISCARD).start()
         process.outputStream.bufferedWriter().use { it.write(input.orEmpty()) }
-        val output = process.inputStream.bufferedReader().readText().trim()
-        if (!process.waitFor(10, TimeUnit.SECONDS)) { process.destroyForcibly(); return@runCatching -1 to "" }
         process.exitValue() to output
     }.getOrDefault(-1 to "")
     override fun read(): String? {
