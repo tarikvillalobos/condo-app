@@ -37,8 +37,6 @@ fun BottomNavigation(controller: AppController, state: AppState) {
                     Column(Modifier.padding(Tokens.xs).heightIn(min = Tokens.touch),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(Tokens.xs)) {
-                        AppIcon(route.glyph(), tint = if (selected) LocalBrand.current.primary else Tokens.secondary)
-                        Text(route.title, style = MaterialTheme.typography.labelSmall,
                             color = if (selected) LocalBrand.current.primary else Tokens.secondary)
                     }
                 }
