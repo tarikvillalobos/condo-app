@@ -35,7 +35,6 @@ class ResidentInstrumentedTest {
                 .edit().clear().commit())
         }
     }
-    @get:Rule val rules: RuleChain = RuleChain.outerRule(resetDemo).around(compose)
 
     @Test fun credentialsOpenHomeAndCollectionRemainsAwaitingLocker() {
         enter("CPF ou e-mail", "alex@condo.demo")
