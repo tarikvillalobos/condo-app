@@ -72,10 +72,6 @@ fun ProfileScreen(controller: AppController, state: AppState) {
             Heading("Cadastrar ou editar veículo")
             FormField(controller, "vehicle.model", "Modelo e cor")
             FormField(controller, "vehicle.plate", "Placa")
-            PrimaryButton("Salvar veículo", !state.submitting) {
-                controller.execute(Command.SaveVehicle(Vehicle(state.forms["vehicle.id"].orEmpty(),
-                    state.forms["vehicle.model"].orEmpty(), state.forms["vehicle.plate"].orEmpty().uppercase())), "Veículo salvo na demonstração.")
-            }
         }
         Route.CONDOMINIUMS -> {
             Text("Escolha qual condomínio você quer ver agora")
