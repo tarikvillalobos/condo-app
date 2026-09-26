@@ -38,3 +38,5 @@ data class Session(val account: Account, val memberships: List<Membership>)
 data class Preferences(
     val parcels: Boolean = true,
     val visits: Boolean = true,
+    val notices: Boolean = true,
+)
