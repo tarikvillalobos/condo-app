@@ -73,6 +73,8 @@ Build sem assinatura para simulador:
 
 ```sh
 xcodebuild -project iosApp/CondoApp.xcodeproj -scheme CondoApp \
+  -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' \
+  -configuration Debug ARCHS=arm64 ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=NO build
 ```
 
 ## Testar a demonstração
