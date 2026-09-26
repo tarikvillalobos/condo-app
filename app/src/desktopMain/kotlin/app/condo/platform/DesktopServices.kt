@@ -38,3 +38,8 @@ class DesktopStore(private val directory: Path = Path.of(
         Files.createDirectories(directory)
         val target = path(key)
         val temporary = Files.createTempFile(directory, "write-", ".tmp")
+        Files.writeString(temporary, value)
+        Files.move(temporary, target, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE)
+    }
+    override fun remove(key: String) { Files.deleteIfExists(path(key)) }
+}
