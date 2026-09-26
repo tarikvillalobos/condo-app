@@ -58,3 +58,9 @@ fun AppController.submitPet() = parseAction {
 fun AppController.submitRequest() = execute(Command.CreateRequest(
     formValue("request.category").ifBlank { "Solicitação" },
     formValue("request.subject"), formValue("request.body"),
+), "Solicitação registrada localmente. Nenhuma mensagem foi enviada à administração.") { back() }
+fun AppController.reserve(facility: String, date: String, hour: Int) = parseAction {
+    val start = LocalDate.parse(date).atTime(hour, 0).toInstant(condominiumZone)
+    val operation = "booking:$facility:$date:$hour"
+    execute(Command.Reserve(facility, start, start + 4.hours, operation), "Reserva confirmada apenas na demonstração.")
+}
