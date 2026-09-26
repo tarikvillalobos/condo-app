@@ -128,6 +128,8 @@ class AppController(
         val version = contextVersion
         scope.launch {
             try { block() } catch (cancelled: CancellationException) { throw cancelled
+            } catch (failure: Exception) { if (version == contextVersion) handle(failure)
+            } finally { if (version == contextVersion) mutable.update { it.copy(submitting = false) } }
         }
     }
     private fun handle(failure: Exception) {
