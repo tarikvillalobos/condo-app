@@ -22,6 +22,13 @@ class MainActivity : ComponentActivity() {
             val platform = AndroidServices(applicationContext)
             AppController(createRepository(platform.store, SystemAppClock), platform)
         }
+        setContent {
+            val state by controller.state.collectAsState()
+            BackHandler(enabled = state.history.isNotEmpty() && !state.showCode && state.message == null) {
+                controller.back()
+            }
+            CondoApp(controller)
+        }
     }
     override fun onRetainCustomNonConfigurationInstance(): Any = controller
     override fun onDestroy() {
