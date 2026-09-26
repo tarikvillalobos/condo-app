@@ -38,3 +38,23 @@ class AndroidServices(private val context: Context) : PlatformServices {
         "Escolha um aplicativo para compartilhar."
     }.getOrDefault("Nenhum aplicativo disponível para compartilhar.")
     override fun open(url: String): String = runCatching {
+        val uri = android.net.Uri.parse(url)
+        require(uri.scheme in setOf("https", "tel", "mailto"))
+        context.startActivity(Intent(Intent.ACTION_VIEW, uri).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        "Link aberto."
+    }.getOrDefault("Não foi possível abrir o link.")
+    override fun openNotificationSettings(): String {
+        context.startActivity(Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+            .putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        return "Permissão controlada pelas configurações do Android."
+    }
+}
+private class AndroidVault(private val store: LocalStore) : SessionVault {
+    private val alias = "condo.$BRAND_ID.$APP_ENVIRONMENT.session"
+    override val available = true
+    private fun key(): SecretKey {
+        val keystore = KeyStore.getInstance("AndroidKeyStore").apply { load(null) }
+        (keystore.getKey(alias, null) as? SecretKey)?.let { return it }
+        return KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore").apply {
+            init(KeyGenParameterSpec.Builder(alias, KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
+                .setBlockModes(KeyProperties.BLOCK_MODE_GCM).setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE).build())
