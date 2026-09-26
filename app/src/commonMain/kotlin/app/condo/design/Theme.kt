@@ -43,6 +43,17 @@ fun CondoTheme(brand: Brand = Brands.current, content: @Composable () -> Unit) {
     val body = FontFamily(Font(Res.font.manrope))
     val heading = FontFamily(Font(Res.font.sora))
     val typography = Typography(
+        headlineLarge = TextStyle(fontFamily = heading, fontWeight = FontWeight.SemiBold, fontSize = 30.sp, lineHeight = 39.sp),
+        headlineMedium = TextStyle(fontFamily = heading, fontWeight = FontWeight.SemiBold, fontSize = 26.sp, lineHeight = 34.sp),
+        titleLarge = TextStyle(fontFamily = heading, fontWeight = FontWeight.SemiBold, fontSize = 20.sp, lineHeight = 28.sp),
+        titleMedium = TextStyle(fontFamily = heading, fontWeight = FontWeight.SemiBold, fontSize = 17.sp, lineHeight = 25.sp),
+        titleSmall = TextStyle(fontFamily = body, fontWeight = FontWeight.Bold, fontSize = 14.sp, lineHeight = 21.sp),
+        bodyLarge = TextStyle(fontFamily = body, fontWeight = FontWeight.Normal, fontSize = 16.sp, lineHeight = 24.sp),
+        bodyMedium = TextStyle(fontFamily = body, fontWeight = FontWeight.Medium, fontSize = 14.sp, lineHeight = 21.sp),
+        bodySmall = TextStyle(fontFamily = body, fontWeight = FontWeight.Medium, fontSize = 12.sp, lineHeight = 18.sp),
+        labelLarge = TextStyle(fontFamily = body, fontWeight = FontWeight.Bold, fontSize = 15.sp, lineHeight = 22.sp),
+        labelMedium = TextStyle(fontFamily = body, fontWeight = FontWeight.Bold, fontSize = 12.sp, lineHeight = 18.sp),
+        labelSmall = TextStyle(fontFamily = body, fontWeight = FontWeight.Bold, fontSize = 11.sp, lineHeight = 16.sp),
     )
     CompositionLocalProvider(LocalBrand provides brand) {
         MaterialTheme(
