@@ -1,0 +1,12 @@
+.gradle/
+.kotlin/
+**/build/
+local.properties
+.DS_Store
+.idea/
+*.iml
+*.xcuserstate
+**/xcuserdata/
+.generated/
+validation/
+app/src/commonMain/composeResources/font/*.ttf
