@@ -37,6 +37,9 @@ AGP 9.2.0, Ktor Client 3.5.2 e bibliotecas. Gradle está fixado em 9.4.1.
 As versões foram conferidas nas documentações oficiais, com links em
 [arquitetura](docs/ARCHITECTURE.md). Resultados com o Xcode local constam em validações.
 
+Os launchers verificam o SHA-256 da distribuição Gradle e das fontes Manrope/Sora.
+JAR do wrapper e fontes binárias não são versionados, respeitando a regra de commits.
+Os assets são obtidos automaticamente na primeira execução.
 
 Branding, visual identity, available modules, and content may vary depending on the deployment.
 
