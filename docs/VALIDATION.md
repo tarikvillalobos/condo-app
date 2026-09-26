@@ -195,6 +195,7 @@ Windows, testes desktop Linux e builds Android foram aprovados no
 
 ## Limites conhecidos
 
+- A execução manual Windows/Linux e os instaladores MSI/DEB não foram validados; Linux tem cobertura de UI sob Xvfb.
 - Windows ainda não possui adaptador de cofre: Manter conectado fica indisponível; não há credencial em texto puro.
 - Leitores de tela não foram auditados; Tab/Enter e escala de fonte são cobertura parcial.
 - As permissões de Computer Use não estavam disponíveis; não houve inspeção por esse recurso.
