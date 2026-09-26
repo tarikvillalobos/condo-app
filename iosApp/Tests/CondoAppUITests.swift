@@ -58,6 +58,16 @@ final class CondoAppUITests: XCTestCase {
     }
 
     private func waitForLabel(_ label: String, file: StaticString = #filePath, line: UInt = #line) {
+        let found = labelQuery(label).firstMatch.waitForExistence(timeout: 15)
+        if !found {
+            capture("missing-label-\(label)")
+            let hierarchy = XCTAttachment(string: app.debugDescription)
+            hierarchy.name = "accessibility-tree"
+            hierarchy.lifetime = .keepAlways
+            add(hierarchy)
+        }
+        XCTAssertTrue(found, "Expected accessible label: \(label); app state: \(app.state.rawValue)",
+                      file: file, line: line)
     }
 
     private func tapLabel(_ label: String, file: StaticString = #filePath, line: UInt = #line) {
