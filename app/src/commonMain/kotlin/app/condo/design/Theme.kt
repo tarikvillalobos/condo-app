@@ -60,6 +60,9 @@ fun CondoTheme(brand: Brand = Brands.current, content: @Composable () -> Unit) {
             colorScheme = lightColorScheme(
                 primary = brand.primary, onPrimary = Color.White,
                 primaryContainer = Tokens.tint, onPrimaryContainer = brand.dark,
+                secondary = brand.primary, onSecondary = Color.White,
+                secondaryContainer = Tokens.tint, onSecondaryContainer = brand.dark,
+                outlineVariant = Tokens.border,
                 background = Tokens.background, onBackground = Tokens.text,
                 surface = Color.White, onSurface = Tokens.text,
                 surfaceVariant = Tokens.background, onSurfaceVariant = Tokens.secondary,
