@@ -78,3 +78,23 @@ Capturas representativas foram inspecionadas visualmente. A revisão encontrou
 problemas no cabeçalho a 320 e no calendário com fonte em 200%; as correções
 foram renderizadas novamente e conferidas: títulos estreitos ocupam linha própria
 e os controles de mês/data se reorganizam com fonte ampliada. O teste automático verifica dimensões e geração de imagens;
+não faz comparação com imagens de referência nem prova ausência de recortes.
+
+A variante Viva gerou 58 capturas no teste adaptado aos módulos da marca.
+Foi verificado o bloqueio da navegação para câmeras e revisada a tela inicial
+com a paleta azul e sem esse módulo. Os resultados não são uma cópia da matriz
+Condo: as telas de câmeras não fazem parte da configuração Viva.
+
+Essa matriz não substitui testes nativos de teclado virtual, áreas seguras,
+rotação, dobradiça de aparelho dobrável ou leitores de tela. A orientação em
+paisagem foi renderizada em uma tela, sem cobrir todos os fluxos nessa orientação.
+
+## Reproduzir testes e capturas
+
+Na raiz do projeto, com os pré-requisitos do [README](../README.md):
+
+```sh
+./gradlew :domain:desktopTest :demo:desktopTest :app:desktopTest
+./gradlew :app:desktopTest --tests app.condo.ResponsiveRenderTest --rerun-tasks
+./gradlew :app:desktopTest --tests app.condo.ResidentFlowTest --rerun-tasks
+./gradlew :app:createDistributable
