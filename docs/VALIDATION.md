@@ -98,3 +98,23 @@ Na raiz do projeto, com os pré-requisitos do [README](../README.md):
 ./gradlew :app:desktopTest --tests app.condo.ResponsiveRenderTest --rerun-tasks
 ./gradlew :app:desktopTest --tests app.condo.ResidentFlowTest --rerun-tasks
 ./gradlew :app:createDistributable
+```
+
+Os testes de UI desktop precisam de sessão gráfica. `createDistributable`
+produz a imagem de aplicação do host em `app/build/compose/binaries/main/app/`.
+Esses resultados macOS não validam empacotamento ou execução nativa Windows/Linux.
+
+### Android
+
+```sh
+./gradlew :androidApp:assembleDebug
+emulator -list-avds
+# Inicie um AVD de teste com resolução nativa 390x844 e densidade 160 dpi.
+adb devices
+# Defina CONDO_ANDROID_SERIAL com o serial de um emulador de teste listado acima.
+adb -s "${CONDO_ANDROID_SERIAL:?Defina o serial do emulador}" shell wm size
+adb -s "$CONDO_ANDROID_SERIAL" shell wm density
+ANDROID_SERIAL="$CONDO_ANDROID_SERIAL" ./gradlew :androidApp:connectedDebugAndroidTest
+```
+
+A execução final em celular usou o AVD `CondoPhone`, serial `emulator-5592`,
