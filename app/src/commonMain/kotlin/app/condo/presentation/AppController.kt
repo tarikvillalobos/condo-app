@@ -147,7 +147,6 @@ class AppController(
         val pendingActions = actionJobs.toList()
         pendingActions.forEach { it.cancel() }
         activeId = null
-        platform.vault.clear()
         if (repository.isDemo) repository.scenario(DemoScenario.NORMAL)
         mutable.value = AppState()
         scope.launch { repository.logout() }
