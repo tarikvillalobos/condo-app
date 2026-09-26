@@ -78,3 +78,23 @@ internal fun Snapshot.toRows(): List<DemoRow> = buildList {
         ))
     }
     vehicles.forEach { value ->
+        add(row("vehicles",
+            "id" to value.id,
+            "model" to value.model,
+            "plate" to value.plate,
+        ))
+    }
+    add(row("preferences", "parcels" to preferences.parcels,
+        "visits" to preferences.visits, "notices" to preferences.notices))
+    add(row("metadata", "updatedAt" to updatedAt))
+}
+
+internal fun List<DemoRow>.restore(seed: Snapshot): Snapshot = seed.copy(
+    parcels = filter { it.type == "parcels" }.map {
+        Parcel(
+            id = it.s("id"),
+            carrier = it.s("carrier"),
+            tracking = it.s("tracking").ifEmpty { null },
+            locker = it.s("locker"),
+            compartment = it.s("compartment"),
+            receivedAt = it.time("receivedAt"),
