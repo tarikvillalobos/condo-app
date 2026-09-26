@@ -98,4 +98,7 @@ private fun AppHeader(controller: AppController, state: AppState, stacked: Boole
         }
         IconButton(controller::refresh) { AppIcon(Glyph.CLOCK, "Atualizar conteúdo") }
     }
+    if (stacked) Text(title, Modifier.fillMaxWidth().padding(horizontal = Tokens.page, vertical = Tokens.sm),
+        style = MaterialTheme.typography.titleMedium, color = LocalBrand.current.dark)
+    }
 }
