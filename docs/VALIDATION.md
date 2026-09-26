@@ -118,3 +118,23 @@ ANDROID_SERIAL="$CONDO_ANDROID_SERIAL" ./gradlew :androidApp:connectedDebugAndro
 ```
 
 A execução final em celular usou o AVD `CondoPhone`, serial `emulator-5592`,
+com **390 × 844 pixels nativos e densidade 160 dpi**, equivalentes a 390 × 844 dp.
+Os 2 testes passaram após transferir o foco Compose ao botão antes de fechar
+o teclado virtual. A falha anterior do fluxo de credenciais foi resolvida e
+retestada nessa configuração.
+
+A configuração de tablet também aprovada foi **1024 × 600 pixels, densidade
+120 dpi**, equivalente a aproximadamente **1365 × 800 dp**, com 2 testes aprovados.
+O teste de formulário também recria a Activity e verifica preservação do rascunho.
+O teste instrumental limpa as preferências demonstrativas do aplicativo antes
+de cada caso; use emulador destinado à validação.
+
+Para reproduzir o celular, prefira um perfil de AVD com essas dimensões nativas.
+Uma redução por `wm size` sobre o AVD de tablet IHM não representa a mesma
+configuração usada na execução final aprovada.
+
+### iOS
+
+```sh
+./gradlew :app:linkDebugFrameworkIosSimulatorArm64
+./gradlew :app:linkReleaseFrameworkIosArm64
