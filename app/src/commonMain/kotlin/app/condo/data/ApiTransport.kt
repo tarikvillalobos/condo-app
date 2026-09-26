@@ -58,3 +58,15 @@ class ApiTransport(engine: HttpClientEngine, private val config: ApiConfiguratio
         } catch (_: Exception) {
             throw AppFailure(FailureKind.NETWORK, "Não foi possível conectar ao serviço.")
         }
+    }
+    fun <Dto, Entity> map(
+        response: ApiResponseDto,
+        serializer: DeserializationStrategy<Dto>,
+        mapper: (Dto) -> Entity,
+    ): Entity = try {
+        mapper(json.decodeFromString(serializer, response.body))
+    } catch (_: Exception) {
+        throw AppFailure(FailureKind.UNAVAILABLE, "Resposta incompatível com o contrato da API.")
+    }
+    fun close() = client.close()
+}
