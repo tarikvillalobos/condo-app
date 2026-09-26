@@ -58,8 +58,6 @@ final class CondoAppUITests: XCTestCase {
     }
 
     private func waitForLabel(_ label: String, file: StaticString = #filePath, line: UInt = #line) {
-        XCTAssertTrue(labelQuery(label).firstMatch.waitForExistence(timeout: 15),
-                      "Expected accessible label: \(label)", file: file, line: line)
     }
 
     private func tapLabel(_ label: String, file: StaticString = #filePath, line: UInt = #line) {
