@@ -179,6 +179,13 @@ class AppController(
                         (failure as? AppFailure)?.kind == FailureKind.EXPIRED)) handle(failure)
             } finally { if (version == contextVersion) mutable.update { it.copy(submitting = false) } }
         }
+        actionJobs.add(job)
+        job.invokeOnCompletion { actionJobs.remove(job) }
+        if (restoring) restorationJob = job
+        job.start()
+    }
+    private suspend fun <T> vault(block: () -> T): T = vaultMutex.withLock {
+        withContext(storageDispatcher) { block() }
     }
     private fun handle(failure: Exception) {
         if (failure is AppFailure && failure.kind == FailureKind.EXPIRED) {
