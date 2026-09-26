@@ -73,6 +73,10 @@ kotlin {
                 implementation(libs.ktor.cio)
             }
         }
+        if (environment != "demo") {
+            commonTest { kotlin.exclude("**/presentation/ControllerTest.kt") }
+            getByName("desktopTest").kotlin.exclude("**/ResponsiveRenderTest.kt", "**/ResidentFlowTest.kt")
+        }
         commonTest.dependencies {
             if (environment == "demo") implementation(project(":demo"))
             implementation(kotlin("test"))
