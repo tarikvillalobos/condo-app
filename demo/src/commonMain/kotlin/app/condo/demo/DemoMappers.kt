@@ -18,3 +18,23 @@ internal fun Snapshot.toRows(): List<DemoRow> = buildList {
         ))
     }
     visits.forEach { value ->
+        add(row("visits",
+            "id" to value.id,
+            "name" to value.name,
+            "purpose" to value.purpose,
+            "provider" to value.provider,
+            "startsAt" to value.startsAt,
+            "expiresAt" to value.expiresAt,
+            "status" to value.status,
+            "frequent" to value.frequent,
+        ))
+    }
+    pets.forEach { value ->
+        add(row("pets",
+            "id" to value.id,
+            "name" to value.name,
+            "species" to value.species,
+            "breed" to value.breed,
+            "birthDate" to value.birthDate,
+            "size" to value.size,
+            "weight" to value.weight,
