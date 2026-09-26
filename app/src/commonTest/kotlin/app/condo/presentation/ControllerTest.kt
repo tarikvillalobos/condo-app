@@ -34,6 +34,8 @@ class ControllerTest {
     private val clock = AppClock { Instant.parse("2026-09-26T12:00:00Z") }
     @Test fun updatesAllScreensAndClearsContextSynchronously() = runTest {
         val services = TestServices()
+        val controller = AppController(DemoRepository(services.store, clock, 0), services, clock, this,
+            StandardTestDispatcher(testScheduler))
         controller.login("alex@condo.demo", "Demo1234!", true)
         advanceUntilIdle()
         assertEquals(2, controller.state.value.snapshot!!.parcels.count { it.status != ParcelStatus.COLLECTED })
