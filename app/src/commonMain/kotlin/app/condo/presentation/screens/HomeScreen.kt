@@ -18,3 +18,23 @@ fun HomeScreen(controller: AppController, state: AppState) {
     val pending = snapshot.parcels.filter { it.status != ParcelStatus.COLLECTED }
     if (state.allows(Route.PARCELS)) Surface(color = LocalBrand.current.dark, shape = Tokens.largeCorner) {
         Column(Modifier.padding(Tokens.page), verticalArrangement = Arrangement.spacedBy(Tokens.lg)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(Tokens.md), verticalAlignment = Alignment.CenterVertically) {
+                AppIcon(Glyph.BOX, modifier = Modifier.size(36.dp), tint = Color.White)
+                Column(Modifier.weight(1f)) {
+                    Text(if (pending.isEmpty()) "Tudo retirado por aqui" else "${pending.size} encomenda${if (pending.size > 1) "s" else ""} no locker",
+                        style = MaterialTheme.typography.titleMedium, color = Color.White)
+                    Text(if (pending.isEmpty()) "Avisaremos quando chegar uma novidade." else "Retire até ${pending.minOf { it.deadline }.dateLabel()}",
+                        style = MaterialTheme.typography.bodySmall, color = Color.White)
+                }
+            }
+            Button({ controller.navigate(Route.PARCELS) }, Modifier.fillMaxWidth().heightIn(min = Tokens.touch),
+                shape = Tokens.controlCorner, colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = LocalBrand.current.dark)) {
+                AppIcon(Glyph.QR)
+                Spacer(Modifier.width(Tokens.sm))
+                Text(if (pending.isEmpty()) "Ver histórico" else "Ver QR Code de retirada")
+            }
+        }
+    }
+    val shortcuts = listOf(Route.PARCELS, Route.VISITS, Route.CAMERAS, Route.PETS,
+        Route.BOOKINGS, Route.NOTICES, Route.SERVICES, Route.CONCIERGE).filter(state::allows)
+    AdaptiveGrid(shortcuts, minimum = 70.dp, maximumColumns = 4) { route ->
