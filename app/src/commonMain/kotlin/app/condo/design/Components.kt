@@ -38,3 +38,23 @@ fun SecondaryButton(text: String, onClick: () -> Unit) {
 }
 @Composable
 fun StatusChip(text: String, warning: Boolean = false) {
+    Surface(color = if (warning) Tokens.warning else Tokens.tint, shape = Tokens.controlCorner) {
+        Text(text, Modifier.padding(horizontal = Tokens.md, vertical = Tokens.sm),
+            color = if (warning) Tokens.onWarning else LocalBrand.current.dark,
+            style = MaterialTheme.typography.labelSmall)
+    }
+}
+@Composable
+fun EmptyState(title: String, description: String, glyph: Glyph = Glyph.CHECK) {
+    Panel {
+        AppIcon(glyph, modifier = Modifier.size(36.dp))
+        Heading(title)
+        Muted(description)
+    }
+}
+@Composable
+fun MenuRow(title: String, subtitle: String? = null, glyph: Glyph = Glyph.NEXT, onClick: () -> Unit) {
+    Surface(onClick, Modifier.fillMaxWidth(), shape = Tokens.corner, border = BorderStroke(1.dp, Tokens.border)) {
+        Row(Modifier.padding(Tokens.lg).heightIn(min = 40.dp), verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(Tokens.md)) {
+            AppIcon(glyph)
