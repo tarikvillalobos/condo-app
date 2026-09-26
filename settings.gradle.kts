@@ -18,7 +18,6 @@ dependencyResolutionManagement {
             content {
                 includeGroupByRegex("androidx\\..*")
                 includeGroupByRegex("com\\.android.*")
-                includeGroupByRegex("com\\.google.*")
             }
         }
         mavenCentral()
