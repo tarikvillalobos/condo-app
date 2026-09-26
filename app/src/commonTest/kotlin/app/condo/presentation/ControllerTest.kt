@@ -171,4 +171,24 @@ class ControllerTest {
         assertEquals(2, bookings.size)
         assertEquals(1, bookings.count { !it.cancelled })
         assertNotEquals(original.id, bookings.single { !it.cancelled }.id)
+    }
+    @Test fun vehicleSaveKeepsItsIdentityAcrossNavigationAndClearsCompletedForm() = runTest {
+        val services = TestServices()
+        val controller = AppController(DemoRepository(services.store, clock, 100), services, clock, this,
+            StandardTestDispatcher(testScheduler))
+        controller.login("alex@condo.demo", "Demo1234!", false)
+        advanceUntilIdle()
+        controller.navigate(Route.VEHICLES)
+        controller.field("vehicle.model", "Sedan")
+        controller.field("vehicle.plate", "ABC1D23")
+        controller.submitVehicle()
+        runCurrent()
+        controller.navigate(Route.PROFILE)
+        advanceUntilIdle()
+        controller.navigate(Route.VEHICLES)
+        controller.submitVehicle()
+        advanceUntilIdle()
+        assertEquals(1, controller.state.value.snapshot!!.vehicles.count { it.plate == "ABC1D23" })
+        assertEquals("", controller.formValue("vehicle.model"))
+        controller.submitVehicle()
 }
