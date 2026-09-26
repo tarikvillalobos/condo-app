@@ -118,3 +118,23 @@ fun ProfileScreen(controller: AppController, state: AppState) {
         else -> Unit
     }
 }
+private fun privacyRequest(controller: AppController, subject: String) {
+    controller.field("request.category", "Privacidade")
+    controller.field("request.subject", subject)
+    controller.navigate(Route.REQUEST_FORM)
+}
+@Composable
+private fun PreferenceRow(title: String, subtitle: String, checked: Boolean, changed: (Boolean) -> Unit) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Column(Modifier.weight(1f)) { Text(title); Muted(subtitle) }
+        Switch(checked, changed)
+    }
+}
+@Composable
+private fun DemoControls(controller: AppController) {
+    Heading("Explore diferentes situações")
+    Muted("Os cenários são executados dentro do app e não se conectam a um servidor.")
+    listOf(
+        DemoScenario.NORMAL to "Dados de exemplo",
+        DemoScenario.EMPTY to "Listas vazias",
+        DemoScenario.NETWORK_ERROR to "Falha de conexão",
