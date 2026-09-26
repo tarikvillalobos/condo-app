@@ -58,3 +58,23 @@ private fun ParcelList(controller: AppController, state: AppState) {
 @Composable
 private fun ParcelDetail(controller: AppController, state: AppState, parcel: Parcel?) {
     if (parcel == null) {
+        EmptyState("Selecione uma encomenda", "Os detalhes e as opções de retirada aparecerão aqui.", Glyph.BOX)
+        return
+    }
+    Heading(parcel.carrier)
+    Muted(parcel.tracking?.let { "Rastreio $it" } ?: "Código de rastreio não informado")
+    StatusChip(parcel.statusLabel(), parcel.status != ParcelStatus.COLLECTED)
+    Panel {
+        Heading("Locker ${parcel.locker}")
+        Text("Compartimento ${parcel.compartment}")
+        Text("Retire até ${parcel.deadline.fullLabel()}")
+        Muted("Apresente o QR Code ao leitor ou digite o código numérico no painel do locker.")
+        if (parcel.status != ParcelStatus.COLLECTED) PrimaryButton("Ver QR Code de retirada", !state.stale && !state.submitting) {
+            controller.execute(Command.IssuePickupCode(parcel.id))
+        }
+    }
+    Panel {
+        Heading("Acompanhe sua encomenda")
+        Text("✓ Depositada · ${parcel.receivedAt.fullLabel()}")
+        Text("✓ Aviso disponível no aplicativo")
+        Text("◷ Prazo · ${parcel.deadline.fullLabel()}")
