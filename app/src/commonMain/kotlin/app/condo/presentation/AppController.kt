@@ -78,3 +78,23 @@ class AppController(
                 if (version == contextVersion) mutable.update { it.copy(loading = false) }
             }
         }
+    }
+    fun execute(command: Command, success: String? = null, after: (() -> Unit)? = null) = runAction {
+        val id = activeId ?: return@runAction
+        val version = contextVersion
+        val outcome = repository.execute(id, command)
+        if (version != contextVersion) return@runAction
+        mutable.update { it.copy(snapshot = outcome.snapshot, code = outcome.code,
+            showCode = outcome.code != null, stale = false, message = success) }
+        after?.invoke()
+    }
+    fun dismissCode() = mutable.update { it.copy(showCode = false, code = null) }
+    fun saveAccount(name: String, phone: String) = runAction {
+        val account = repository.updateAccount(name, phone)
+        mutable.update { it.copy(session = it.session?.copy(account = account), message = "Dados salvos na demonstração.") }
+        back()
+    }
+    fun link(invitation: String) = runAction {
+        val session = repository.linkMembership(invitation)
+        mutable.update { it.copy(session = session, message = "Condomínio vinculado na demonstração.") }
+    }
