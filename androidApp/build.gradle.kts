@@ -27,4 +27,7 @@ android {
 dependencies {
     implementation(project(":app"))
     implementation(libs.activity.compose)
+    androidTestImplementation(libs.android.test.runner)
+    androidTestImplementation(libs.android.test.junit)
+    androidTestImplementation(libs.compose.ui.test)
 }
