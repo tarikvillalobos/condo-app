@@ -38,3 +38,23 @@ As URLs vêm de Brand.apiUrls; HTTPS é obrigatório. Não usar query string par
 Headers, método, corpo e caminho devem ser definidos a partir do contrato recebido.
 O transporte possui timeouts, cancelamento, serialização e mapeamento genérico de
 status HTTP 401/403/409, sem mostrar corpo de erro arbitrário ao usuário.
+Nenhum retry automático de mutações ou interceptor de autenticação foi presumido.
+Nenhum logger imprime headers, corpos, códigos QR, senhas ou identificadores pessoais.
+O transporte não segue redirecionamentos automaticamente.
+
+Só adicionar renovação de token e idempotência conforme regras da API.
+Os adaptadores de armazenamento seguro e capacidades nativas já têm contratos separados.
+VideoAdapter retorna indisponibilidade até existir um fornecedor autorizado;
+as imagens de câmera atuais são ilustrações nativas marcadas SIMULAÇÃO.
+Não se conecta o app diretamente a equipamentos ou serviços por suposição.
+
+## Contrato exclusivamente demonstrativo
+
+Payload QR: `condo-demo:v1:<condomínio>:<pickup|visit>:<registro>:<nonce>`.
+Não é um contrato de locker real. O nonce usa aleatoriedade para cenários locais,
+não deve ser usado como credencial de produção. Código de retirada: seis dígitos,
+validade máxima de cinco minutos ou o prazo restante da encomenda.
+Convite usa a janela cadastrada, até sete dias, com verificação no simulador.
+Reemissão substitui o código anterior; consumo e revogação impedem reutilização local.
+Um evento físico demonstrativo é sempre identificado como simulado na interface.
+Reserva usa janela de quatro horas, máximo de duas futuras e horizonte de trinta dias.
