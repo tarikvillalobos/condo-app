@@ -99,6 +99,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = if (brandName == "viva") "Viva Morar" else "Condo App"
+            packageVersion = "1.0.0"
             copyright = "Private and proprietary"
         }
     }
