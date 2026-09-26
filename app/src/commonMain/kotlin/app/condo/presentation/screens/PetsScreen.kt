@@ -66,5 +66,7 @@ private fun PetCard(pet: Pet, now: kotlin.time.Instant) {
         Heading(pet.name)
         Muted("${pet.species} · ${pet.breed}")
         Text("Porte ${pet.size} · ${pet.weight} kg")
+        val vaccine = pet.vaccineStatus(now)
+        StatusChip(vaccine.first, warning = vaccine.second)
     }
 }
