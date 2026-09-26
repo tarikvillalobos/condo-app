@@ -22,6 +22,7 @@ import org.junit.rules.RuleChain
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 import org.junit.runner.RunWith
+import java.io.File
 
 @RunWith(AndroidJUnit4::class)
 class ResidentInstrumentedTest {
