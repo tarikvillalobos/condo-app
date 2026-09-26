@@ -74,7 +74,6 @@ internal class DemoMutation(
 
 internal fun requireModule(member: Membership, command: Command) {
     val module = when (command) {
-        is Command.ReportCollected, is Command.IssuePickupCode, is Command.ApplyLockerEvent -> Module.PARCELS
         is Command.SaveVisit, is Command.SetVisitStatus, is Command.IssueVisitCode,
         is Command.ConsumeVisitCode -> Module.VISITS
         is Command.SavePet, is Command.ReportPet -> Module.PETS
