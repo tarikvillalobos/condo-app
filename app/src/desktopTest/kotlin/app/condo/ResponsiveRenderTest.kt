@@ -52,6 +52,12 @@ class ResponsiveRenderTest {
         controller.login("alex@condo.demo", "Demo1234!", false)
         yield()
         assertNotNull(controller.state.value.snapshot)
+        if (BRAND_ID == "viva") {
+            controller.navigate(Route.CAMERAS)
+            assertEquals(Route.HOME, controller.state.value.destination.route)
+            assertNotNull(controller.state.value.message)
+            controller.clearMessage()
+        }
         val routes = listOf(Route.HOME, Route.PARCELS, Route.PARCEL_DETAIL, Route.CAMERAS,
             Route.VISITS, Route.PETS, Route.BOOKINGS, Route.PROFILE)
         for (width in listOf(320, 390, 430, 600, 840, 1200)) {
