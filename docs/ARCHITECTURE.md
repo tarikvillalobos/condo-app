@@ -83,3 +83,5 @@ Kotlin 2.4.20, Gradle 9.4.1 e AGP 9.2.0 estão na faixa de compatibilidade publi
 O plugin Compose Compiler usa exatamente a versão de Kotlin.
 O Xcode de referência da tabela é 26.4; o ambiente local tem 26.2. Builds locais
 são reportados como evidência específica, sem substituir a matriz oficial.
+
+A CI Apple usa o runner ARM `macos-26`, conforme a [matriz oficial de runners](https://docs.github.com/en/actions/reference/runners/github-hosted-runners).
