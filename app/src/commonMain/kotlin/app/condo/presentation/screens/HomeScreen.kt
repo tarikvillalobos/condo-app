@@ -38,3 +38,21 @@ fun HomeScreen(controller: AppController, state: AppState) {
     val shortcuts = listOf(Route.PARCELS, Route.VISITS, Route.CAMERAS, Route.PETS,
         Route.BOOKINGS, Route.NOTICES, Route.SERVICES, Route.CONCIERGE).filter(state::allows)
     AdaptiveGrid(shortcuts, minimum = 70.dp, maximumColumns = 4) { route ->
+        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+            FilledTonalIconButton({ controller.navigate(route) }, Modifier.size(60.dp), shape = Tokens.corner) {
+                AppIcon(route.glyph(), route.title, Modifier.size(26.dp))
+            }
+            Text(route.title, Modifier.padding(top = Tokens.sm), style = MaterialTheme.typography.bodySmall)
+        }
+    }
+    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+        Heading("Avisos do condomínio", Modifier.weight(1f))
+        TextButton({ controller.navigate(Route.NOTICES) }) { Text("Ver todos") }
+    }
+    if (snapshot.bulletins.isEmpty()) EmptyState("Nenhum aviso novo", "As novidades da administração aparecerão aqui.", Glyph.NOTICE)
+    snapshot.bulletins.take(2).forEach { bulletin ->
+        MenuRow(bulletin.title, "${bulletin.date.dateLabel()} · ${bulletin.body.substringBefore('.')}", Glyph.CALENDAR) {
+            controller.navigate(Route.BULLETIN, bulletin.id)
+        }
+    }
+}
