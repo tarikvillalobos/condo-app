@@ -20,6 +20,7 @@ class ResidentFlowTest {
         compose.waitUntil(5000) { controller.state.value.snapshot != null }
         compose.onNodeWithText("Olá, Alex").assertExists()
         compose.onNodeWithText("Ver QR Code de retirada").performClick()
+        compose.onNode(hasText("Mercado Livre") and hasClickAction()).performScrollTo().performClick()
         compose.onNodeWithText("Já retirei a encomenda").performScrollTo().performClick()
         compose.waitUntil(5000) {
             controller.state.value.snapshot?.parcels?.first()?.status == ParcelStatus.MANUAL_REPORT
