@@ -57,6 +57,5 @@ Android, com emulador ou dispositivo conectado:
 adb shell am start -n app.condo.resident/app.condo.android.MainActivity
 ```
 
-## License
 
 Private and proprietary software.
