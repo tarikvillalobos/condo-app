@@ -13,6 +13,10 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "0.1.0"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders["appLabel"] = if (providers.gradleProperty("brand").get() == "viva") {
+            "Viva Morar"
+        } else "Condo App"
     }
     buildFeatures { compose = true }
     compileOptions {
