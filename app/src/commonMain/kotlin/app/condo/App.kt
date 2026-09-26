@@ -33,6 +33,7 @@ fun CondoApp(controller: AppController) {
                     Row(Modifier.weight(1f)) {
                         if (state.session != null && wide) SideNavigation(controller, state, expanded)
                         Column(Modifier.weight(1f)) {
+                            if (state.session != null) AppHeader(controller, state, compactLabels || LocalDensity.current.fontScale > 1.3f)
                             if (state.loading) LinearProgressIndicator(Modifier.fillMaxWidth())
                             val scroll = key(state.destination) { rememberScrollState() }
                             LaunchedEffect(state.session?.account?.id, state.snapshot?.membership?.id, state.destination) {
