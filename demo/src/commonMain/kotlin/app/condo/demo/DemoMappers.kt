@@ -158,3 +158,20 @@ internal fun List<DemoRow>.restore(seed: Snapshot): Snapshot = seed.copy(
     notices = filter { it.type == "notices" }.map {
         Notice(
             id = it.s("id"),
+            title = it.s("title"),
+            target = it.s("target"),
+            read = it.flag("read"),
+        )
+    },
+    vehicles = filter { it.type == "vehicles" }.map {
+        Vehicle(
+            id = it.s("id"),
+            model = it.s("model"),
+            plate = it.s("plate"),
+        )
+    },
+    preferences = firstOrNull { it.type == "preferences" }?.let {
+        Preferences(it.flag("parcels"), it.flag("visits"), it.flag("notices"))
+    } ?: Preferences(),
+    updatedAt = first { it.type == "metadata" }.time("updatedAt"),
+)
