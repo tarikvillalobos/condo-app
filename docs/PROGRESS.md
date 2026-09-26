@@ -26,3 +26,7 @@
 
 O modo demonstrativo não representa autenticação, autorização, retirada
 física ou confirmação de disponibilidade por um servidor real.
+Biometria real, push remoto e vídeo também dependem das integrações externas.
+Compilações aprovadas e capturas desktop não significam homologação multiplataforma
+ou prontidão para produção. Estado registrado em 26/09/2026; novas validações
+devem ser registradas em VALIDATION com plataforma e alcance reais.
