@@ -58,3 +58,15 @@ class ControllerTest {
         val repository = DemoRepository(services.store, clock, 0)
         val controller = AppController(repository, services, clock, this)
         controller.login("alex@condo.demo", "Demo1234!", false)
+        advanceUntilIdle()
+        controller.execute(Command.IssuePickupCode("p1"))
+        advanceUntilIdle()
+        assertNotNull(controller.state.value.code)
+        repository.scenario(DemoScenario.NETWORK_ERROR)
+        controller.refresh()
+        advanceUntilIdle()
+        assertTrue(controller.state.value.stale)
+        assertNull(controller.state.value.code)
+        assertNotNull(controller.state.value.snapshot)
+    }
+}
