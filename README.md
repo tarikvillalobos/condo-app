@@ -50,7 +50,6 @@ Desktop (macOS, Windows e Linux):
 # Windows: gradlew.bat :app:run
 ```
 
-## Getting Started
 
 Setup and development instructions will be added as the project evolves.
 
