@@ -72,6 +72,7 @@ fun ProfileScreen(controller: AppController, state: AppState) {
             Heading("Cadastrar ou editar veículo")
             FormField(controller, "vehicle.model", "Modelo e cor")
             FormField(controller, "vehicle.plate", "Placa")
+            PrimaryButton("Salvar veículo", !state.submitting, controller::submitVehicle)
         }
         Route.CONDOMINIUMS -> {
             Text("Escolha qual condomínio você quer ver agora")
