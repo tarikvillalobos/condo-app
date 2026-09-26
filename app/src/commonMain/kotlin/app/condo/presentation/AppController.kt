@@ -98,3 +98,23 @@ class AppController(
         val session = repository.linkMembership(invitation)
         mutable.update { it.copy(session = session, message = "Condomínio vinculado na demonstração.") }
     }
+    fun activate(invitation: String, name: String, password: String) = runAction {
+        val session = repository.activate(invitation, name, password)
+        mutable.update { it.copy(session = session, forms = emptyMap(), destination = Destination()) }
+        switchMembership(session.memberships.first().id)
+    }
+    fun recover(identifier: String) = runAction { message(repository.recover(identifier)) }
+    fun password(current: String, replacement: String) = runAction {
+        message(repository.changePassword(current, replacement))
+        mutable.update { it.copy(forms = emptyMap()) }
+    }
+    fun scenario(value: DemoScenario) {
+        repository.scenario(value)
+        refresh()
+    }
+    fun logout() {
+        contextVersion++
+        loadingJob?.cancel()
+        activeId = null
+        platform.vault.clear()
+        mutable.value = AppState()
