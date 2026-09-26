@@ -58,3 +58,23 @@ A troca de marca é configuração de distribuição; a seleção de condomínio
 A largura disponível determina a navegação: abaixo de 600 dp há barra inferior;
 a partir de 600 dp há rail; a partir de 840 dp há menu lateral e lista/detalhe de encomendas.
 Conteúdo tem largura máxima de 1180 dp; formulários usam até 520 dp.
+Grades calculam colunas pela largura mínima e escala de fonte, sem escalar a tela inteira.
+Câmeras usam até três colunas; calendário usa até sete; atalhos, até quatro.
+Insets seguros e de teclado são aplicados na raiz. Conteúdo principal e diálogos podem rolar.
+Botões têm pelo menos 48 dp de altura. Status combinam texto e cor.
+Títulos têm semântica de heading; controles recebem rótulos e descrições.
+O QR preserva proporção 1:1 e margem branca de quatro módulos, com código numérico alternativo.
+
+Android retém o controller durante mudanças de configuração. Desktop e iOS mantêm
+o estado enquanto a janela muda de tamanho; dados digitados não dependem de largura.
+Validação específica de dobradiça em foldables, leitor de tela e teclado físico
+está registrada separadamente; não deve ser inferida a partir dos renders desktop.
+
+## Versões verificadas
+
+- [Compatibilidade Kotlin/Gradle/AGP/Xcode](https://kotlinlang.org/docs/multiplatform/multiplatform-compatibility-guide.html).
+- [Compatibilidade Compose e plataformas](https://kotlinlang.org/docs/multiplatform/compose-compatibility-and-versioning.html).
+- [Plugin Android KMP](https://developer.android.com/kotlin/multiplatform/plugin).
+- [Releases Ktor](https://ktor.io/docs/releases.html).
+- [QR Code Kotlin](https://github.com/g0dkar/qrcode-kotlin).
+
