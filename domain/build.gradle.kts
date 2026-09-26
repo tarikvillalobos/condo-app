@@ -18,3 +18,8 @@ kotlin {
             api(libs.datetime)
         }
         commonTest.dependencies {
+            implementation(kotlin("test"))
+            implementation(libs.coroutines.test)
+        }
+    }
+}
