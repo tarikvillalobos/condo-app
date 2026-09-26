@@ -13,6 +13,26 @@ import kotlin.time.Instant
 
 class ResidentFlowTest {
     @get:Rule val compose = createComposeRule()
+    @Test fun residentCanTabBetweenCredentialsAndPressEnterToLogin() {
+        val platform = TestServices()
+        val clock = AppClock { Instant.parse("2026-09-26T12:00:00Z") }
+        val controller = AppController(DemoRepository(platform.store, clock, 0), platform, clock,
+            storageDispatcher = kotlinx.coroutines.Dispatchers.Main.immediate)
+        compose.setContent { CondoApp(controller) }
+        try {
+            val identity = compose.onNode(hasSetTextAction() and hasText("CPF ou e-mail"))
+            val password = compose.onNode(hasSetTextAction() and hasText("Senha"))
+            identity.performScrollTo().performSemanticsAction(SemanticsActions.RequestFocus) { it() }
+            identity.performTextInput("alex@condo.demo")
+            compose.onRoot().performKeyInput { pressKey(Key.Tab) }
+            password.assertIsFocused().performTextInput("Demo1234!")
+            val submit = compose.onNode(hasText("Entrar") and hasClickAction())
+            submit.performScrollTo().performSemanticsAction(SemanticsActions.RequestFocus) { it() }
+            submit.assertIsFocused()
+            compose.onRoot().performKeyInput { pressKey(Key.Enter) }
+            compose.waitUntil(5000) { controller.state.value.snapshot != null }
+            compose.onNodeWithText("Olá, Alex").assertExists()
+        } finally {
     @Test fun residentCanLoginOpenParcelAndReportCollection() {
         val platform = TestServices()
         val clock = AppClock { Instant.parse("2026-09-26T12:00:00Z") }
