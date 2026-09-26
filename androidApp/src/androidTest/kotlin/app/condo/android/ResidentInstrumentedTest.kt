@@ -63,6 +63,16 @@ class ResidentInstrumentedTest {
     }
 
     private fun field(label: String) = compose.onNode(hasSetTextAction() and hasText(label))
+    private fun closeSoftKeyboard() {
+        compose.runOnIdle {
+            val activity = compose.activity
+            val view = activity.currentFocus ?: activity.window.decorView
+            val keyboard = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            keyboard.hideSoftInputFromWindow(view.windowToken, 0)
+            view.clearFocus()
+        }
+        compose.waitForIdle()
+    }
     private fun enter(label: String, value: String) {
         field(label).performScrollTo().performClick().performTextReplacement(value)
     }
