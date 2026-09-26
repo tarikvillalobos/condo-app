@@ -114,7 +114,6 @@ class AppController(
         mutable.update { it.copy(session = it.session?.copy(account = account)) }
         if (navigation == navigationVersion) { message("Dados salvos na demonstração."); back() }
     }
-    fun link(invitation: String) = runAction {
         val session = repository.linkMembership(invitation)
         mutable.update { it.copy(session = session, message = "Condomínio vinculado na demonstração.") }
     }
