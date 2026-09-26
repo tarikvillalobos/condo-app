@@ -50,5 +50,6 @@ schemes:
     build:
       targets:
         CondoApp: all
+        CondoAppUITests: [test]
     run:
       config: Debug
