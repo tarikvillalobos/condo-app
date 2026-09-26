@@ -18,3 +18,10 @@ for name, digest in fonts.items():
     ).read()
     if hashlib.sha256(data).hexdigest() != digest:
         raise SystemExit(f'Font integrity check failed: {name}')
+    target.write_bytes(data)
+    license_file = root / '.generated/licenses' / (name + '-OFL.txt')
+    if not license_file.exists():
+        license_file.parent.mkdir(parents=True, exist_ok=True)
+        license_file.write_bytes(urllib.request.urlopen(
+            f'https://raw.githubusercontent.com/google/fonts/main/ofl/{name}/OFL.txt'
+        ).read())
