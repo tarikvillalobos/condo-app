@@ -151,4 +151,24 @@ class ControllerTest {
         assertEquals(Route.HOME, controller.state.value.destination.route)
         assertEquals("Novo Nome", controller.state.value.session?.account?.name)
     }
+    @Test fun cancelledSlotCanBeReservedAgainWithoutDuplicatingRetries() = runTest {
+        val services = TestServices()
+        val controller = AppController(DemoRepository(services.store, clock, 0), services, clock, this,
+            StandardTestDispatcher(testScheduler))
+        controller.login("alex@condo.demo", "Demo1234!", false)
+        advanceUntilIdle()
+        controller.reserve("court", "2026-09-27", 10)
+        advanceUntilIdle()
+        val original = controller.state.value.snapshot!!.bookings.single()
+        controller.reserve("court", "2026-09-27", 10)
+        advanceUntilIdle()
+        assertEquals(1, controller.state.value.snapshot!!.bookings.size)
+        controller.execute(Command.CancelBooking(original.id))
+        advanceUntilIdle()
+        controller.reserve("court", "2026-09-27", 10)
+        advanceUntilIdle()
+        val bookings = controller.state.value.snapshot!!.bookings
+        assertEquals(2, bookings.size)
+        assertEquals(1, bookings.count { !it.cancelled })
+        assertNotEquals(original.id, bookings.single { !it.cancelled }.id)
 }
