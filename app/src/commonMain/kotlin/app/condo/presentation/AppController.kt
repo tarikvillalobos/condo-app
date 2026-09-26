@@ -100,7 +100,6 @@ class AppController(
     }
     fun execute(command: Command, success: String? = null, after: (() -> Unit)? = null) = runAction { version, navigation ->
         val id = activeId ?: return@runAction
-        val version = contextVersion
         val outcome = repository.execute(id, command)
         if (version != contextVersion) return@runAction
         mutable.update { it.copy(snapshot = outcome.snapshot, code = outcome.code,
