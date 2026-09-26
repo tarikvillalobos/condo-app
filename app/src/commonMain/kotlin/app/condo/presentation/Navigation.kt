@@ -44,6 +44,10 @@ fun BottomNavigation(controller: AppController, state: AppState) {
                 }
             }
         }
+        if (largeFont) Text(state.destination.route.title,
+            Modifier.align(Alignment.CenterHorizontally).padding(bottom = Tokens.sm),
+            style = MaterialTheme.typography.labelSmall)
+        }
     }
 }
 @Composable
