@@ -102,9 +102,6 @@ class AppController(
         val id = activeId ?: return@runAction
         val outcome = repository.execute(id, command)
         if (version != contextVersion) return@runAction
-        mutable.update { it.copy(snapshot = outcome.snapshot, code = outcome.code,
-            showCode = outcome.code != null, stale = false, message = success) }
-        after?.invoke()
     }
     fun dismissCode() = mutable.update { it.copy(showCode = false, code = null) }
     fun saveAccount(name: String, phone: String) = runAction {
