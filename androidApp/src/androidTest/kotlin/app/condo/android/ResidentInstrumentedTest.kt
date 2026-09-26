@@ -36,7 +36,6 @@ class ResidentInstrumentedTest {
         enter("CPF ou e-mail", "alex@condo.demo")
         enter("Senha", "Demo1234!")
         closeSoftKeyboard()
-        compose.onNodeWithText("Entrar").performScrollTo().performClick()
         waitForText("Olá, Alex")
         compose.onNodeWithText("Ver QR Code de retirada").performScrollTo().performClick()
         compose.onNode(hasText("Mercado Livre") and hasClickAction()).performScrollTo().performClick()
