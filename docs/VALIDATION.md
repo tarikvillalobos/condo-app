@@ -168,6 +168,8 @@ banner do sistema Apple Intelligence; isso não faz parte da interface do app.
 Não houve homologação em dispositivo iOS físico,
 TestFlight ou distribuição assinada. O Xcode local é 26.2; a diferença para a
 referência de compatibilidade 26.4 está registrada em [arquitetura](ARCHITECTURE.md).
+O comando de build define ARM64 explicitamente para evitar que o Xcode tente
+incluir x86_64, target não configurado. Esse comando foi revalidado localmente.
 
 ## Marca Viva e ambiente de produção
 
