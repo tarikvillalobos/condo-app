@@ -29,3 +29,15 @@ fun Visit.statusLabel(now: Instant): String = if (expiresAt <= now && status != 
     VisitStatus.DENIED -> "Recusada"
     VisitStatus.REVOKED -> "Convite revogado"
 }
+
+fun Pet.vaccineStatus(now: Instant): Pair<String, Boolean> {
+    val today = now.toLocalDateTime(condominiumZone).date
+    val due = runCatching { LocalDate.parse(vaccineDue) }.getOrNull()
+        ?: return "Vencimento não informado" to true
+    val days = today.daysUntil(due)
+    return when {
+        days < 0 -> "Vacina vencida há ${-days} dias" to true
+        days <= 30 -> "Vacina vence em $days dias" to true
+        else -> "Vacinas em dia · próxima em $vaccineDue" to false
+    }
+}
