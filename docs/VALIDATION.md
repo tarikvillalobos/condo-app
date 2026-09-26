@@ -138,3 +138,23 @@ configuração usada na execução final aprovada.
 ```sh
 ./gradlew :app:linkDebugFrameworkIosSimulatorArm64
 ./gradlew :app:linkReleaseFrameworkIosArm64
+xcodegen generate --spec iosApp/project.yml
+xcodebuild -project iosApp/CondoApp.xcodeproj -scheme CondoApp \
+  -sdk iphonesimulator -configuration Debug -derivedDataPath iosApp/build/DerivedData \
+  CODE_SIGNING_ALLOWED=NO build
+xcrun simctl list devices available
+# Defina CONDO_IOS_SIMULATOR com o UDID de um simulador de teste disponível.
+xcodebuild -project iosApp/CondoApp.xcodeproj -scheme CondoApp \
+  -destination "platform=iOS Simulator,id=${CONDO_IOS_SIMULATOR:?Defina o UDID}" \
+  -configuration Debug -derivedDataPath iosApp/build/DerivedData \
+  CODE_SIGNING_ALLOWED=NO test
+```
+
+Use simulador com dados demonstrativos limpos. No iPhone 17 Pro com iOS 26.2,
+o teste de login, encomenda e troca de condomínio passou, anexando screenshots
+ao resultado XCTest. O encerramento anterior foi resolvido com o `Info.plist`
+explícito e a chave `CADisableMinimumFrameDurationOnPhone` como booleano `true`.
+O framework `iosArm64` release também compilou, em 4min04s; isso não comprova
+execução em hardware real. O mesmo XCTest passou no iPad Pro 11 (M5), iOS 26.2.
+Capturas de início e detalhes foram revisadas nos dois simuladores: iPhone
+1206 × 2622 pixels; iPad 1668 × 2420 pixels. Uma captura do iPad inclui um
