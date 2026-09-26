@@ -84,6 +84,11 @@ private fun AppHeader(controller: AppController, state: AppState) {
         IconButton({ controller.navigate(Route.NOTIFICATIONS) }) {
             BadgedBox(badge = {
                 val count = state.snapshot?.notices?.count { !it.read } ?: 0
+                if (count > 0) {
+                    if (LocalDensity.current.fontScale > 1.3f) Badge()
+                    else Badge { Text(count.toString()) }
+                }
+            }) { AppIcon(Glyph.BELL, "Notificações, ${state.snapshot?.notices?.count { !it.read } ?: 0} não lidas") }
         }
         IconButton(controller::refresh) { AppIcon(Glyph.CLOCK, "Atualizar conteúdo") }
     }
