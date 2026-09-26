@@ -58,3 +58,23 @@ final class CondoAppUITests: XCTestCase {
     }
 
     private func waitForLabel(_ label: String, file: StaticString = #filePath, line: UInt = #line) {
+        XCTAssertTrue(labelQuery(label).firstMatch.waitForExistence(timeout: 15),
+                      "Expected accessible label: \(label)", file: file, line: line)
+    }
+
+    private func tapLabel(_ label: String, file: StaticString = #filePath, line: UInt = #line) {
+        for _ in 0..<8 {
+            if let element = labelQuery(label).allElementsBoundByIndex.first(where: { $0.isHittable }) {
+                element.tap()
+                return
+            }
+            app.swipeUp()
+        }
+        XCTFail("Could not reach accessible control: \(label)", file: file, line: line)
+    }
+
+    private func capture(_ name: String) {
+        let attachment = XCTAttachment(screenshot: app.screenshot())
+        attachment.name = name
+        attachment.lifetime = .keepAlways
+        add(attachment)
