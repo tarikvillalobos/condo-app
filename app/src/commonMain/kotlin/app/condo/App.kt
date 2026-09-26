@@ -68,7 +68,6 @@ fun CondoApp(controller: AppController) {
                 state.message?.let { message ->
                     AlertDialog(
                         onDismissRequest = controller::clearMessage,
-                        title = { Text("Condo App") }, text = { Text(message) },
                         confirmButton = { TextButton(controller::clearMessage) { Text("Entendi") } },
                     )
                 }
