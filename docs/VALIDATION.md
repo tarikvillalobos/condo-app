@@ -145,6 +145,9 @@ configuração usada na execução final aprovada.
 ./gradlew :app:linkReleaseFrameworkIosArm64
 xcodegen generate --spec iosApp/project.yml
 xcodebuild -project iosApp/CondoApp.xcodeproj -scheme CondoApp \
+  -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' \
+  -configuration Debug -derivedDataPath iosApp/build/DerivedData \
+  ARCHS=arm64 ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=NO build
 xcrun simctl list devices available
 # Defina CONDO_IOS_SIMULATOR com o UDID de um simulador de teste disponível.
 xcodebuild -project iosApp/CondoApp.xcodeproj -scheme CondoApp \
