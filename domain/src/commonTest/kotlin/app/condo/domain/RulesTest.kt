@@ -18,3 +18,23 @@ class RulesTest {
         assertEquals(3, metrics.received)
         assertEquals(2, metrics.pending)
         assertEquals(120, metrics.averageMinutes)
+        assertNull(parcelMetrics(emptyList(), now, now + 1.hours).averageMinutes)
+    }
+    @Test fun adjacentBookingsDoNotOverlap() {
+        val booking = Booking("1", "court", now, now + 1.hours)
+        assertFalse(booking.overlaps(now + 1.hours, now + 2.hours))
+        assertTrue(booking.overlaps(now, now + 2.hours))
+        assertFalse(booking.copy(cancelled = true).overlaps(now, now + 1.hours))
+    }
+    @Test fun invitationRequiresActiveWindowAndStatus() {
+        val visit = Visit("1", "Fictício", "Visita", false, now, now + 1.hours)
+        assertTrue(visit.isUsable(now))
+        assertFalse(visit.isUsable(now - 1.hours))
+        assertFalse(visit.isUsable(now + 1.hours))
+        assertFalse(visit.copy(status = VisitStatus.REVOKED).isUsable(now))
+        assertFalse(visit.copy(status = VisitStatus.ENTERED).isUsable(now))
+    }
+    @Test fun loginValidatesIdentifiersWithoutTreatingCpfAsAuthentication() {
+        assertFailsWith<AppFailure> { validateLogin("bad", "password") }
+        assertFailsWith<AppFailure> { validateLogin("alex@condo.demo", "x") }
+        validateLogin("00000000000", "password")
