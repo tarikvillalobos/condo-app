@@ -38,3 +38,23 @@ fun CamerasScreen(controller: AppController, state: AppState) {
         FilterChips(listOf("Todas", "Portaria", "Garagem", "Lazer"), filter) { controller.filter("cameras", it) }
         val cameras = snapshot.cameras.filter { filter == "Todas" || it.location == filter }
         if (cameras.isEmpty()) EmptyState("Nenhuma câmera neste local", "Selecione outra localização.", Glyph.CAMERA)
+        AdaptiveGrid(cameras, minimum = 220.dp, maximumColumns = 3) { camera ->
+            Panel {
+                if (camera.online) CameraPreview(camera.name)
+                else EmptyState("Offline", "Sinal indisponível", Glyph.CAMERA)
+                Heading(camera.name)
+                SecondaryButton("Visualizar câmera") { controller.navigate(Route.CAMERA_DETAIL, camera.id) }
+            }
+        }
+    }
+    SecondaryButton("Falar com a portaria") { controller.navigate(Route.CONCIERGE) }
+    SecondaryButton("Gravações") {
+        controller.message(if (!snapshot.membership.recordingAccess) "Seu perfil não tem permissão para gravações. Solicite acesso à administração."
+        else "Gravações indisponíveis: a API externa ainda não forneceu catálogo e URLs autorizadas.")
+    }
+}
+@Composable
+private fun CameraPreview(name: String) {
+    Box(Modifier.fillMaxWidth().aspectRatio(1.65f).background(Color(0xFFD1DAD3), Tokens.corner)) {
+        Canvas(Modifier.fillMaxSize()) {
+            drawRect(Color(0xFFA7B8AA), topLeft = Offset(0f, size.height * .62f), size = Size(size.width, size.height * .38f))
