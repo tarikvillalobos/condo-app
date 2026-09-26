@@ -14,7 +14,6 @@ class ResidentFlowTest {
     @Test fun residentCanLoginOpenParcelAndReportCollection() {
         val platform = TestServices()
         val clock = AppClock { Instant.parse("2026-09-26T12:00:00Z") }
-        val controller = AppController(DemoRepository(platform.store, clock, 0), platform, clock)
         compose.setContent { CondoApp(controller) }
         compose.onNodeWithText("Entrar na demonstração").performScrollTo().performClick()
         compose.waitUntil(5000) { controller.state.value.snapshot != null }
