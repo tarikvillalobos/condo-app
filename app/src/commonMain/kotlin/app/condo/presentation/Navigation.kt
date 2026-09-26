@@ -38,6 +38,8 @@ fun BottomNavigation(controller: AppController, state: AppState, compactLabels: 
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(Tokens.xs)) {
                         AppIcon(route.glyph(), description = if (largeFont) route.title else null, tint = if (selected) LocalBrand.current.primary else Tokens.secondary)
+                        if (!largeFont) Text(if (compactLabels && route == Route.PARCELS) "Entregas" else route.title,
+                            style = MaterialTheme.typography.labelSmall,
                             color = if (selected) LocalBrand.current.primary else Tokens.secondary)
                     }
                 }
