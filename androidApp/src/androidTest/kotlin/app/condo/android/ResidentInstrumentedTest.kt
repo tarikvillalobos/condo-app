@@ -35,6 +35,22 @@ class ResidentInstrumentedTest {
                 .edit().clear().commit())
         }
     }
+    private val captureFailure = object : TestWatcher() {
+        override fun failed(error: Throwable, description: Description) {
+            runCatching {
+                val instrumentation = InstrumentationRegistry.getInstrumentation()
+                val directory = requireNotNull(instrumentation.targetContext.getExternalFilesDir("qa"))
+                check(directory.isDirectory || directory.mkdirs())
+                val screenshot = instrumentation.uiAutomation.takeScreenshot() ?: return
+                try {
+                    File(directory, "${description.methodName}.png").outputStream().use {
+                        check(screenshot.compress(Bitmap.CompressFormat.PNG, 100, it))
+                    }
+                } finally { screenshot.recycle() }
+            }
+        }
+    }
+    @get:Rule val rules: RuleChain = RuleChain.outerRule(resetDemo).around(compose).around(captureFailure)
 
     @Test fun credentialsOpenHomeAndCollectionRemainsAwaitingLocker() {
         enter("CPF ou e-mail", "alex@condo.demo")
