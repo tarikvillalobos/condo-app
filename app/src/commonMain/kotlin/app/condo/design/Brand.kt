@@ -16,6 +16,7 @@ data class Brand(
     val privacy: String,
     val terms: String,
     val apiUrls: Map<String, String>,
+    val logo: Glyph = Glyph.BUILDING,
 )
 object Brands {
     val condo = Brand(
