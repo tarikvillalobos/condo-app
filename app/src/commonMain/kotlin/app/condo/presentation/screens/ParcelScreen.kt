@@ -18,3 +18,23 @@ fun ParcelScreen(controller: AppController, state: AppState, expanded: Boolean) 
         Row(horizontalArrangement = Arrangement.spacedBy(Tokens.xl)) {
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(Tokens.lg)) { ParcelList(controller, state) }
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(Tokens.lg)) {
+                ParcelDetail(controller, state, selected ?: snapshot.parcels.firstOrNull())
+            }
+        }
+    } else if (state.destination.route == Route.PARCEL_DETAIL) ParcelDetail(controller, state, selected)
+    else ParcelList(controller, state)
+}
+@Composable
+private fun ParcelList(controller: AppController, state: AppState) {
+    val parcels = state.snapshot!!.parcels
+    val filter = state.filters["parcels"] ?: "Todas"
+    FilterChips(listOf("Todas", "Aguardando", "Histórico"), filter) { controller.filter("parcels", it) }
+    val now = controller.clock.now()
+    val metrics = parcelMetrics(parcels, now - 30.days, now)
+    AdaptiveGrid(listOf("Recebidas nos últimos 30 dias" to "${metrics.received} encomendas",
+        "Tempo médio de retirada" to (metrics.averageMinutes?.let { "${it / 60}h ${it % 60}min" } ?: "Sem retiradas válidas")), minimum = 145.dp, maximumColumns = 2) {
+        Panel(color = Tokens.background) {
+            Muted(it.first)
+            Heading(it.second)
+        }
+    }
