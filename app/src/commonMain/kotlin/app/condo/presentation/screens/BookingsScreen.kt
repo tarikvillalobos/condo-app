@@ -28,7 +28,6 @@ fun BookingsScreen(controller: AppController, state: AppState) {
             Text("${date.month.number.toString().padStart(2, '0')}/${date.year}", Modifier.weight(1f), style = MaterialTheme.typography.titleMedium)
             TextButton({ controller.field("booking.page", if (page == 0) "1" else "0") }) { Text(if (page == 0) "Próximas datas" else "Datas anteriores") }
         }
-        AdaptiveGrid(dates, minimum = 40.dp, maximumColumns = 7) { day ->
             FilterChip(date == day, { controller.field("booking.date", day.toString()) },
                 { Text(day.day.toString()) }, modifier = Modifier.heightIn(min = Tokens.touch))
         }
