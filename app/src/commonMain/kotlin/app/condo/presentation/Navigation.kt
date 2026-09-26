@@ -29,6 +29,7 @@ fun AppState.allows(route: Route) = route.module == null ||
 fun BottomNavigation(controller: AppController, state: AppState) {
     val largeFont = LocalDensity.current.fontScale > 1.3f
     Surface(color = Color.White, shadowElevation = 2.dp) {
+        Column {
         Row(Modifier.fillMaxWidth().padding(vertical = Tokens.sm)) {
             mainDestinations.filter(state::allows).forEach { route ->
                 val selected = state.destination.route == route
