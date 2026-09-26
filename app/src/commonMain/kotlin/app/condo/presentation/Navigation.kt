@@ -58,3 +58,14 @@ fun SideNavigation(controller: AppController, state: AppState, expanded: Boolean
                 Surface({ controller.navigate(route) }, Modifier.fillMaxWidth(), shape = Tokens.controlCorner,
                     color = if (state.destination.route == route) Tokens.tint else Color.Transparent) {
                     if (expanded) Row(Modifier.padding(Tokens.md), horizontalArrangement = Arrangement.spacedBy(Tokens.md)) {
+                        AppIcon(route.glyph())
+                        Text(route.title, style = MaterialTheme.typography.titleSmall)
+                    } else Column(Modifier.padding(Tokens.sm), horizontalAlignment = Alignment.CenterHorizontally) {
+                        AppIcon(route.glyph())
+                        Text(route.title, style = MaterialTheme.typography.labelSmall)
+                    }
+                }
+            }
+        }
+    }
+}
