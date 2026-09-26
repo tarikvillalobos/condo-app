@@ -157,7 +157,6 @@ class AppController(
             repository.logout()
         }
     }
-    private fun runAction(block: suspend () -> Unit) {
         if (state.value.submitting) return
         mutable.update { it.copy(submitting = true, error = null) }
         val version = contextVersion
