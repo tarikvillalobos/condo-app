@@ -18,3 +18,7 @@ class QrRoundTripTest {
         }
         val source = RGBLuminanceSource(side, side, pixels)
         val decoded = MultiFormatReader().decode(BinaryBitmap(HybridBinarizer(source)))
+        assertEquals(payload, decoded.text)
+        assertEquals(BarcodeFormat.QR_CODE, decoded.barcodeFormat)
+    }
+}
