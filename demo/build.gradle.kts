@@ -18,3 +18,9 @@ kotlin {
             implementation(project(":domain"))
             implementation(libs.serialization.json)
         }
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+            implementation(libs.coroutines.test)
+        }
+    }
+}
