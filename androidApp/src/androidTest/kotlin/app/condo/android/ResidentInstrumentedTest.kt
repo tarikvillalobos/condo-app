@@ -79,6 +79,12 @@ class ResidentInstrumentedTest {
             keyboard.hideSoftInputFromWindow(view.windowToken, 0)
             view.clearFocus()
         }
+        compose.waitUntil(5_000) {
+            compose.runOnIdle {
+                val insets = ViewCompat.getRootWindowInsets(compose.activity.window.decorView)
+                insets != null && !insets.isVisible(WindowInsetsCompat.Type.ime())
+            }
+        }
         compose.waitForIdle()
     }
     private fun enter(label: String, value: String) {
