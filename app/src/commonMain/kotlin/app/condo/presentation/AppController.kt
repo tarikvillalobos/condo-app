@@ -120,6 +120,7 @@ class AppController(
         mutable.update { it.copy(session = session) }
         if (navigation == navigationVersion) message("Condomínio vinculado na demonstração.")
     }
+    fun activate(invitation: String, name: String, password: String) = runAction { version, _ ->
         val session = repository.activate(invitation, name, password)
         mutable.update { it.copy(session = session, forms = emptyMap(), destination = Destination()) }
         switchMembership(session.memberships.first().id)
