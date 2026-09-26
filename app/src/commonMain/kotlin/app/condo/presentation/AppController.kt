@@ -56,6 +56,7 @@ class AppController(
             it.copy(destination = it.history.lastOrNull() ?: Destination(), history = it.history.dropLast(1), code = null, showCode = false)
         }
     }
+    fun login(identifier: String, password: String, remember: Boolean) = runAction { version, _ ->
         validateLogin(identifier, password)
         val session = repository.login(identifier.trim(), password)
         platform.vault.clear()
