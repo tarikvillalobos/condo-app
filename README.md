@@ -60,3 +60,23 @@ adb shell am start -n app.condo.resident/app.condo.android.MainActivity
 Para gerar apenas o APK, use `./gradlew :androidApp:assembleDebug`.
 A saída fica em `androidApp/build/outputs/apk/debug/`.
 
+Para iOS:
+
+```sh
+xcodegen generate --spec iosApp/project.yml
+open iosApp/CondoApp.xcodeproj
+```
+
+Selecione o esquema CondoApp e um simulador iPhone/iPad no Xcode e execute.
+O script da target compila e incorpora o framework compartilhado.
+Build sem assinatura para simulador:
+
+```sh
+xcodebuild -project iosApp/CondoApp.xcodeproj -scheme CondoApp \
+  -sdk iphonesimulator -configuration Debug CODE_SIGNING_ALLOWED=NO build
+```
+
+## Testar a demonstração
+
+Use **Entrar na demonstração**, ou `alex@condo.demo` / `Demo1234!`.
+A segunda conta fictícia é `bia@condo.demo`, com a mesma senha.
