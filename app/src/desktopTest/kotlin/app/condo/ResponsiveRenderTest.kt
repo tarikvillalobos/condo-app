@@ -61,7 +61,6 @@ class ResponsiveRenderTest {
         val routes = listOf(Route.HOME, Route.PARCELS, Route.PARCEL_DETAIL, Route.CAMERAS,
             Route.VISITS, Route.PETS, Route.BOOKINGS, Route.PROFILE)
         for (width in listOf(320, 390, 430, 600, 840, 1200)) {
-            for (route in routes) {
                 controller.navigate(route, if (route == Route.PARCEL_DETAIL) "p1" else null)
                 render(route.name.lowercase(), width, 844)
             }
