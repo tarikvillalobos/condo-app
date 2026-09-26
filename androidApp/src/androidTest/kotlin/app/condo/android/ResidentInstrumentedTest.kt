@@ -81,6 +81,7 @@ class ResidentInstrumentedTest {
         compose.activityRule.scenario.recreate()
         field("Nome completo").assertTextContains("Nina Instrumentação")
         field("Motivo ou serviço").assertTextContains("Entrega autorizada")
+        closeSoftKeyboard("Salvar visita")
         compose.onNodeWithText("Salvar visita").performScrollTo().performClick()
         waitForText("Visita salva na demonstração.")
         compose.onNodeWithText("Entendi").performClick()
