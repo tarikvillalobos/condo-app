@@ -110,6 +110,9 @@ class AppController(
     fun dismissCode() = mutable.update { it.copy(showCode = false, code = null) }
     fun saveAccount(name: String, phone: String) = runAction { version, navigation ->
         val account = repository.updateAccount(name, phone)
+        if (version != contextVersion) return@runAction
+        mutable.update { it.copy(session = it.session?.copy(account = account)) }
+        if (navigation == navigationVersion) { message("Dados salvos na demonstração."); back() }
     }
     fun link(invitation: String) = runAction {
         val session = repository.linkMembership(invitation)
