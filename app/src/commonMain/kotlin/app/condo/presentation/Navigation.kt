@@ -58,7 +58,6 @@ fun SideNavigation(controller: AppController, state: AppState, expanded: Boolean
     Surface(Modifier.width(if (expanded) 212.dp else 96.dp).fillMaxHeight(), color = Color.White) {
         Column(Modifier.verticalScroll(rememberScrollState()).padding(Tokens.md), verticalArrangement = Arrangement.spacedBy(Tokens.sm)) {
             if (expanded) {
-                AppIcon(Glyph.BUILDING, modifier = Modifier.size(40.dp))
                 Heading(LocalBrand.current.name)
                 Muted("Seu condomínio, mais perto.")
                 HorizontalDivider(Modifier.padding(vertical = Tokens.lg))
