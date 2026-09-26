@@ -58,3 +58,23 @@ internal class DemoMutation(
                 val vehicle = command.vehicle.copy(id = command.vehicle.id.ifBlank { id("car") })
                 snapshot = snapshot.copy(vehicles = snapshot.vehicles.filterNot { it.id == vehicle.id } + vehicle)
             }
+            is Command.SavePreferences -> snapshot = snapshot.copy(preferences = command.preferences)
+        }
+        snapshot = snapshot.copy(updatedAt = now)
+        return Outcome(snapshot, code)
+    }
+    fun document() = previous.copy(
+        rows = snapshot.toRows(), events = events, operations = operations,
+        codes = codes.map { it.toDto() },
+    )
+    fun missing(): Nothing = throw AppFailure(FailureKind.DENIED, "Registro não encontrado neste contexto.")
+}
+
+internal fun requireModule(member: Membership, command: Command) {
+    val module = when (command) {
+        is Command.ReportCollected, is Command.IssuePickupCode, is Command.ApplyLockerEvent -> Module.PARCELS
+        is Command.SaveVisit, is Command.SetVisitStatus, is Command.IssueVisitCode,
+        is Command.ConsumeVisitCode -> Module.VISITS
+        is Command.SavePet, is Command.ReportPet -> Module.PETS
+        is Command.Reserve, is Command.CancelBooking -> Module.BOOKINGS
+        is Command.CreateRequest -> Module.SERVICES
