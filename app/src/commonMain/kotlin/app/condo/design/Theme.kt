@@ -58,3 +58,16 @@ fun CondoTheme(brand: Brand = Brands.current, content: @Composable () -> Unit) {
     CompositionLocalProvider(LocalBrand provides brand) {
         MaterialTheme(
             colorScheme = lightColorScheme(
+                primary = brand.primary, onPrimary = Color.White,
+                primaryContainer = Tokens.tint, onPrimaryContainer = brand.dark,
+                background = Tokens.background, onBackground = Tokens.text,
+                surface = Color.White, onSurface = Tokens.text,
+                surfaceVariant = Tokens.background, onSurfaceVariant = Tokens.secondary,
+                outline = Tokens.border, error = Tokens.danger,
+            ),
+            typography = typography,
+            shapes = Shapes(medium = Tokens.corner, large = Tokens.largeCorner),
+            content = content,
+        )
+    }
+}
