@@ -43,7 +43,6 @@ Os assets são obtidos automaticamente na primeira execução.
 
 ## Executar
 
-## Status
 
 🚧 This project is currently under development.
 
