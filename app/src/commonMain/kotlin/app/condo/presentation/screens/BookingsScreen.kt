@@ -58,3 +58,15 @@ fun BookingsScreen(controller: AppController, state: AppState) {
         else it.cancelled || it.endsAt <= controller.clock.now()
     }
     if (bookings.isEmpty()) EmptyState("Nenhuma reserva neste período", "Escolha uma área e um horário para começar.", Glyph.CALENDAR)
+    bookings.forEach { booking ->
+        Panel {
+            Heading(snapshot.facilities.find { it.id == booking.facilityId }?.name ?: "Área comum")
+            Text("${booking.startsAt.fullLabel()} – ${booking.endsAt.timeLabel()}")
+            StatusChip(if (booking.cancelled) "Cancelada" else "Confirmada na demonstração")
+            if (!booking.cancelled && booking.startsAt > controller.clock.now()) {
+                SecondaryButton("Cancelar reserva") { controller.execute(Command.CancelBooking(booking.id), "Reserva cancelada na demonstração.") }
+            }
+        }
+    }
+    SecondaryButton("Ver agenda de eventos") { controller.navigate(Route.EVENTS) }
+}
