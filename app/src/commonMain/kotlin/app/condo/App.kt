@@ -36,6 +36,9 @@ fun CondoApp(controller: AppController) {
                             if (state.session != null) AppHeader(controller, state)
                             if (state.loading) LinearProgressIndicator(Modifier.fillMaxWidth())
                             val scroll = key(state.destination) { rememberScrollState() }
+                            LaunchedEffect(state.session?.account?.id, state.snapshot?.membership?.id, state.destination) {
+                                scroll.scrollTo(0)
+                            }
                             Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.TopCenter) {
                                 Column(
                                     Modifier.widthIn(max = Tokens.maxContent).fillMaxWidth()
