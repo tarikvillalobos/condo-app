@@ -82,6 +82,7 @@ final class CondoAppUITests: XCTestCase {
     }
 
     private func capture(_ name: String) {
+        let attachment = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
         attachment.name = name
         attachment.lifetime = .keepAlways
         add(attachment)
