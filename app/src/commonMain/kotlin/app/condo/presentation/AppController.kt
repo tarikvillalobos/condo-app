@@ -27,12 +27,6 @@ class AppController(
     private val actionJobs = mutableSetOf<Job>()
     private val vaultMutex = Mutex()
     init {
-        platform.vault.read()?.let { reference ->
-            runAction {
-                val session = repository.restore(reference)
-                mutable.update { it.copy(session = session) }
-                switchMembership(session.memberships.first().id)
-            }
         }
     }
     fun field(key: String, value: String) = mutable.update { it.copy(forms = it.forms + (key to value)) }
