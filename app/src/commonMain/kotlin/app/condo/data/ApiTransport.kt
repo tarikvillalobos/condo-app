@@ -38,3 +38,23 @@ class ApiTransport(engine: HttpClientEngine, private val config: ApiConfiguratio
     ): ApiResponseDto {
         require(contractPath.startsWith('/') && !contractPath.startsWith("//"))
         return try {
+            val response = client.request(config.baseUrl.trimEnd('/') + contractPath) {
+                method = contractMethod
+                contractHeaders.forEach { (name, value) -> header(name, value) }
+                contractBody?.let { setBody(it) }
+            }
+            val dto = ApiResponseDto(response.status.value, response.bodyAsText())
+            when (dto.status) {
+                in 200..299 -> dto
+                401 -> throw AppFailure(FailureKind.EXPIRED, "Sessão expirada. Entre novamente.")
+                403 -> throw AppFailure(FailureKind.DENIED, "Você não tem permissão para esta ação.")
+                409 -> throw AppFailure(FailureKind.CONFLICT, "Os dados mudaram. Atualize e tente novamente.")
+                else -> throw AppFailure(FailureKind.UNAVAILABLE, "Serviço indisponível (HTTP ${dto.status}).")
+            }
+        } catch (cancelled: CancellationException) {
+            throw cancelled
+        } catch (failure: AppFailure) {
+            throw failure
+        } catch (_: Exception) {
+            throw AppFailure(FailureKind.NETWORK, "Não foi possível conectar ao serviço.")
+        }
