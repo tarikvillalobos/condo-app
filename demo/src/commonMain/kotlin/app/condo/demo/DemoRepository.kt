@@ -118,3 +118,14 @@ class DemoRepository(
         available()
         requireInput(identifier.isNotBlank(), "Informe seu CPF ou e-mail.")
         return "Demonstração: nenhum e-mail foi enviado. Use Demo1234! ao reiniciar o app. Recuperação real depende da API."
+    }
+    override suspend fun changePassword(current: String, replacement: String): String {
+        available()
+        requireInput(current == password, "Senha atual incorreta.")
+        validateLogin("alex@condo.demo", replacement)
+        password = replacement
+        return "Senha alterada apenas nesta sessão demonstrativa; ao reiniciar, use Demo1234!."
+    }
+    override suspend fun logout() { session = null }
+    private val linkedMembership = Membership("bosque", "Morada do Bosque", "Casa 12")
+}
