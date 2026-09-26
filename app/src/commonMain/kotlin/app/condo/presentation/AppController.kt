@@ -74,6 +74,7 @@ class AppController(
     fun switchMembership(id: String) {
         if (state.value.session?.memberships?.none { it.id == id } != false) return
         contextVersion++
+        navigationVersion++
         loadingJob?.cancel()
         activeId = id
         mutable.update { it.copy(snapshot = null, code = null, showCode = false, forms = emptyMap(),
