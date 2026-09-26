@@ -37,6 +37,7 @@ kotlin {
     jvmToolchain(21)
     android {
         namespace = "app.condo.shared"
+        compileSdk = 37
         minSdk = 26
         androidResources.enable = true
     }
