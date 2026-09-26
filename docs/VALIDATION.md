@@ -38,3 +38,23 @@ suítes desktop. Os relatórios são artefatos locais, sobrescritos em novas exe
 Logs locais desta rodada: `/tmp/condo-final-tests.log` (desktop e Android celular),
 `/tmp/condo-ios-iphone-v4.log` (XCTest), `/tmp/condo-production.log` e
 `/tmp/condo-viva-final.log` e `/tmp/condo-ios-ipad.log`. Capturas nativas foram
+preservadas em `.generated/validation/ios-iphone/` e `ios-ipad/`.
+Esses artefatos locais e logs temporários não são versionados.
+
+## Cobertura funcional
+
+As regressões do controller verificam troca de condomínio e limpeza de estado,
+invalidação de códigos após falha, logout durante autenticação atrasada,
+logout consecutivo seguido de novo login, navegação durante ações, nova reserva
+após cancelamento e ausência de duplicação de veículo após navegação.
+As operações de cofre usam dispatcher injetável nos testes; isso não valida
+interações reais com todos os cofres nativos.
+
+O transporte HTTP usa respostas controladas para validar cancelamento,
+classificação de sessão expirada/acesso negado, rejeição de conexão sem TLS
+e tratamento de corpo inválido. Não existe contrato externo validado nesses
+testes. `UnavailableRepositoryTest` verifica a falha explícita da integração.
+
+O teste de QR codifica e decodifica o payload demonstrativo. Os testes de UI
+desktop cobrem entrada por credenciais com Tab/Enter e o fluxo de encomenda
+com retirada informada pelo morador, sem afirmar retirada física.
