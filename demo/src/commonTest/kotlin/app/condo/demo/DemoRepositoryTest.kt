@@ -58,3 +58,23 @@ class DemoRepositoryTest {
         assertFailsWith<AppFailure> { r.execute("aurora", command.copy(endsAt = now + 4.hours)) }
         val id = r.load("aurora").bookings.single().id
         r.execute("aurora", Command.CancelBooking(id))
+        r.execute("aurora", command.copy(operationId = "new"))
+        assertEquals(1, r.load("aurora").bookings.count { !it.cancelled })
+    }
+    @Test fun expiredRevokedAndConsumedVisitCodesFail() = runTest {
+        val r = repo()
+        r.signIn()
+        val code = r.execute("aurora", Command.IssueVisitCode("v2")).code!!
+        r.execute("aurora", Command.ConsumeVisitCode(code.payload))
+        assertFailsWith<AppFailure> { r.execute("aurora", Command.ConsumeVisitCode(code.payload)) }
+        val visit = Visit("", "Teste", "Amigo", false, now, now + 1.hours)
+        val created = r.execute("aurora", Command.SaveVisit(visit)).snapshot.visits.last()
+        val revoked = r.execute("aurora", Command.IssueVisitCode(created.id)).code!!
+        r.execute("aurora", Command.SetVisitStatus(created.id, VisitStatus.REVOKED))
+        assertFailsWith<AppFailure> { r.execute("aurora", Command.ConsumeVisitCode(revoked.payload)) }
+        val another = r.execute("aurora", Command.SaveVisit(visit)).snapshot.visits.last()
+        val expired = r.execute("aurora", Command.IssueVisitCode(another.id)).code!!
+        now += 2.hours
+        assertFailsWith<AppFailure> { r.execute("aurora", Command.ConsumeVisitCode(expired.payload)) }
+    }
+    @Test fun lockerEventsAreIdempotentAndRejectOldEvents() = runTest {
