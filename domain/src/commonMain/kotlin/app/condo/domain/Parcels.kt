@@ -18,3 +18,23 @@ data class ParcelMetrics(val received: Int, val pending: Int, val averageMinutes
 fun parcelMetrics(parcels: List<Parcel>, since: Instant, until: Instant): ParcelMetrics {
     val period = parcels.filter { it.receivedAt >= since && it.receivedAt < until }
     val durations = period.mapNotNull { parcel ->
+        parcel.collectedAt?.takeIf {
+            parcel.status == ParcelStatus.COLLECTED && it >= parcel.receivedAt && it < until
+        }?.let { (it - parcel.receivedAt).inWholeMinutes }
+    }
+    return ParcelMetrics(
+        period.size,
+        parcels.count { it.status != ParcelStatus.COLLECTED },
+        durations.takeIf { it.isNotEmpty() }?.average()?.toLong(),
+    )
+}
+data class AccessCode(
+    val ownerId: String,
+    val payload: String,
+    val numericCode: String,
+    val expiresAt: Instant,
+    val consumed: Boolean = false,
+)
+data class LockerEvent(
+    val eventId: String,
+    val parcelId: String,
