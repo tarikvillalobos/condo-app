@@ -58,3 +58,21 @@ private class AndroidVault(private val store: LocalStore) : SessionVault {
         return KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore").apply {
             init(KeyGenParameterSpec.Builder(alias, KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
                 .setBlockModes(KeyProperties.BLOCK_MODE_GCM).setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE).build())
+        }.generateKey()
+    }
+    override fun read(): String? = runCatching {
+        val parts = store.read("session.encrypted")?.split(':') ?: return null
+        val cipher = Cipher.getInstance("AES/GCM/NoPadding")
+        cipher.init(Cipher.DECRYPT_MODE, key(), GCMParameterSpec(128, Base64.decode(parts[0], Base64.NO_WRAP)))
+        String(cipher.doFinal(Base64.decode(parts[1], Base64.NO_WRAP)))
+    }.getOrNull()
+    override fun write(value: String): Boolean = runCatching {
+        val cipher = Cipher.getInstance("AES/GCM/NoPadding")
+        cipher.init(Cipher.ENCRYPT_MODE, key())
+        val iv = Base64.encodeToString(cipher.iv, Base64.NO_WRAP)
+        val ciphertext = Base64.encodeToString(cipher.doFinal(value.toByteArray()), Base64.NO_WRAP)
+        store.write("session.encrypted", "$iv:$ciphertext")
+        true
+    }.getOrDefault(false)
+    override fun clear() = store.remove("session.encrypted")
+}
