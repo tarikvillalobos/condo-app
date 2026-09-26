@@ -78,3 +78,10 @@ internal fun requireModule(member: Membership, command: Command) {
         is Command.SavePet, is Command.ReportPet -> Module.PETS
         is Command.Reserve, is Command.CancelBooking -> Module.BOOKINGS
         is Command.CreateRequest -> Module.SERVICES
+        is Command.ReadNotice -> Module.NOTICES
+        else -> null
+    }
+    if (module != null && module !in member.modules) {
+        throw AppFailure(FailureKind.DENIED, "Este módulo não está disponível neste condomínio.")
+    }
+}
