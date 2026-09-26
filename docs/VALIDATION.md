@@ -194,7 +194,6 @@ Windows, testes desktop Linux, builds Android e frameworks/host Apple foram apro
 
 ## Próximas verificações
 
-- Validar plataformas, dispositivos físicos e distribuição assinada descritos abaixo.
 - Integrar e homologar os fluxos reais após disponibilização do contrato externo.
 
 ## Limites conhecidos
