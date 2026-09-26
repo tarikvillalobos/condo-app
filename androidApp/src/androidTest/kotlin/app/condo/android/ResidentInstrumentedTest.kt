@@ -55,6 +55,7 @@ class ResidentInstrumentedTest {
     @Test fun credentialsOpenHomeAndCollectionRemainsAwaitingLocker() {
         enter("CPF ou e-mail", "alex@condo.demo")
         enter("Senha", "Demo1234!")
+        closeSoftKeyboard("Entrar")
         field("CPF ou e-mail").assert(SemanticsMatcher.expectValue(
             SemanticsProperties.InputText, AnnotatedString("alex@condo.demo")))
         field("Senha").assert(SemanticsMatcher.expectValue(
