@@ -99,4 +99,24 @@ class DemoRepositoryTest {
         r.scenario(DemoScenario.SESSION_EXPIRED)
         assertFailsWith<AppFailure> { r.load("aurora") }
     }
+    @Test fun pickupExpiryConsumptionAndDepositDeduplication() = runTest {
+        val r = repo()
+        r.signIn()
+        val expired = r.execute("aurora", Command.IssuePickupCode("p1")).code!!
+        now += 1.hours
+        assertFailsWith<AppFailure> { r.execute("aurora", Command.ConsumePickupCode(expired.payload)) }
+        val renewed = r.execute("aurora", Command.IssuePickupCode("p1")).code!!
+        r.execute("aurora", Command.ConsumePickupCode(renewed.payload))
+        assertFailsWith<AppFailure> { r.execute("aurora", Command.ConsumePickupCode(renewed.payload)) }
+        val deposit = Command.DepositParcel("deposit1", Parcel(
+            "new", "Entrega fictícia", null, "Portaria", "09", now, now + 24.hours,
+        ))
+        r.execute("aurora", deposit)
+        r.execute("aurora", deposit)
+        assertEquals(1, r.load("aurora").parcels.count { it.id == "new" })
+    }
+    @Test fun linkAndAccountChangesSurviveRestart() = runTest {
+        val r = repo()
+        r.signIn()
+        r.linkMembership("VINCULAR-DEMO")
 }
