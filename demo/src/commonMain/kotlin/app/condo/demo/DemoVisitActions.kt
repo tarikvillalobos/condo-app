@@ -38,3 +38,7 @@ internal fun DemoMutation.consumeVisit(payload: String) {
     val visit = snapshot.visits.find { "visit:${it.id}" == code.ownerId } ?: missing()
     requireInput(visit.isUsable(now), "Convite ainda não válido, revogado ou utilizado.")
     snapshot = snapshot.copy(visits = snapshot.visits.map {
+        if (it.id == visit.id) it.copy(status = VisitStatus.ENTERED) else it
+    })
+    codes.replaceAllMatching(code.ownerId) { it.copy(consumed = true) }
+}
