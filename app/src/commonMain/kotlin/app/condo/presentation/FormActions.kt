@@ -71,5 +71,9 @@ fun AppController.submitVehicle() {
 }
 fun AppController.reserve(facility: String, date: String, hour: Int) = parseAction {
     val start = LocalDate.parse(date).atTime(hour, 0).toInstant(condominiumZone)
+    val attempt = state.value.snapshot?.bookings?.count {
+        it.facilityId == facility && it.startsAt == start && it.cancelled
+    } ?: 0
+    val operation = "booking:$facility:$date:$hour:$attempt"
     execute(Command.Reserve(facility, start, start + 4.hours, operation), "Reserva confirmada apenas na demonstração.")
 }
