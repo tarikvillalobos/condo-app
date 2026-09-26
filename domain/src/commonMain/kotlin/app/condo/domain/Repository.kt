@@ -38,3 +38,15 @@ interface CondoRepository {
     suspend fun linkMembership(invitation: String): Session
     suspend fun activate(invitation: String, name: String, password: String): Session
     suspend fun recover(identifier: String): String
+    suspend fun changePassword(current: String, replacement: String): String
+    suspend fun logout()
+    fun scenario(value: DemoScenario)
+}
+fun requireInput(valid: Boolean, message: String) {
+    if (!valid) throw AppFailure(FailureKind.VALIDATION, message)
+}
+fun validateLogin(identifier: String, password: String) {
+    val cpf = identifier.filter(Char::isDigit)
+    requireInput(identifier.contains('@') || cpf.length == 11, "Informe CPF ou e-mail válido.")
+    requireInput(password.length >= 8, "A senha deve ter pelo menos 8 caracteres.")
+}
