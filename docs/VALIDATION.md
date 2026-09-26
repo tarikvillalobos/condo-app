@@ -205,6 +205,9 @@ Windows, testes desktop Linux, builds Android e frameworks/host Apple foram apro
 - As permissões de Computer Use não estavam disponíveis; não houve inspeção por esse recurso.
 - Biometria real, push remoto, vídeo/câmeras e operações de portaria/locker aguardam integração.
 - Autenticação, autorização, expiração e cache de dados reais dependem do contrato da API externa.
+- Assinaturas de distribuição, notarização, lojas e ambientes de homologação não foram validados.
+- O build `iphoneos` assinado para desenvolvimento passou com `DEVELOPMENT_TEAM=XH7GJF24HY`, `CODE_SIGN_STYLE=Automatic` e `CODE_SIGN_IDENTITY=Apple Development`; instalação e inicialização no iPhone físico foram confirmadas por `devicectl`.
+- O perfil de desenvolvimento curinga do SmartLocker, válido para este aparelho e certificado local, foi reutilizado apenas no host. O perfil não foi versionado; a identidade ad-hoc de simulador não assina apps para aparelho físico.
 
 Nenhum APK, `.app`, framework, screenshot ou outro binário faz parte desta
 documentação versionada. Consulte [o progresso](PROGRESS.md) e
