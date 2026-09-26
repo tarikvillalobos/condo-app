@@ -5,7 +5,6 @@ Kotlin Multiplatform e Compose Multiplatform para Android, iOS e desktop.
 
 ## Status real
 
-## Features
 
 Planned features include:
 
