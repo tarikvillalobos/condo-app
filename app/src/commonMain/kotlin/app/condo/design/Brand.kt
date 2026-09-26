@@ -18,3 +18,18 @@ data class Brand(
     val apiUrls: Map<String, String>,
 )
 object Brands {
+    val condo = Brand(
+        "condo", "Condo App", Color(0xFF007A5E), Color(0xFF083933), "C",
+        Module.entries.toSet(), "suporte@example.invalid",
+        "Conectando você ao seu condomínio.",
+        "Demonstração com dados fictícios armazenados neste dispositivo. Política de produção pendente do cliente.",
+        "Ambiente de demonstração, sem operações reais de acesso ou cobrança.", emptyMap(),
+    )
+    val viva = Brand(
+        "viva", "Viva Morar", Color(0xFF375CB3), Color(0xFF183466), "V",
+        Module.entries.toSet() - Module.CAMERAS, "ajuda@example.invalid",
+        "Mais vida em comunidade.",
+        condo.privacy, condo.terms, emptyMap(),
+    )
+    val current: Brand get() = if (BRAND_ID == "viva") viva else condo
+}
