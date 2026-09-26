@@ -38,3 +38,6 @@ data class AccessCode(
 data class LockerEvent(
     val eventId: String,
     val parcelId: String,
+    val occurredAt: Instant,
+    val collected: Boolean,
+)
