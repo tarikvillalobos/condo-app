@@ -96,3 +96,5 @@ compose.desktop {
         }
     }
 }
+
+compose.resources { packageOfResClass = "app.condo.resources" }
