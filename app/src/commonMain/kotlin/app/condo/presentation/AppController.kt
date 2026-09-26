@@ -167,9 +167,6 @@ class AppController(
         if (state.value.submitting) return
         mutable.update { it.copy(submitting = true, error = null) }
         val version = contextVersion
-        scope.launch {
-            try { block() } catch (cancelled: CancellationException) { throw cancelled
-            } catch (failure: Exception) { if (version == contextVersion) handle(failure)
             } finally { if (version == contextVersion) mutable.update { it.copy(submitting = false) } }
         }
     }
