@@ -50,6 +50,8 @@ fun AuthScreen(controller: AppController, state: AppState) {
                     SecondaryButton("Primeiro acesso? Ative seu cadastro") { controller.navigate(Route.ACTIVATE) }
                     if (controller.repository.isDemo) Panel(color = Tokens.tint) {
                         Heading("Explore a demonstração")
+                        Text("alex@condo.demo")
+                        Text("Senha: Demo1234!")
                         Muted("Dados fictícios. Sem conexão com condomínios, portarias ou equipamentos reais.")
                         TextButton({ controller.login("alex@condo.demo", "Demo1234!", false) }) { Text("Entrar na demonstração") }
                     }
