@@ -158,3 +158,23 @@ O framework `iosArm64` release também compilou, em 4min04s; isso não comprova
 execução em hardware real. O mesmo XCTest passou no iPad Pro 11 (M5), iOS 26.2.
 Capturas de início e detalhes foram revisadas nos dois simuladores: iPhone
 1206 × 2622 pixels; iPad 1668 × 2420 pixels. Uma captura do iPad inclui um
+banner do sistema Apple Intelligence; isso não faz parte da interface do app.
+Não houve homologação em dispositivo iOS físico,
+TestFlight ou distribuição assinada. O Xcode local é 26.2; a diferença para a
+referência de compatibilidade 26.4 está registrada em [arquitetura](ARCHITECTURE.md).
+
+## Marca Viva e ambiente de produção
+
+```sh
+./gradlew -Pbrand=viva :app:desktopTest --tests app.condo.ResponsiveRenderTest :androidApp:assembleDebug
+./gradlew -PappEnvironment=production :app:desktopTest :androidApp:assembleRelease
+```
+
+Os dois comandos foram aprovados. Viva gerou APK e 58 capturas; produção gerou
+APK release e aprovou os sete testes aplicáveis. A inspeção do DEX confirmou
+ausência das classes do módulo demo e presença do repositório indisponível.
+O ambiente de produção continua falhando explicitamente enquanto faltar a API;
+esse resultado confirma isolamento da demonstração, não integração real.
+As verificações de CI configuradas só contam como evidência após execução com
+resultado disponível; a existência do workflow não prova aprovação.
+
