@@ -1,6 +1,6 @@
 # Validação executada e limitações
 
-Registro de 26/09/2026, no ambiente local macOS. O aplicativo permanece em
+Registro de 26/09/2026, no macOS local e na CI. O aplicativo permanece em
 desenvolvimento: a demonstração é local e nenhuma operação foi homologada com
 API, condomínio, portaria ou locker reais. Compilar ou aprovar testes locais
 não equivale a liberar uma versão para produção.
@@ -25,6 +25,7 @@ não equivale a liberar uma versão para produção.
 | UI iPad | 1 XCTest aprovado e capturas revisadas | iPad Pro 11 (M5), iOS 26.2: login, encomenda e troca de condomínio. |
 | Framework iOS físico | Release compilado | Target `iosArm64`; execução física e assinatura pendentes. |
 | Frameworks Apple na CI | Debug simulador e release físico aprovados | Runner macOS ARM64; resultado dos frameworks é separado do host Swift. |
+| Host Swift na CI | `xcodebuild` aprovado | Simulador ARM64; distribuição assinada e execução física continuam pendentes. |
 | Produção | 7 testes e Android release aprovados | Inspeção do DEX do APK confirma ausência de `Lapp/condo/demo` e presença de `UnavailableRepository`. |
 | Marca Viva | APK debug e teste de renderização aprovados | 58 PNGs; navegação para câmeras bloqueada; início azul e sem módulo de câmeras revisado. |
 
@@ -185,8 +186,8 @@ O ambiente de produção continua falhando explicitamente enquanto faltar a API;
 esse resultado confirma isolamento da demonstração, não integração real.
 As verificações de CI configuradas só contam como evidência após execução com
 resultado disponível; a existência do workflow não prova aprovação.
-Windows, testes desktop Linux e builds Android foram aprovados no
-[run 36241415466](https://github.com/tarikvillalobos/condo-app/actions/runs/36241415466).
+Windows, testes desktop Linux, builds Android e frameworks/host Apple foram aprovados no
+[run 36241859209](https://github.com/tarikvillalobos/condo-app/actions/runs/36241859209).
 
 ## Próximas verificações
 
