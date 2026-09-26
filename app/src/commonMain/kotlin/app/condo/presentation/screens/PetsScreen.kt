@@ -32,6 +32,7 @@ fun PetsScreen(controller: AppController, state: AppState) {
         Route.PET_DETAIL -> {
             val pet = snapshot.pets.find { it.id == state.destination.id }
             if (pet != null) {
+                PetCard(pet, controller.clock.now())
                 Panel {
                     Text("Nascimento: ${pet.birthDate}")
                     Text("Microchip: ${pet.microchip.ifBlank { "Não informado" }}")
