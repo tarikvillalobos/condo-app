@@ -185,6 +185,8 @@ O ambiente de produção continua falhando explicitamente enquanto faltar a API;
 esse resultado confirma isolamento da demonstração, não integração real.
 As verificações de CI configuradas só contam como evidência após execução com
 resultado disponível; a existência do workflow não prova aprovação.
+Windows, testes desktop Linux e builds Android foram aprovados no
+[run 36241415466](https://github.com/tarikvillalobos/condo-app/actions/runs/36241415466).
 
 ## Próximas verificações
 
