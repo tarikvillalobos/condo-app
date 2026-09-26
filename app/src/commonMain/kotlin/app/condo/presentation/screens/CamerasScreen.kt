@@ -58,3 +58,17 @@ private fun CameraPreview(name: String) {
     Box(Modifier.fillMaxWidth().aspectRatio(1.65f).background(Color(0xFFD1DAD3), Tokens.corner)) {
         Canvas(Modifier.fillMaxSize()) {
             drawRect(Color(0xFFA7B8AA), topLeft = Offset(0f, size.height * .62f), size = Size(size.width, size.height * .38f))
+            drawRect(Color(0xFFDBDFDA), topLeft = Offset(size.width * .08f, size.height * .12f), size = Size(size.width * .6f, size.height * .5f))
+            repeat(5) { index ->
+                val x = size.width * (.1f + index * .115f)
+                drawRect(Color(0xFF627A70), topLeft = Offset(x, size.height * .18f), size = Size(size.width * .08f, size.height * .36f))
+            }
+            drawCircle(Color(0xFF446454), size.width * .12f, Offset(size.width * .83f, size.height * .42f))
+            drawLine(Color(0xFF6F7464), Offset(size.width * .83f, size.height * .45f), Offset(size.width * .83f, size.height * .8f), 7f)
+        }
+        Surface(color = Color(0xCC083933), modifier = Modifier.align(Alignment.TopStart).padding(Tokens.sm), shape = Tokens.controlCorner) {
+            Text("SIMULAÇÃO", Modifier.padding(Tokens.sm), color = Color.White, style = MaterialTheme.typography.labelSmall)
+        }
+        Text(name, Modifier.align(Alignment.BottomStart).padding(Tokens.md), color = Color(0xFF10201C), style = MaterialTheme.typography.titleSmall)
+    }
+}
