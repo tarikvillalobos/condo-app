@@ -45,6 +45,10 @@ Os assets são obtidos automaticamente na primeira execução.
 
 Desktop (macOS, Windows e Linux):
 
+```sh
+./gradlew :app:run
+# Windows: gradlew.bat :app:run
+```
 
 ## Getting Started
 
