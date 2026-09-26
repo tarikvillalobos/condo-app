@@ -18,3 +18,23 @@ class IosVault(private val service: String) : SessionVault {
             CFDictionarySetValue(dictionary, kSecAttrAccount, account)
             return block(dictionary)
         } finally {
+            CFRelease(account)
+            CFRelease(serviceString)
+            CFRelease(dictionary)
+        }
+    }
+    override fun read(): String? = query { query ->
+        CFDictionarySetValue(query, kSecReturnData, kCFBooleanTrue)
+        CFDictionarySetValue(query, kSecMatchLimit, kSecMatchLimitOne)
+        memScoped {
+            val result = alloc<CFTypeRefVar>()
+            if (SecItemCopyMatching(query, result.ptr) != errSecSuccess) return@memScoped null
+            val data = result.value?.reinterpret<__CFData>() ?: return@memScoped null
+            try {
+                CFDataGetBytePtr(data)?.readBytes(CFDataGetLength(data).toInt())?.decodeToString()
+            } finally { CFRelease(data) }
+        }
+    }
+    override fun write(value: String): Boolean = query { query ->
+        SecItemDelete(query)
+        val bytes = value.encodeToByteArray()
