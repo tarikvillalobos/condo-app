@@ -116,7 +116,6 @@ class AppController(
     }
     fun link(invitation: String) = runAction { version, navigation ->
         val session = repository.linkMembership(invitation)
-        mutable.update { it.copy(session = session, message = "Condomínio vinculado na demonstração.") }
     }
     fun activate(invitation: String, name: String, password: String) = runAction {
         val session = repository.activate(invitation, name, password)
