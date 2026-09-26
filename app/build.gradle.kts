@@ -18,3 +18,23 @@ val generateConfig by tasks.registering {
     outputs.dir(generatedSource)
     doLast {
         val file = generatedSource.get().file("app/condo/BuildConfig.kt").asFile
+        file.parentFile.mkdirs()
+        val factory = if (environment == "demo") {
+            "app.condo.demo.DemoRepository(storage, clock)"
+        } else {
+            "app.condo.data.UnavailableRepository()"
+        }
+        file.writeText("""
+            package app.condo
+            import app.condo.domain.*
+            const val APP_ENVIRONMENT = "$environment"
+            const val BRAND_ID = "$brandName"
+            fun createRepository(storage: LocalStore, clock: AppClock): CondoRepository = $factory
+        """.trimIndent())
+    }
+}
+kotlin {
+    jvmToolchain(21)
+    android {
+        namespace = "app.condo.shared"
+        compileSdk = 36
