@@ -38,3 +38,23 @@ fun AppController.submitVisit() = parseAction {
 }
 fun AppController.beginPet(pet: Pet? = null) {
     mapOf(
+        "pet.name" to pet?.name.orEmpty(), "pet.species" to (pet?.species ?: "Cão"),
+        "pet.breed" to pet?.breed.orEmpty(), "pet.birth" to (pet?.birthDate ?: "2024-01-01"),
+        "pet.size" to (pet?.size ?: "Pequeno"), "pet.weight" to pet?.weight.orEmpty(),
+        "pet.microchip" to pet?.microchip.orEmpty(), "pet.vaccine" to pet?.vaccine.orEmpty(),
+        "pet.due" to (pet?.vaccineDue ?: clock.now().formDate()),
+    ).forEach { (key, value) -> field(key, value) }
+    navigate(Route.PET_FORM, pet?.id)
+}
+fun AppController.submitPet() = parseAction {
+    val birth = LocalDate.parse(formValue("pet.birth"))
+    requireInput(birth <= clock.now().toLocalDateTime(condominiumZone).date, "Nascimento não pode ser no futuro.")
+    LocalDate.parse(formValue("pet.due"))
+    val pet = Pet(state.value.destination.id.orEmpty(), formValue("pet.name"), formValue("pet.species"),
+        formValue("pet.breed"), formValue("pet.birth"), formValue("pet.size"),
+        formValue("pet.weight").replace(',', '.'), formValue("pet.microchip"), formValue("pet.vaccine"), formValue("pet.due"))
+    execute(Command.SavePet(pet), "Pet salvo na demonstração.") { back() }
+}
+fun AppController.submitRequest() = execute(Command.CreateRequest(
+    formValue("request.category").ifBlank { "Solicitação" },
+    formValue("request.subject"), formValue("request.body"),
