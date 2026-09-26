@@ -22,7 +22,6 @@ class MainActivity : ComponentActivity() {
             val platform = AndroidServices(applicationContext)
             AppController(createRepository(platform.store, SystemAppClock), platform)
         }
-        setContent { CondoApp(controller) }
     }
     override fun onRetainCustomNonConfigurationInstance(): Any = controller
     override fun onDestroy() {
