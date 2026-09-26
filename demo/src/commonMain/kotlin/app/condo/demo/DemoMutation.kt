@@ -38,3 +38,23 @@ internal class DemoMutation(
             is Command.CancelBooking -> {
                 val booking = snapshot.bookings.find { it.id == command.bookingId } ?: missing()
                 requireInput(booking.startsAt > now, "Uma reserva passada não pode ser cancelada.")
+                snapshot = snapshot.copy(bookings = snapshot.bookings.map {
+                    if (it.id == booking.id) it.copy(cancelled = true) else it
+                })
+            }
+            is Command.ReadNotice -> snapshot = snapshot.copy(notices = snapshot.notices.map {
+                if (it.id == command.noticeId) it.copy(read = true) else it
+            })
+            is Command.CreateRequest -> {
+                requireInput(command.subject.length in 3..120, "Informe um assunto de 3 a 120 caracteres.")
+                requireInput(command.body.length in 8..3000, "Descreva a solicitação (8 a 3000 caracteres).")
+                snapshot = snapshot.copy(requests = snapshot.requests + ServiceRequest(
+                    id("request"), command.category, command.subject, command.body, now,
+                ))
+            }
+            is Command.SaveVehicle -> {
+                requireInput(command.vehicle.model.isNotBlank(), "Informe o modelo do veículo.")
+                requireInput(command.vehicle.plate.length in 6..8, "Informe uma placa válida.")
+                val vehicle = command.vehicle.copy(id = command.vehicle.id.ifBlank { id("car") })
+                snapshot = snapshot.copy(vehicles = snapshot.vehicles.filterNot { it.id == vehicle.id } + vehicle)
+            }
