@@ -98,3 +98,23 @@ class DemoRepository(
     override suspend fun linkMembership(invitation: String): Session = mutex.withLock {
         available()
         requireInput(invitation == "VINCULAR-DEMO", "Convite demonstrativo inválido ou expirado.")
+        val current = session ?: throw AppFailure(FailureKind.EXPIRED, "Entre novamente.")
+        requireInput(current.memberships.none { it.id == linkedMembership.id }, "Condomínio já vinculado.")
+        store.write("demo.link.${current.account.id}", "yes")
+        createSession(current.account.id)
+    }
+    override suspend fun activate(invitation: String, name: String, password: String): Session {
+        available()
+        requireInput(invitation == "PRIMEIRO-DEMO", "Convite de primeiro acesso inválido.")
+        requireInput(store.read("demo.activated") == null, "Convite demonstrativo já utilizado.")
+        validateLogin("alex@condo.demo", password)
+        requireInput(name.trim().length >= 2, "Informe seu nome.")
+        this.password = password
+        store.write("demo.activated", "yes")
+        store.write("demo.profile.alex.name", name.trim())
+        return createSession("alex")
+    }
+    override suspend fun recover(identifier: String): String {
+        available()
+        requireInput(identifier.isNotBlank(), "Informe seu CPF ou e-mail.")
+        return "Demonstração: nenhum e-mail foi enviado. Use Demo1234! ao reiniciar o app. Recuperação real depende da API."
