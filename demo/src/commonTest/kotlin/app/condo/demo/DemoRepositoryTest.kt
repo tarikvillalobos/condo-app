@@ -38,3 +38,23 @@ class DemoRepositoryTest {
         restored.signIn()
         val parcel = restored.load("aurora").parcels.first()
         assertEquals(ParcelStatus.MANUAL_REPORT, parcel.status)
+        assertNull(parcel.collectedAt)
+    }
+    @Test fun disabledModulesRejectDirectCommands() = runTest {
+        val r = repo()
+        r.signIn()
+        assertFailsWith<AppFailure> {
+            r.execute("aguas", Command.ReportPet("Pet perdido no jardim"))
+        }
+    }
+    @Test fun conflictingConcurrentBookingsAndCancellation() = runTest {
+        val r = repo()
+        r.signIn()
+        val command = Command.Reserve("court", now + 2.hours, now + 3.hours, "same")
+        val outcomes = listOf(async { r.execute("aurora", command) }, async { r.execute("aurora", command) })
+        outcomes.forEach { it.await() }
+        assertEquals(1, r.load("aurora").bookings.size)
+        assertFailsWith<AppFailure> { r.execute("aurora", command.copy(operationId = "different")) }
+        assertFailsWith<AppFailure> { r.execute("aurora", command.copy(endsAt = now + 4.hours)) }
+        val id = r.load("aurora").bookings.single().id
+        r.execute("aurora", Command.CancelBooking(id))
