@@ -45,6 +45,7 @@ class AppController(
             message("Este módulo não está disponível neste condomínio.")
             return
         }
+        navigationVersion++
         mutable.update {
             it.copy(destination = Destination(route, id), history = it.history + it.destination, code = null, showCode = false)
         }
