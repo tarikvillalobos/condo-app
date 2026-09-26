@@ -110,7 +110,6 @@ python3 scripts/check-history.py
 ```
 
 Testes Compose geram capturas em `app/build/validation/`.
-Relatórios ficam em `<módulo>/build/reports/tests/`.
 A CI verifica lógica, transporte HTTP com respostas controladas, UI, Android,
 frameworks Apple e compilação Windows. A execução em cada runner depende do próprio ambiente.
 
