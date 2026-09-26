@@ -38,3 +38,23 @@ class AppController(
         mutable.update {
             it.copy(destination = Destination(route, id), history = it.history + it.destination, code = null, showCode = false)
         }
+    }
+    fun back() = mutable.update {
+        it.copy(destination = it.history.lastOrNull() ?: Destination(), history = it.history.dropLast(1), code = null, showCode = false)
+    }
+    fun login(identifier: String, password: String, remember: Boolean) = runAction {
+        validateLogin(identifier, password)
+        val session = repository.login(identifier.trim(), password)
+        platform.vault.clear()
+        if (remember) {
+            val saved = platform.vault.write("demo|${session.account.id}|${(clock.now() + 7.days).toEpochMilliseconds()}")
+            if (!saved) message("Armazenamento seguro indisponível. A sessão durará apenas enquanto o app estiver aberto.")
+        }
+        mutable.update { it.copy(session = session, forms = emptyMap(), destination = Destination(), history = emptyList()) }
+        switchMembership(session.memberships.first().id)
+    }
+    fun switchMembership(id: String) {
+        if (state.value.session?.memberships?.none { it.id == id } != false) return
+        contextVersion++
+        loadingJob?.cancel()
+        activeId = id
