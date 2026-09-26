@@ -59,7 +59,6 @@ class AppController(
     fun login(identifier: String, password: String, remember: Boolean) = runAction { version, _ ->
         validateLogin(identifier, password)
         val session = repository.login(identifier.trim(), password)
-        platform.vault.clear()
         if (remember) {
             val saved = platform.vault.write("demo|${session.account.id}|${(clock.now() + 7.days).toEpochMilliseconds()}")
             if (!saved) message("Armazenamento seguro indisponível. A sessão durará apenas enquanto o app estiver aberto.")
