@@ -18,3 +18,23 @@ class AppController(
     private var activeId: String? = null
     private var loadingJob: Job? = null
     init {
+        platform.vault.read()?.let { reference ->
+            runAction {
+                val session = repository.restore(reference)
+                mutable.update { it.copy(session = session) }
+                switchMembership(session.memberships.first().id)
+            }
+        }
+    }
+    fun field(key: String, value: String) = mutable.update { it.copy(forms = it.forms + (key to value)) }
+    fun filter(key: String, value: String) = mutable.update { it.copy(filters = it.filters + (key to value)) }
+    fun clearMessage() = mutable.update { it.copy(message = null, error = null) }
+    fun message(value: String) = mutable.update { it.copy(message = value) }
+    fun navigate(route: Route, id: String? = null) {
+        if (route.module != null && route.module !in state.value.snapshot?.membership?.modules.orEmpty()) {
+            message("Este módulo não está disponível neste condomínio.")
+            return
+        }
+        mutable.update {
+            it.copy(destination = Destination(route, id), history = it.history + it.destination, code = null, showCode = false)
+        }
