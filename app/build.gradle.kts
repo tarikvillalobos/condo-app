@@ -70,6 +70,7 @@ kotlin {
             }
         }
         commonTest.dependencies {
+            if (environment == "demo") implementation(project(":demo"))
             implementation(kotlin("test"))
             implementation(libs.coroutines.test)
             implementation(libs.ktor.mock)
