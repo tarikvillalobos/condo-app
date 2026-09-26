@@ -58,3 +58,23 @@ fun MenuRow(title: String, subtitle: String? = null, glyph: Glyph = Glyph.NEXT, 
         Row(Modifier.padding(Tokens.lg).heightIn(min = 40.dp), verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(Tokens.md)) {
             AppIcon(glyph)
+            Column(Modifier.weight(1f)) {
+                Text(title, style = MaterialTheme.typography.titleSmall)
+                subtitle?.let { Muted(it) }
+            }
+            AppIcon(Glyph.NEXT, tint = Tokens.secondary)
+        }
+    }
+}
+@Composable
+fun FilterChips(options: List<String>, selected: String, onSelect: (String) -> Unit) {
+    FlowRow(horizontalArrangement = Arrangement.spacedBy(Tokens.sm)) {
+        options.forEach { option ->
+            FilterChip(selected == option, { onSelect(option) }, { Text(option) }, modifier = Modifier.heightIn(min = Tokens.touch))
+        }
+    }
+}
+@Composable
+fun <T> AdaptiveGrid(items: List<T>, minimum: Dp = 240.dp, maximumColumns: Int = 4, content: @Composable (T) -> Unit) {
+    BoxWithConstraints(Modifier.fillMaxWidth()) {
+        val scale = LocalDensity.current.fontScale.coerceAtLeast(1f)
