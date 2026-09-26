@@ -13,6 +13,7 @@ precisam ser fornecidos. O build de produção exclui o módulo demonstrativo
 e apresenta a indisponibilidade da integração; não faz fallback para dados fictícios.
 Consulte [validações](docs/VALIDATION.md) e [pendências](docs/PROGRESS.md).
 
+## Recursos
 
 - Package management
 - Smart locker integration
