@@ -58,3 +58,4 @@ internal object DemoSeed {
         members = listOf(UnitMember("Alex Exemplo", "Titular"), UnitMember("Sam Exemplo", "Morador")),
         updatedAt = now,
     )
+}
