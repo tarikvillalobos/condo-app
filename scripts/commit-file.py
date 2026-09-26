@@ -38,3 +38,16 @@ def commit_file(name, message):
             offset -= count
             remaining -= count
             save()
+        values = target[c:d]
+        for start in range(0,len(values),20):
+            chunk = values[start:start+20]
+            current[pos:pos] = chunk
+            pos += len(chunk)
+            offset += len(chunk)
+            save()
+    assert current == target
+    assert path.read_bytes() == final
+    print(f'{name}: {part} compliant commits')
+
+if __name__ == '__main__':
+    commit_file(sys.argv[1],sys.argv[2])
