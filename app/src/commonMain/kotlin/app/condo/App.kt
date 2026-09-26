@@ -85,8 +85,6 @@ private fun AppHeader(controller: AppController, state: AppState, stacked: Boole
         if (state.destination.route != Route.HOME) {
             IconButton(controller::back) { AppIcon(Glyph.BACK, "Voltar") }
         } else AppIcon(Glyph.BUILDING, modifier = Modifier.size(32.dp))
-        Text(if (state.destination.route == Route.HOME) LocalBrand.current.name else state.destination.route.title,
-            Modifier.weight(1f), style = MaterialTheme.typography.titleMedium, color = LocalBrand.current.dark)
         IconButton({ controller.navigate(Route.NOTIFICATIONS) }) {
             BadgedBox(badge = {
                 val count = state.snapshot?.notices?.count { !it.read } ?: 0
