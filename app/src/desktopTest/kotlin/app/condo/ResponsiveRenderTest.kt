@@ -16,7 +16,6 @@ class ResponsiveRenderTest {
     @Test fun renderReferenceScreensAtAllRequestedWidths() = runBlocking(Dispatchers.Main) {
         val clock = AppClock { Instant.parse("2026-09-26T12:00:00Z") }
         val platform = TestServices()
-        val controller = AppController(DemoRepository(platform.store, clock, 0), platform, clock)
         val folder = File("build/validation").apply { mkdirs() }
         fun render(name: String, width: Int, height: Int, scale: Float = 1f) {
             val scene = ImageComposeScene(width, height, Density(1f, scale)) { CondoApp(controller) }
