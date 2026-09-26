@@ -18,3 +18,23 @@ settings:
     TARGETED_DEVICE_FAMILY: "1,2"
 targets:
   CondoApp:
+    type: application
+    platform: iOS
+    sources:
+      - CondoApp.swift
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: app.condo.resident
+    preBuildScripts:
+      - name: Build shared Kotlin framework
+        basedOnDependencyAnalysis: false
+        script: |
+          cd "$SRCROOT/.."
+          ./gradlew :app:embedAndSignAppleFrameworkForXcode
+schemes:
+  CondoApp:
+    build:
+      targets:
+        CondoApp: all
+    run:
+      config: Debug
