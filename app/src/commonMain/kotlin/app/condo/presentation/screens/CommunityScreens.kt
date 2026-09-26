@@ -78,3 +78,8 @@ fun CommunityScreen(controller: AppController, state: AppState) {
             }
             Heading("Encomendas e visitantes")
             MenuRow("Minhas encomendas", "Retirada e problemas com entregas", Glyph.BOX) { controller.navigate(Route.PARCELS) }
+            MenuRow("Autorizações de visitas", "Gerencie quem pode visitar você", Glyph.PEOPLE) { controller.navigate(Route.VISITS) }
+        }
+        else -> Unit
+    }
+}
