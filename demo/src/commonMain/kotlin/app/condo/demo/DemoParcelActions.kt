@@ -41,3 +41,19 @@ internal fun DemoMutation.lockerEvent(event: LockerEvent) {
 internal fun MutableList<AccessCode>.replaceAllMatching(owner: String, transform: (AccessCode) -> AccessCode) {
     indices.forEach { index -> if (this[index].ownerId == owner) this[index] = transform(this[index]) }
 }
+
+internal fun DemoMutation.consumePickup(payload: String) {
+    val code = codes.find { it.payload == payload && it.ownerId.startsWith("pickup:") } ?: missing()
+    requireInput(!code.consumed && now < code.expiresAt, "Código expirado ou já utilizado.")
+    val parcelId = code.ownerId.removePrefix("pickup:")
+    lockerEvent(LockerEvent("code:${code.payload}", parcelId, now, true))
+}
+internal fun DemoMutation.deposit(eventId: String, parcel: Parcel) {
+    if (eventId in events) return
+    requireInput(parcel.receivedAt <= now && parcel.deadline > parcel.receivedAt, "Datas do depósito inválidas.")
+    requireInput(snapshot.parcels.none { it.id == parcel.id }, "Já existe uma encomenda com esse identificador.")
+    requireInput(parcel.status == ParcelStatus.WAITING && parcel.collectedAt == null, "Estado inicial inválido.")
+    events.add(eventId)
+    snapshot = snapshot.copy(parcels = listOf(parcel) + snapshot.parcels,
+        notices = snapshot.notices + Notice(id("notice"), "Nova encomenda de ${parcel.carrier}", "parcel:${parcel.id}"))
+}
