@@ -18,3 +18,14 @@ fun Parcel.statusLabel() = when (status) {
     ParcelStatus.WAITING -> "Aguardando retirada"
     ParcelStatus.MANUAL_REPORT -> "Retirada informada · aguardando locker"
     ParcelStatus.COLLECTED -> "Retirada confirmada no simulador"
+}
+fun Visit.statusLabel(now: Instant): String = if (expiresAt <= now && status != VisitStatus.ENTERED) {
+    "Expirado"
+} else when (status) {
+    VisitStatus.SCHEDULED -> "Agendada"
+    VisitStatus.AT_GATE -> "Na portaria"
+    VisitStatus.AUTHORIZED -> "Autorizado"
+    VisitStatus.ENTERED -> "Entrada registrada"
+    VisitStatus.DENIED -> "Recusada"
+    VisitStatus.REVOKED -> "Convite revogado"
+}
