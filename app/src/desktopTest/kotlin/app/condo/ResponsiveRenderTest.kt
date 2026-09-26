@@ -92,6 +92,10 @@ class ResponsiveRenderTest {
         controller.navigate(Route.PARCELS)
         render("parcels-extensive", 320, 844)
         render("parcels-extensive", 1200, 844)
+        if (controller.state.value.allows(Route.CAMERAS)) {
+            controller.navigate(Route.CAMERAS)
+            render("cameras-extensive", 1200, 844)
+        }
         controller.navigate(Route.BOOKINGS)
         render("bookings-font200", 390, 844, 2f)
         controller.close()
