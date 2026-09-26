@@ -18,3 +18,7 @@ fun ScreenRouter(controller: AppController, state: AppState, expanded: Boolean) 
         Route.PETS, Route.PET_FORM, Route.PET_DETAIL, Route.PET_ALERTS -> PetsScreen(controller, state)
         Route.BOOKINGS -> BookingsScreen(controller, state)
         Route.EVENTS, Route.NOTICES, Route.BULLETIN, Route.NOTIFICATIONS,
+        Route.SERVICES, Route.REQUEST_FORM, Route.REQUEST_DETAIL, Route.CONCIERGE -> CommunityScreen(controller, state)
+        else -> ProfileScreen(controller, state)
+    }
+}
