@@ -63,7 +63,6 @@ class AppController(
         vault { platform.vault.clear() }
         if (version != contextVersion) return@runAction
         if (remember) {
-            val saved = platform.vault.write("demo|${session.account.id}|${(clock.now() + 7.days).toEpochMilliseconds()}")
             if (!saved) message("Armazenamento seguro indisponível. A sessão durará apenas enquanto o app estiver aberto.")
         }
         mutable.update { it.copy(session = session, forms = emptyMap(), destination = Destination(), history = emptyList()) }
