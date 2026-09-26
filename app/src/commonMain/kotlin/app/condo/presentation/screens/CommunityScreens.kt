@@ -38,3 +38,23 @@ fun CommunityScreen(controller: AppController, state: AppState) {
                     }
                 }
             }
+        }
+        Route.REQUEST_FORM -> {
+            FilterChips(listOf("Solicitação", "Ocorrência", "Privacidade"), state.forms["request.category"] ?: "Solicitação") {
+                controller.field("request.category", it)
+            }
+            FormField(controller, "request.subject", "Assunto")
+            FormField(controller, "request.body", "Descreva o que aconteceu", multiline = true)
+            Muted("Não inclua senhas ou códigos de acesso. Na demonstração, o registro fica somente neste dispositivo.")
+            PrimaryButton("Registrar", !state.submitting, controller::submitRequest)
+        }
+        Route.REQUEST_DETAIL -> snapshot.requests.find { it.id == state.destination.id }?.let {
+            Heading(it.subject)
+            StatusChip(it.status)
+            Muted("Protocolo ${it.id} · ${it.createdAt.fullLabel()}")
+            Panel { Text(it.description) }
+            Heading("Histórico")
+            Text("✓ ${it.createdAt.fullLabel()} · Registro demonstrativo criado")
+            Muted("Respostas da administração dependem da integração real.")
+        }
+        Route.SERVICES -> {
