@@ -78,3 +78,14 @@ fun FilterChips(options: List<String>, selected: String, onSelect: (String) -> U
 fun <T> AdaptiveGrid(items: List<T>, minimum: Dp = 240.dp, maximumColumns: Int = 4, content: @Composable (T) -> Unit) {
     BoxWithConstraints(Modifier.fillMaxWidth()) {
         val scale = LocalDensity.current.fontScale.coerceAtLeast(1f)
+        val columns = ((maxWidth + Tokens.md) / (minimum * scale + Tokens.md)).toInt().coerceIn(1, maximumColumns)
+        Column(verticalArrangement = Arrangement.spacedBy(Tokens.md)) {
+            items.chunked(columns).forEach { row ->
+                Row(horizontalArrangement = Arrangement.spacedBy(Tokens.md)) {
+                    row.forEach { item -> Box(Modifier.weight(1f)) { content(item) } }
+                    repeat(columns - row.size) { Spacer(Modifier.weight(1f)) }
+                }
+            }
+        }
+    }
+}
