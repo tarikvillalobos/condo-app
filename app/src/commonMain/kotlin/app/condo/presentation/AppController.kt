@@ -127,7 +127,6 @@ class AppController(
         mutable.update { it.copy(submitting = true, error = null) }
         val version = contextVersion
         scope.launch {
-            mutable.update { it.copy(submitting = true, error = null) }
             try { block() } catch (cancelled: CancellationException) { throw cancelled
             } catch (failure: Exception) { handle(failure)
             } finally { mutable.update { it.copy(submitting = false) } }
