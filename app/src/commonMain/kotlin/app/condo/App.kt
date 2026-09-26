@@ -68,6 +68,7 @@ fun CondoApp(controller: AppController) {
                 state.message?.let { message ->
                     AlertDialog(
                         onDismissRequest = controller::clearMessage,
+                        title = { Text(LocalBrand.current.name) }, text = { Text(message) },
                         confirmButton = { TextButton(controller::clearMessage) { Text("Entendi") } },
                     )
                 }
