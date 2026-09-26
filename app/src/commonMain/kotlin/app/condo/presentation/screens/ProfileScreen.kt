@@ -98,3 +98,23 @@ fun ProfileScreen(controller: AppController, state: AppState) {
         }
         Route.PRIVACY -> {
             Heading("Seus dados, suas escolhas")
+            Text(LocalBrand.current.privacy)
+            Text(LocalBrand.current.terms)
+            SecondaryButton("Solicitar acesso aos meus dados") { privacyRequest(controller, "Solicitação de acesso aos dados") }
+            SecondaryButton("Solicitar exclusão dos meus dados") { privacyRequest(controller, "Solicitação de exclusão dos dados") }
+        }
+        Route.HELP -> {
+            Heading("Como podemos ajudar?")
+            MenuRow("Não consigo retirar uma encomenda", glyph = Glyph.BOX) {
+                controller.message("Confira o prazo e solicite um código atualizado. Códigos demonstrativos não funcionam em equipamentos reais.")
+            }
+            MenuRow("Reservas e convites", glyph = Glyph.CALENDAR) {
+                controller.message("Consulte a validade dos convites e o histórico de reservas. A confirmação real depende da API externa do condomínio.")
+            }
+            SecondaryButton("Abrir solicitação de suporte") { controller.navigate(Route.REQUEST_FORM) }
+            Muted("${LocalBrand.current.name} · versão 0.1.0 · desenvolvimento")
+        }
+        Route.DEMO -> DemoControls(controller)
+        else -> Unit
+    }
+}
