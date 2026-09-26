@@ -58,3 +58,23 @@ fun CondoApp(controller: AppController) {
                         }
                     }
                 }
+                if (state.submitting) LinearProgressIndicator(Modifier.fillMaxWidth().align(Alignment.TopCenter))
+                if (state.showCode) CodeDialog(controller, state)
+                state.message?.let { message ->
+                    AlertDialog(
+                        onDismissRequest = controller::clearMessage,
+                        title = { Text("Condo App") }, text = { Text(message) },
+                        confirmButton = { TextButton(controller::clearMessage) { Text("Entendi") } },
+                    )
+                }
+            }
+        }
+    }
+}
+@Composable
+private fun AppHeader(controller: AppController, state: AppState) {
+    Row(Modifier.fillMaxWidth().background(Color.White).padding(horizontal = Tokens.page, vertical = Tokens.sm),
+        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Tokens.md)) {
+        if (state.destination.route != Route.HOME) {
+            IconButton(controller::back) { AppIcon(Glyph.BACK, "Voltar") }
+        } else AppIcon(Glyph.BUILDING, modifier = Modifier.size(32.dp))
