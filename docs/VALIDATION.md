@@ -178,3 +178,21 @@ esse resultado confirma isolamento da demonstração, não integração real.
 As verificações de CI configuradas só contam como evidência após execução com
 resultado disponível; a existência do workflow não prova aprovação.
 
+## Próximas verificações
+
+- Validar plataformas, dispositivos físicos e distribuição assinada descritos abaixo.
+- Integrar e homologar os fluxos reais após disponibilização do contrato externo.
+
+## Limites conhecidos
+
+- Windows e Linux não foram validados em execução ou distribuição nativa.
+- Windows ainda não possui adaptador de cofre: Manter conectado fica indisponível; não há credencial em texto puro.
+- Leitores de tela não foram auditados; Tab/Enter e escala de fonte são cobertura parcial.
+- As permissões de Computer Use não estavam disponíveis; não houve inspeção por esse recurso.
+- Biometria real, push remoto, vídeo/câmeras e operações de portaria/locker aguardam integração.
+- Autenticação, autorização, expiração e cache de dados reais dependem do contrato da API externa.
+- Assinaturas, notarização, lojas e ambientes de homologação não foram validados.
+
+Nenhum APK, `.app`, framework, screenshot ou outro binário faz parte desta
+documentação versionada. Consulte [o progresso](PROGRESS.md) e
+[as dependências de integração](API-INTEGRATION.md) antes de planejar distribuição.
