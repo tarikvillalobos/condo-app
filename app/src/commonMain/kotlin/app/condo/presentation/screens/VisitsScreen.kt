@@ -58,3 +58,23 @@ fun VisitsScreen(controller: AppController, state: AppState) {
             controller.beginVisit(visit.copy(id = "", startsAt = now, expiresAt = now + kotlin.time.Duration.parse("2h")))
         }
     }
+}
+@Composable
+private fun VisitForm(controller: AppController, state: AppState) {
+    Column(Modifier.widthIn(max = Tokens.maxForm), verticalArrangement = Arrangement.spacedBy(Tokens.md)) {
+        FormField(controller, "visit.name", "Nome completo")
+        FormField(controller, "visit.purpose", "Motivo ou serviço")
+        FilterChips(listOf("Visitante", "Prestador"), if (state.forms["visit.provider"] == "true") "Prestador" else "Visitante") {
+            controller.field("visit.provider", (it == "Prestador").toString())
+        }
+        FormField(controller, "visit.date", "Data de início · AAAA-MM-DD")
+        FormField(controller, "visit.time", "Horário de início · HH:MM")
+        FormField(controller, "visit.endDate", "Data final · AAAA-MM-DD")
+        FormField(controller, "visit.endTime", "Horário final · HH:MM")
+        Muted("Horários de Brasília · validade máxima demonstrativa de 7 dias.")
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Checkbox(state.forms["visit.frequent"] == "true", { controller.field("visit.frequent", it.toString()) })
+            Text("Salvar como visitante frequente")
+        }
+        PrimaryButton("Salvar visita", !state.submitting, controller::submitVisit)
+    }
