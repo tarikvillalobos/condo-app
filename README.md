@@ -120,3 +120,23 @@ frameworks Apple e compilação Windows. A execução em cada runner depende do 
 ./gradlew -Pbrand=viva :androidApp:assembleDebug
 ./gradlew -PappEnvironment=production :app:run
 ```
+
+`condo` mantém a paleta da referência; `viva` usa azul e desabilita câmeras.
+Marca de distribuição e condomínios vinculados são conceitos separados.
+Veja [como configurar marca, módulos e ambiente](docs/ARCHITECTURE.md).
+Veja [o que falta para integrar a API](docs/API-INTEGRATION.md).
+Não há endpoints nem credenciais de servidor inventados.
+
+## Distribuição
+
+`./gradlew :app:packageDistributionForCurrentOS` gera o pacote desktop no host compatível.
+DMG, MSI e DEB exigem o respectivo sistema e ferramentas de empacotamento.
+Android release: `:androidApp:bundleRelease`; configurar assinatura com segredos de CI,
+fora do repositório. iOS físico/TestFlight exige conta Apple, Team e provisioning profiles.
+macOS distribuído exige assinatura Developer ID e notarização.
+Nenhuma assinatura de distribuição ou publicação em loja está configurada.
+Inclua os avisos de bibliotecas e das fontes em qualquer distribuição.
+
+## Histórico de commits
+
+`git config core.hooksPath .githooks` ativa a verificação de staging após clonar.
