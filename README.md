@@ -52,7 +52,6 @@ Desktop (macOS, Windows e Linux):
 
 Android, com emulador ou dispositivo conectado:
 
-Setup and development instructions will be added as the project evolves.
 
 ## License
 
