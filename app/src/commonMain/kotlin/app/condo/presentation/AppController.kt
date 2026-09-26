@@ -157,6 +157,13 @@ class AppController(
             repository.logout()
         }
     }
+    private fun runAction(restoring: Boolean = false, block: suspend (Int, Int) -> Unit) {
+        val previousRestore = restorationJob?.takeIf { !restoring && it.isActive }
+        if (previousRestore != null) {
+            contextVersion++
+            previousRestore.cancel()
+            mutable.update { it.copy(submitting = false) }
+        }
         if (state.value.submitting) return
         mutable.update { it.copy(submitting = true, error = null) }
         val version = contextVersion
