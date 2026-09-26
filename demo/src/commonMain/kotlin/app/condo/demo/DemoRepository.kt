@@ -38,3 +38,23 @@ class DemoRepository(
             else -> throw AppFailure(FailureKind.DENIED, "Use uma conta demonstrativa indicada na tela.")
         }
         createSession(user)
+    }
+    private fun createSession(user: String): Session {
+        requireInput(user in setOf("alex", "bia"), "Sessão demonstrativa inválida.")
+        val name = store.read("demo.profile.$user.name") ?: if (user == "alex") "Alex Exemplo" else "Bia Exemplo"
+        val phone = store.read("demo.profile.$user.phone").orEmpty()
+        val memberships = DemoSeed.memberships.map {
+            if (user == "bia") it.copy(unit = "Bloco C · Apto 201") else it
+        }.let { if (store.read("demo.link.$user") == "yes") it + linkedMembership else it }
+        return Session(Account(user, name, "$user@condo.demo", phone), memberships).also { session = it }
+    }
+    override suspend fun restore(sessionReference: String): Session = mutex.withLock {
+        available()
+        val parts = sessionReference.split('|')
+        requireInput(parts.size == 3 && parts[0] == "demo", "Sessão inválida.")
+        val expires = parts[2].toLongOrNull() ?: 0
+        if (clock.now().toEpochMilliseconds() >= expires) {
+            throw AppFailure(FailureKind.EXPIRED, "Sessão expirada. Entre novamente.")
+        }
+        createSession(parts[1])
+    }
