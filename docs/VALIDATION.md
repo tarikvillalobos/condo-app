@@ -58,3 +58,23 @@ testes. `UnavailableRepositoryTest` verifica a falha explícita da integração.
 O teste de QR codifica e decodifica o payload demonstrativo. Os testes de UI
 desktop cobrem entrada por credenciais com Tab/Enter e o fluxo de encomenda
 com retirada informada pelo morador, sem afirmar retirada física.
+
+## Matriz visual
+
+O teste usa `ImageComposeScene`, densidade 1 e estas larguras: **320, 390, 430,
+600, 840 e 1200**, com altura 844. Nessas condições, os valores correspondem
+a pixels e dp. Em cada largura são renderizadas nove telas: login, início,
+lista e detalhe de encomenda, câmeras, visitas, pets, reservas e perfil.
+
+As 12 capturas adicionais cobrem:
+
+- Fonte em 200% a 390 × 844: login, início, perfil e reservas.
+- Reservas em paisagem a 844 × 390.
+- Formulário de visita com texto longo a 390 e 1200 de largura.
+- Listas vazias de encomendas e câmeras.
+- 60 encomendas a 320 e 1200; 12 câmeras a 1200.
+
+Capturas representativas foram inspecionadas visualmente. A revisão encontrou
+problemas no cabeçalho a 320 e no calendário com fonte em 200%; as correções
+foram renderizadas novamente e conferidas: títulos estreitos ocupam linha própria
+e os controles de mês/data se reorganizam com fonte ampliada. O teste automático verifica dimensões e geração de imagens;
