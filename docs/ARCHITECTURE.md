@@ -78,3 +78,7 @@ está registrada separadamente; não deve ser inferida a partir dos renders desk
 - [Releases Ktor](https://ktor.io/docs/releases.html).
 - [QR Code Kotlin](https://github.com/g0dkar/qrcode-kotlin).
 
+Kotlin 2.4.20, Gradle 9.4.1 e AGP 9.2.0 estão na faixa de compatibilidade publicada.
+O plugin Compose Compiler usa exatamente a versão de Kotlin.
+O Xcode de referência da tabela é 26.4; o ambiente local tem 26.2. Builds locais
+são reportados como evidência específica, sem substituir a matriz oficial.
