@@ -49,7 +49,6 @@ kotlin {
         }
     }
     sourceSets {
-        commonMain.kotlin.srcDir(generatedSource)
         commonMain.dependencies {
             implementation(project(":domain"))
             if (environment == "demo") implementation(project(":demo"))
