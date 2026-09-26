@@ -78,3 +78,23 @@ class DemoRepository(
         store.write(key(membershipId), demoJson.encodeToString(doc))
         snapshot.copy(updatedAt = clock.now())
     }
+    override suspend fun execute(membershipId: String, command: Command): Outcome = mutex.withLock {
+        available()
+        val (snapshot, doc) = document(membershipId)
+        requireModule(snapshot.membership, command)
+        val mutation = DemoMutation(snapshot, doc, clock.now())
+        val outcome = mutation.apply(command)
+        store.write(key(membershipId), demoJson.encodeToString(mutation.document()))
+        outcome
+    }
+    override suspend fun updateAccount(name: String, phone: String): Account = mutex.withLock {
+        available()
+        requireInput(name.trim().length in 2..100, "Informe um nome entre 2 e 100 caracteres.")
+        val current = session ?: throw AppFailure(FailureKind.EXPIRED, "Entre novamente.")
+        store.write("demo.profile.${current.account.id}.name", name.trim())
+        store.write("demo.profile.${current.account.id}.phone", phone)
+        createSession(current.account.id).account
+    }
+    override suspend fun linkMembership(invitation: String): Session = mutex.withLock {
+        available()
+        requireInput(invitation == "VINCULAR-DEMO", "Convite demonstrativo inválido ou expirado.")
