@@ -18,3 +18,19 @@ enum class Route(val title: String, val module: Module? = null) {
     SECURITY("Senha e biometria"), PRIVACY("Privacidade e dados"), HELP("Ajuda e suporte"),
     RECOVERY("Recuperar senha"), ACTIVATE("Primeiro acesso"), DEMO("Cenários demonstrativos"),
 }
+data class Destination(val route: Route = Route.HOME, val id: String? = null)
+data class AppState(
+    val session: Session? = null,
+    val snapshot: Snapshot? = null,
+    val destination: Destination = Destination(),
+    val history: List<Destination> = emptyList(),
+    val forms: Map<String, String> = emptyMap(),
+    val filters: Map<String, String> = emptyMap(),
+    val loading: Boolean = false,
+    val submitting: Boolean = false,
+    val error: String? = null,
+    val message: String? = null,
+    val stale: Boolean = false,
+    val code: AccessCode? = null,
+    val showCode: Boolean = false,
+)
