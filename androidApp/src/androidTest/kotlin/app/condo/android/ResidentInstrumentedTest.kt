@@ -36,6 +36,11 @@ class ResidentInstrumentedTest {
         enter("CPF ou e-mail", "alex@condo.demo")
         enter("Senha", "Demo1234!")
         closeSoftKeyboard()
+        field("CPF ou e-mail").assert(SemanticsMatcher.expectValue(
+            SemanticsProperties.InputText, AnnotatedString("alex@condo.demo")))
+        field("Senha").assert(SemanticsMatcher.expectValue(
+            SemanticsProperties.InputText, AnnotatedString("Demo1234!")))
+        compose.onNodeWithText("Entrar").performScrollTo().assertIsDisplayed().performClick()
         waitForText("Olá, Alex")
         compose.onNodeWithText("Ver QR Code de retirada").performScrollTo().performClick()
         compose.onNode(hasText("Mercado Livre") and hasClickAction()).performScrollTo().performClick()
