@@ -10,3 +10,5 @@ local.properties
 .generated/
 validation/
 app/src/commonMain/composeResources/font/*.ttf
+iosApp/CondoApp.xcodeproj/
+iosApp/DerivedData/
