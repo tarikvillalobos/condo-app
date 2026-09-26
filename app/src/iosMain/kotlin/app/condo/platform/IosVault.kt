@@ -38,3 +38,14 @@ class IosVault(private val service: String) : SessionVault {
     override fun write(value: String): Boolean = query { query ->
         SecItemDelete(query)
         val bytes = value.encodeToByteArray()
+        bytes.usePinned { pinned ->
+            val data = CFDataCreate(null, pinned.addressOf(0).reinterpret(), bytes.size.toLong())!!
+            try {
+                CFDictionarySetValue(query, kSecValueData, data)
+                CFDictionarySetValue(query, kSecAttrAccessible, kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly)
+                SecItemAdd(query, null) == errSecSuccess
+            } finally { CFRelease(data) }
+        }
+    }
+    override fun clear() { query { SecItemDelete(it) } }
+}
