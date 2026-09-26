@@ -4,11 +4,6 @@
 - [x] Alteração de escopo: somente aplicativos, sem backend próprio.
 - [x] Regra automatizada de um arquivo e até 20 linhas por commit.
 - [x] Versões verificadas nas documentações oficiais.
-- [ ] Domínio, repositórios demonstrativos e persistência isolada.
-- [ ] Nove telas Compose e fluxos auxiliares.
-- [ ] Adaptadores de plataforma e cliente HTTP sem endpoints inventados.
-- [ ] Testes funcionais e builds Android, iOS e desktop.
-- [ ] Validação visual responsiva e documentação de execução.
 - [ ] Contrato da API externa: solicitado ao usuário; não disponível.
 - [ ] Integração real e homologação: dependem do contrato e do ambiente.
 
