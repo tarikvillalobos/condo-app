@@ -38,3 +38,5 @@ class RulesTest {
         assertFailsWith<AppFailure> { validateLogin("bad", "password") }
         assertFailsWith<AppFailure> { validateLogin("alex@condo.demo", "x") }
         validateLogin("00000000000", "password")
+    }
+}
