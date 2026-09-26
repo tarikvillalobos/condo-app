@@ -18,3 +18,23 @@ fun AuthScreen(controller: AppController, state: AppState) {
             Text(if (route in listOf(Route.RECOVERY, Route.ACTIVATE)) route.title else "Bem-vindo de volta",
                 style = MaterialTheme.typography.headlineMedium, color = LocalBrand.current.dark)
             Text("Entre para acompanhar encomendas, visitas e tudo do seu condomínio.", color = Tokens.secondary)
+            when (route) {
+                Route.RECOVERY -> {
+                    FormField(controller, "identity", "CPF ou e-mail")
+                    PrimaryButton("Recuperar acesso", !state.submitting) { controller.recover(state.forms["identity"].orEmpty()) }
+                    SecondaryButton("Voltar ao login", controller::back)
+                }
+                Route.ACTIVATE -> {
+                    Muted("Demonstração: use o convite PRIMEIRO-DEMO, válido para uma ativação local.")
+                    FormField(controller, "invitation", "Código do convite")
+                    FormField(controller, "name", "Seu nome")
+                    FormField(controller, "password", "Crie uma senha", secret = true)
+                    PrimaryButton("Ativar cadastro", !state.submitting) {
+                        controller.activate(state.forms["invitation"].orEmpty(), state.forms["name"].orEmpty(), state.forms["password"].orEmpty())
+                    }
+                    SecondaryButton("Voltar ao login", controller::back)
+                }
+                else -> {
+                    FormField(controller, "identity", "CPF ou e-mail")
+                    FormField(controller, "password", "Senha", secret = true)
+                    val remember = state.forms["remember"] == "true"
