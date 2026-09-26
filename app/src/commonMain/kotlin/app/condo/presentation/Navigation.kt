@@ -38,3 +38,23 @@ fun BottomNavigation(controller: AppController, state: AppState) {
                         Text(route.title, style = MaterialTheme.typography.labelSmall,
                             color = if (selected) LocalBrand.current.primary else Tokens.secondary)
                     }
+                }
+            }
+        }
+    }
+}
+@Composable
+fun SideNavigation(controller: AppController, state: AppState, expanded: Boolean) {
+    val destinations = mainDestinations + listOf(Route.PETS, Route.BOOKINGS, Route.EVENTS, Route.NOTICES, Route.SERVICES)
+    Surface(Modifier.width(if (expanded) 212.dp else 96.dp).fillMaxHeight(), color = Color.White) {
+        Column(Modifier.verticalScroll(rememberScrollState()).padding(Tokens.md), verticalArrangement = Arrangement.spacedBy(Tokens.sm)) {
+            if (expanded) {
+                AppIcon(Glyph.BUILDING, modifier = Modifier.size(40.dp))
+                Heading(LocalBrand.current.name)
+                Muted("Seu condomínio, mais perto.")
+                HorizontalDivider(Modifier.padding(vertical = Tokens.lg))
+            }
+            destinations.filter(state::allows).forEach { route ->
+                Surface({ controller.navigate(route) }, Modifier.fillMaxWidth(), shape = Tokens.controlCorner,
+                    color = if (state.destination.route == route) Tokens.tint else Color.Transparent) {
+                    if (expanded) Row(Modifier.padding(Tokens.md), horizontalArrangement = Arrangement.spacedBy(Tokens.md)) {
