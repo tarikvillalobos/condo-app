@@ -58,3 +58,6 @@ Senha: Demo1234!")
                 }
             }
             Muted(LocalBrand.current.institution)
+        }
+    }
+}
