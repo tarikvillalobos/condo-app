@@ -126,6 +126,14 @@ class AppController(
         mutable.update { it.copy(session = session, forms = emptyMap(), destination = Destination()) }
         switchMembership(session.memberships.first().id)
     }
+    fun recover(identifier: String) = runAction { version, navigation ->
+        val result = repository.recover(identifier)
+        if (version == contextVersion && navigation == navigationVersion) message(result)
+    }
+    fun password(current: String, replacement: String) = runAction { version, navigation ->
+        val result = repository.changePassword(current, replacement)
+        if (version != contextVersion || navigation != navigationVersion) return@runAction
+        message(result)
         mutable.update { it.copy(forms = emptyMap()) }
     }
     fun scenario(value: DemoScenario) {
