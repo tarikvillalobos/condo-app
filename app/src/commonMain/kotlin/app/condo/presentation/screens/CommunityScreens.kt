@@ -58,3 +58,23 @@ fun CommunityScreen(controller: AppController, state: AppState) {
             Muted("Respostas da administração dependem da integração real.")
         }
         Route.SERVICES -> {
+            PrimaryButton("+ Nova solicitação ou ocorrência") { controller.navigate(Route.REQUEST_FORM) }
+            val filter = state.filters["requests"] ?: "Todas"
+            FilterChips(listOf("Todas", "Solicitação", "Ocorrência", "Privacidade"), filter) { controller.filter("requests", it) }
+            val requests = snapshot.requests.filter { filter == "Todas" || it.category == filter }
+            if (requests.isEmpty()) EmptyState("Nenhum registro ainda", "Acompanhe solicitações e ocorrências neste espaço.", Glyph.SHIELD)
+            requests.forEach {
+                MenuRow(it.subject, "${it.category} · ${it.status}", Glyph.NOTICE) { controller.navigate(Route.REQUEST_DETAIL, it.id) }
+            }
+        }
+        Route.CONCIERGE -> {
+            Panel {
+                AppIcon(Glyph.SHIELD)
+                Heading("Estamos por perto")
+                Text(snapshot.membership.name)
+                Muted("Atendimento demonstrativo · nenhum contato real configurado.")
+                PrimaryButton("Contato da portaria") { controller.message("O telefone da portaria ainda não foi informado pela API deste condomínio.") }
+                SecondaryButton("Criar solicitação") { controller.navigate(Route.REQUEST_FORM) }
+            }
+            Heading("Encomendas e visitantes")
+            MenuRow("Minhas encomendas", "Retirada e problemas com entregas", Glyph.BOX) { controller.navigate(Route.PARCELS) }
