@@ -18,3 +18,23 @@ data class ApiConfiguration(val baseUrl: String, val environment: String) {
         require(environment in setOf("staging", "production"))
     }
 }
+data class ApiResponseDto(val status: Int, val body: String)
+class ApiTransport(engine: HttpClientEngine, private val config: ApiConfiguration) {
+    private val client = HttpClient(engine) {
+        expectSuccess = false
+        followRedirects = false
+        install(HttpTimeout) {
+            requestTimeoutMillis = 20_000
+            connectTimeoutMillis = 10_000
+            socketTimeoutMillis = 20_000
+        }
+    }
+    private val json = Json { ignoreUnknownKeys = true }
+    suspend fun request(
+        contractPath: String,
+        contractMethod: HttpMethod,
+        contractHeaders: Map<String, String> = emptyMap(),
+        contractBody: String? = null,
+    ): ApiResponseDto {
+        require(contractPath.startsWith('/') && !contractPath.startsWith("//"))
+        return try {
