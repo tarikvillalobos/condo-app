@@ -32,6 +32,7 @@ targets:
         basedOnDependencyAnalysis: false
         script: |
           cd "$SRCROOT/.."
+          ./gradlew -Pbrand="$CONDO_BRAND" -PappEnvironment="$CONDO_ENVIRONMENT" :app:embedAndSignAppleFrameworkForXcode
 schemes:
   CondoApp:
     build:
