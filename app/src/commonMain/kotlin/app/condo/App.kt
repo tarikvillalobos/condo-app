@@ -38,3 +38,23 @@ fun CondoApp(controller: AppController) {
                                 Column(
                                     Modifier.widthIn(max = Tokens.maxContent).fillMaxWidth()
                                         .verticalScroll(scroll).padding(Tokens.page),
+                                    verticalArrangement = Arrangement.spacedBy(Tokens.lg),
+                                ) {
+                                    state.error?.let {
+                                        Panel(color = Tokens.warning) {
+                                            Text(it, color = Tokens.onWarning)
+                                            if (state.stale) Muted("Exibindo dados anteriores. Códigos e confirmações exigem atualização.")
+                                            SecondaryButton("Tentar novamente") { controller.refresh() }
+                                        }
+                                    }
+                                    if (state.session == null) AuthScreen(controller, state)
+                                    else if (state.snapshot == null) {
+                                        if (!state.loading) EmptyState("Conteúdo indisponível", "Atualize para carregar este condomínio.")
+                                    } else ScreenRouter(controller, state, expanded)
+                                    Spacer(Modifier.height(Tokens.md))
+                                }
+                            }
+                            if (state.session != null && !wide) BottomNavigation(controller, state)
+                        }
+                    }
+                }
