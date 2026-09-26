@@ -29,7 +29,6 @@ class IosVault(private val service: String) : SessionVault {
         memScoped {
             val result = alloc<CFTypeRefVar>()
             if (SecItemCopyMatching(query, result.ptr) != errSecSuccess) return@memScoped null
-            val data = result.value?.reinterpret<__CFData>() ?: return@memScoped null
             try {
                 CFDataGetBytePtr(data)?.readBytes(CFDataGetLength(data).toInt())?.decodeToString()
             } finally { CFRelease(data) }
