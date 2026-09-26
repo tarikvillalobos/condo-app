@@ -24,6 +24,7 @@ não equivale a liberar uma versão para produção.
 | Host Swift e UI iPhone | Compilação e 1 XCTest aprovados | iPhone 17 Pro, iOS 26.2: login, encomenda e troca de condomínio. |
 | UI iPad | 1 XCTest aprovado e capturas revisadas | iPad Pro 11 (M5), iOS 26.2: login, encomenda e troca de condomínio. |
 | Framework iOS físico | Release compilado | Target `iosArm64`; execução física e assinatura pendentes. |
+| Frameworks Apple na CI | Debug simulador e release físico aprovados | Runner macOS ARM64; resultado dos frameworks é separado do host Swift. |
 | Produção | 7 testes e Android release aprovados | Inspeção do DEX do APK confirma ausência de `Lapp/condo/demo` e presença de `UnavailableRepository`. |
 | Marca Viva | APK debug e teste de renderização aprovados | 58 PNGs; navegação para câmeras bloqueada; início azul e sem módulo de câmeras revisado. |
 
