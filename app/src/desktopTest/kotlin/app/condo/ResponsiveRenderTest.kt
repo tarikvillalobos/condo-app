@@ -75,6 +75,19 @@ class ResponsiveRenderTest {
         yield()
         controller.navigate(Route.PARCELS)
         render("parcels-empty", 390, 844)
+        controller.navigate(Route.CAMERAS)
+        render("cameras-empty", 600, 844)
+        extendedLists = true
+        controller.scenario(DemoScenario.NORMAL)
+        yield()
+        assertEquals(60, controller.state.value.snapshot!!.parcels.size)
+        controller.navigate(Route.PARCELS)
+        render("parcels-extensive", 320, 844)
+        render("parcels-extensive", 1200, 844)
+        controller.navigate(Route.CAMERAS)
+        render("cameras-extensive", 1200, 844)
+        controller.navigate(Route.BOOKINGS)
+        render("bookings-font200", 390, 844, 2f)
         controller.close()
     }
 }
