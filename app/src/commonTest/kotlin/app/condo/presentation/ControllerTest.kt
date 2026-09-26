@@ -18,3 +18,23 @@ class TestServices : PlatformServices {
         override val available = true
         var value: String? = null
         override fun read() = value
+        override fun write(value: String): Boolean { this.value = value; return true }
+        override fun clear() { value = null }
+    }
+    override val biometricStatus = "Teste"
+    override val notificationStatus = "Teste"
+    override fun copy(text: String) = Unit
+    override fun share(text: String) = "Teste"
+    override fun open(url: String) = "Teste"
+    override fun openNotificationSettings() = "Teste"
+}
+@OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
+class ControllerTest {
+    private val clock = AppClock { Instant.parse("2026-09-26T12:00:00Z") }
+    @Test fun updatesAllScreensAndClearsContextSynchronously() = runTest {
+        val services = TestServices()
+        val controller = AppController(DemoRepository(services.store, clock, 0), services, clock, this)
+        controller.login("alex@condo.demo", "Demo1234!", true)
+        advanceUntilIdle()
+        assertEquals(2, controller.state.value.snapshot!!.parcels.count { it.status != ParcelStatus.COLLECTED })
+        controller.execute(Command.ApplyLockerEvent(LockerEvent("event", "p1", clock.now(), true)))
