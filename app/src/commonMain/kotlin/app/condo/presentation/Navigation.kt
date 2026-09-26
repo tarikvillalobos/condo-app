@@ -18,3 +18,23 @@ fun Route.glyph(): Glyph = when (this) {
     Route.PETS, Route.PET_DETAIL, Route.PET_FORM -> Glyph.PAW
     Route.BOOKINGS, Route.EVENTS -> Glyph.CALENDAR
     Route.NOTICES, Route.BULLETIN -> Glyph.NOTICE
+    Route.SERVICES, Route.REQUEST_FORM -> Glyph.WARNING
+    Route.CONCIERGE -> Glyph.SHIELD
+    else -> Glyph.USER
+}
+fun AppState.allows(route: Route) = route.module == null ||
+    route.module in snapshot?.membership?.modules.orEmpty().intersect(Brands.current.modules)
+@Composable
+fun BottomNavigation(controller: AppController, state: AppState) {
+    Surface(color = Color.White, shadowElevation = 2.dp) {
+        Row(Modifier.fillMaxWidth().padding(vertical = Tokens.sm)) {
+            mainDestinations.filter(state::allows).forEach { route ->
+                val selected = state.destination.route == route
+                Surface({ controller.navigate(route) }, Modifier.weight(1f), color = Color.Transparent) {
+                    Column(Modifier.padding(Tokens.xs).heightIn(min = Tokens.touch),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(Tokens.xs)) {
+                        AppIcon(route.glyph(), tint = if (selected) LocalBrand.current.primary else Tokens.secondary)
+                        Text(route.title, style = MaterialTheme.typography.labelSmall,
+                            color = if (selected) LocalBrand.current.primary else Tokens.secondary)
+                    }
