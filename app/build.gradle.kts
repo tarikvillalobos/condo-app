@@ -38,3 +38,23 @@ kotlin {
     android {
         namespace = "app.condo.shared"
         compileSdk = 36
+        minSdk = 26
+        androidResources.enable = true
+    }
+    jvm("desktop")
+    listOf(iosArm64(), iosSimulatorArm64()).forEach {
+        it.binaries.framework {
+            baseName = "CondoApp"
+            isStatic = true
+        }
+    }
+    sourceSets {
+        commonMain.kotlin.srcDir(generatedSource)
+        commonMain.dependencies {
+            implementation(project(":domain"))
+            if (environment == "demo") implementation(project(":demo"))
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.components.resources)
+            implementation(libs.ktor.core)
