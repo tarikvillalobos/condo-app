@@ -18,3 +18,12 @@ class MainActivity : ComponentActivity() {
         controller = lastCustomNonConfigurationInstance as? AppController ?: run {
             val platform = AndroidServices(applicationContext)
             AppController(createRepository(platform.store, SystemAppClock), platform)
+        }
+        setContent { CondoApp(controller) }
+    }
+    override fun onRetainCustomNonConfigurationInstance(): Any = controller
+    override fun onDestroy() {
+        if (!isChangingConfigurations) controller.close()
+        super.onDestroy()
+    }
+}
