@@ -70,8 +70,6 @@ fun SideNavigation(controller: AppController, state: AppState, expanded: Boolean
                         AppIcon(route.glyph())
                         Text(route.title, style = MaterialTheme.typography.titleSmall)
                     } else Column(Modifier.padding(Tokens.sm), horizontalAlignment = Alignment.CenterHorizontally) {
-                        AppIcon(route.glyph())
-                        Text(route.title, style = MaterialTheme.typography.labelSmall)
                     }
                 }
             }
