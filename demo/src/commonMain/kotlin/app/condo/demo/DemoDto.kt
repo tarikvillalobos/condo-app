@@ -18,3 +18,20 @@ internal data class DemoDocument(
 @Serializable
 internal data class DemoCodeDto(
     val owner: String,
+    val payload: String,
+    val number: String,
+    val expires: String,
+    val consumed: Boolean,
+) {
+    fun toDomain() = AccessCode(owner, payload, number, Instant.parse(expires), consumed)
+}
+internal fun AccessCode.toDto() = DemoCodeDto(
+    ownerId, payload, numericCode, expiresAt.toString(), consumed,
+)
+internal val demoJson = Json { ignoreUnknownKeys = true }
+internal fun row(type: String, vararg fields: Pair<String, Any?>) = DemoRow(
+    type, fields.associate { (key, value) -> key to (value?.toString() ?: "") },
+)
+internal fun DemoRow.s(key: String) = fields[key].orEmpty()
+internal fun DemoRow.time(key: String) = Instant.parse(s(key))
+internal fun DemoRow.flag(key: String) = s(key).toBooleanStrict()
