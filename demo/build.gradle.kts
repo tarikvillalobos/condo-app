@@ -7,6 +7,7 @@ kotlin {
     jvmToolchain(21)
     android {
         namespace = "app.condo.demo"
+        compileSdk = 37
         minSdk = 26
     }
     jvm("desktop")
