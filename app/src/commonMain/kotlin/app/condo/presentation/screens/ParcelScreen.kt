@@ -38,3 +38,23 @@ private fun ParcelList(controller: AppController, state: AppState) {
             Heading(it.second)
         }
     }
+    val visible = parcels.filter {
+        when (filter) {
+            "Aguardando" -> it.status != ParcelStatus.COLLECTED
+            "Histórico" -> it.status == ParcelStatus.COLLECTED
+            else -> true
+        }
+    }
+    if (visible.isEmpty()) EmptyState("Nenhuma encomenda", "As encomendas deste filtro aparecerão aqui.", Glyph.BOX)
+    visible.forEach { parcel ->
+        Panel {
+            MenuRow(parcel.carrier, "${parcel.receivedAt.fullLabel()} · ${parcel.locker}", Glyph.BOX) {
+                controller.navigate(Route.PARCEL_DETAIL, parcel.id)
+            }
+            StatusChip(parcel.statusLabel(), parcel.status != ParcelStatus.COLLECTED)
+        }
+    }
+}
+@Composable
+private fun ParcelDetail(controller: AppController, state: AppState, parcel: Parcel?) {
+    if (parcel == null) {
