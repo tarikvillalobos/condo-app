@@ -7,6 +7,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 
 val mainDestinations = listOf(Route.HOME, Route.PARCELS, Route.VISITS, Route.CAMERAS, Route.PROFILE)
