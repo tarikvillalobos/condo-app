@@ -43,6 +43,7 @@ Os assets são obtidos automaticamente na primeira execução.
 
 ## Executar
 
+Desktop (macOS, Windows e Linux):
 
 🚧 This project is currently under development.
 
