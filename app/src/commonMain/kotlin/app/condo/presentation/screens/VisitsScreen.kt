@@ -78,3 +78,4 @@ private fun VisitForm(controller: AppController, state: AppState) {
         }
         PrimaryButton("Salvar visita", !state.submitting, controller::submitVisit)
     }
+}
