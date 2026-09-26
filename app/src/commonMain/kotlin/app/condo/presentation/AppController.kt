@@ -22,6 +22,10 @@ class AppController(
     private var navigationVersion = 0
     private var activeId: String? = null
     private var loadingJob: Job? = null
+    private var restorationJob: Job? = null
+    private var logoutJob: Job? = null
+    private val actionJobs = mutableSetOf<Job>()
+    private val vaultMutex = Mutex()
     init {
         platform.vault.read()?.let { reference ->
             runAction {
