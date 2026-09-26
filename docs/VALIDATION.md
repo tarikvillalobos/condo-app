@@ -106,7 +106,6 @@ Na raiz do projeto, com os pré-requisitos do [README](../README.md):
 
 Os testes de UI desktop precisam de sessão gráfica. `createDistributable`
 produz a imagem de aplicação do host em `app/build/compose/binaries/main/app/`.
-Esses resultados macOS não validam empacotamento ou execução nativa Windows/Linux.
 
 ### Android
 
