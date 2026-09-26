@@ -38,3 +38,23 @@ class ResidentInstrumentedTest {
         compose.onNode(hasText("Mercado Livre") and hasClickAction()).performScrollTo().performClick()
         compose.onNodeWithText("Já retirei a encomenda").performScrollTo().performClick()
         waitForText("Entendi")
+        compose.onNodeWithText("Entendi").performClick()
+        waitForText("Retirada informada · aguardando locker")
+        compose.onAllNodesWithText("Retirada informada · aguardando locker")[0].assertExists()
+    }
+
+    @Test fun visitDraftSurvivesActivityRecreationAndCanBeSubmitted() {
+        compose.onNodeWithText("Entrar na demonstração").performScrollTo().performClick()
+        waitForText("Olá, Alex")
+        compose.onNode(hasText("Visitas") and hasClickAction()).performClick()
+        compose.onNodeWithText("+ Nova visita").performScrollTo().performClick()
+        enter("Nome completo", "Nina Instrumentação")
+        enter("Motivo ou serviço", "Entrega autorizada")
+        compose.activityRule.scenario.recreate()
+        field("Nome completo").assertTextContains("Nina Instrumentação")
+        field("Motivo ou serviço").assertTextContains("Entrega autorizada")
+        closeSoftKeyboard()
+        compose.onNodeWithText("Salvar visita").performScrollTo().performClick()
+        waitForText("Visita salva na demonstração.")
+        compose.onNodeWithText("Entendi").performClick()
+        compose.onNodeWithText("Agendadas").performScrollTo().performClick()
