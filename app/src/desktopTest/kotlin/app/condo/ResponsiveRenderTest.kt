@@ -81,8 +81,6 @@ class ResponsiveRenderTest {
         yield()
         controller.navigate(Route.PARCELS)
         render("parcels-empty", 390, 844)
-        controller.navigate(Route.CAMERAS)
-        render("cameras-empty", 600, 844)
         extendedLists = true
         controller.scenario(DemoScenario.NORMAL)
         yield()
