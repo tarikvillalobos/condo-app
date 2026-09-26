@@ -55,7 +55,6 @@ fun CondoApp(controller: AppController) {
                                     Spacer(Modifier.height(Tokens.md))
                                 }
                             }
-                            if (state.session != null && !wide) BottomNavigation(controller, state)
                         }
                     }
                 }
