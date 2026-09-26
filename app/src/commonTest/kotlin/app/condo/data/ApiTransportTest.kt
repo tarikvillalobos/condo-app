@@ -38,3 +38,10 @@ class ApiTransportTest {
         val failure = assertFailsWith<AppFailure> {
             transport.map(ApiResponseDto(200, "private-secret"), FixtureDto.serializer()) { it.value }
         }
+        assertFalse(failure.message.contains("private-secret"))
+        transport.close()
+    }
+    @Test fun externalConnectionsRequireTls() {
+        assertFailsWith<IllegalArgumentException> { ApiConfiguration("http://external.invalid", "production") }
+    }
+}
