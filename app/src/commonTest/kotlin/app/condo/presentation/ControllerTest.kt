@@ -131,4 +131,24 @@ class ControllerTest {
     }
     @Test fun navigationPreservesNewPageWhilePublishingCompletedChanges() = runTest {
         val services = TestServices()
+        val controller = AppController(DemoRepository(services.store, clock, 100), services, clock, this,
+            StandardTestDispatcher(testScheduler))
+        controller.login("alex@condo.demo", "Demo1234!", false)
+        advanceUntilIdle()
+        controller.navigate(Route.REQUEST_FORM)
+        controller.execute(Command.CreateRequest("Manutenção", "Elevador", "Verificar o elevador"), "Salvo") { controller.back() }
+        runCurrent()
+        controller.navigate(Route.PROFILE)
+        advanceUntilIdle()
+        assertEquals(Route.PROFILE, controller.state.value.destination.route)
+        assertEquals("Elevador", controller.state.value.snapshot!!.requests.single().subject)
+        assertNull(controller.state.value.message)
+        controller.navigate(Route.PROFILE_FORM)
+        controller.saveAccount("Novo Nome", "")
+        runCurrent()
+        controller.navigate(Route.HOME)
+        advanceUntilIdle()
+        assertEquals(Route.HOME, controller.state.value.destination.route)
+        assertEquals("Novo Nome", controller.state.value.session?.account?.name)
+    }
 }
