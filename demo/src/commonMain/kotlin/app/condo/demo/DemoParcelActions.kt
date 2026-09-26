@@ -38,3 +38,6 @@ internal fun DemoMutation.lockerEvent(event: LockerEvent) {
     })
     codes.replaceAllMatching("pickup:${parcel.id}") { it.copy(consumed = true) }
 }
+internal fun MutableList<AccessCode>.replaceAllMatching(owner: String, transform: (AccessCode) -> AccessCode) {
+    indices.forEach { index -> if (this[index].ownerId == owner) this[index] = transform(this[index]) }
+}
