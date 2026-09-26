@@ -47,6 +47,8 @@ class ResponsiveRenderTest {
                 data.close()
             } finally { scene.close() }
         }
+        for (width in listOf(320, 390, 430, 600, 840, 1200)) render("login", width, 844)
+        render("login-font200", 390, 844, 2f)
         controller.login("alex@condo.demo", "Demo1234!", false)
         yield()
         assertNotNull(controller.state.value.snapshot)
