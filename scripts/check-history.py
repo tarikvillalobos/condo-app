@@ -3,7 +3,6 @@
 import subprocess
 import sys
 
-baseline = sys.argv[1] if len(sys.argv) > 1 else 'eb789c86cefc35e24b50cae5237c383e49a4cd00'
 commits = subprocess.check_output(['git', 'rev-list', f'{baseline}..HEAD'], text=True).splitlines()
 for commit in commits:
     rows = subprocess.check_output([
