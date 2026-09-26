@@ -14,6 +14,7 @@ class AppController(
     val platform: PlatformServices,
     val clock: AppClock = SystemAppClock,
     private val scope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate),
+    private val storageDispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) {
     private val mutable = MutableStateFlow(AppState())
     val state: StateFlow<AppState> = mutable.asStateFlow()
