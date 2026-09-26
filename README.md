@@ -140,3 +140,12 @@ Inclua os avisos de bibliotecas e das fontes em qualquer distribuição.
 ## Histórico de commits
 
 `git config core.hooksPath .githooks` ativa a verificação de staging após clonar.
+Cada commit desta implementação altera exatamente um arquivo, com no máximo 20
+linhas adicionadas + removidas. Arquivos são construídos incrementalmente.
+`scripts/commit-file.py caminho 'feat: descrição específica'` auxilia o processo.
+O histórico inicial do README é preservado como baseline da auditoria.
+
+## Licença
+
+Software privado e proprietário. Nenhuma licença open-source é concedida para este projeto.
+As dependências e fontes mantêm suas próprias licenças; consulte [terceiros](docs/THIRD-PARTY.md).
