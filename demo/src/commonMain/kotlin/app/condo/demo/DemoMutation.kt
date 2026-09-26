@@ -18,6 +18,8 @@ internal class DemoMutation(
         when (command) {
             is Command.ReportCollected -> reportCollected(command.parcelId)
             is Command.IssuePickupCode -> code = pickupCode(command.parcelId)
+            is Command.ConsumePickupCode -> consumePickup(command.payload)
+            is Command.DepositParcel -> deposit(command.eventId, command.parcel)
             is Command.ApplyLockerEvent -> lockerEvent(command.event)
             is Command.SaveVisit -> saveVisit(command.visit)
             is Command.SetVisitStatus -> visitStatus(command.visitId, command.status)
