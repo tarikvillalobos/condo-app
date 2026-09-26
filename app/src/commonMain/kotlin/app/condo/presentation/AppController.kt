@@ -19,6 +19,7 @@ class AppController(
     private val mutable = MutableStateFlow(AppState())
     val state: StateFlow<AppState> = mutable.asStateFlow()
     private var contextVersion = 0
+    private var navigationVersion = 0
     private var activeId: String? = null
     private var loadingJob: Job? = null
     init {
