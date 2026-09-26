@@ -1,6 +1,5 @@
 # Condo App
 
-White-label mobile application for residential communities and condominiums.
 
 The app provides residents with a centralized place to access services, information, and features related to their condominium.
 
