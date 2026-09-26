@@ -77,6 +77,9 @@ fun CondoApp(controller: AppController) {
     }
 }
 @Composable
+private fun AppHeader(controller: AppController, state: AppState, stacked: Boolean) {
+    val title = if (state.destination.route == Route.HOME) LocalBrand.current.name else state.destination.route.title
+    Column {
     Row(Modifier.fillMaxWidth().background(Color.White).padding(horizontal = Tokens.page, vertical = Tokens.sm),
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Tokens.md)) {
         if (state.destination.route != Route.HOME) {
