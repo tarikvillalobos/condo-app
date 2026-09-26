@@ -38,3 +38,7 @@ class IosServices : PlatformServices {
     }
     override fun openNotificationSettings(): String {
         val url = NSURL.URLWithString(UIApplicationOpenSettingsURLString) ?: return "Abra os Ajustes do iOS."
+        UIApplication.sharedApplication.openURL(url, emptyMap<Any?, Any?>(), null)
+        return "Permissão controlada pelos Ajustes do iOS."
+    }
+}
