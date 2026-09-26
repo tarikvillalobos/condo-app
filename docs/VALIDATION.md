@@ -23,8 +23,6 @@ não equivale a liberar uma versão para produção.
 | Framework iOS de simulador | Debug compilado | Target `iosSimulatorArm64`. |
 | Host Swift e UI iPhone | Compilação e 1 XCTest aprovados | iPhone 17 Pro, iOS 26.2: login, encomenda e troca de condomínio. |
 | UI iPad | 1 XCTest aprovado e capturas revisadas | iPad Pro 11 (M5), iOS 26.2: login, encomenda e troca de condomínio. |
-| Framework iOS físico | Release compilado | Target `iosArm64`; execução física e assinatura pendentes. |
-| Host iOS físico | Debug `iphoneos` ARM64 compilado sem assinatura | Aparelho pareado por cabo e Modo Desenvolvedor ativo; assinatura bloqueada por `No Account for Team` e ausência de perfil no Xcode. |
 | Frameworks Apple na CI | Debug simulador e release físico aprovados | Runner macOS ARM64; resultado dos frameworks é separado do host Swift. |
 | Host Swift na CI | `xcodebuild` aprovado | Simulador ARM64; distribuição assinada e execução física continuam pendentes. |
 | Produção | 7 testes e Android release aprovados | Inspeção do DEX do APK confirma ausência de `Lapp/condo/demo` e presença de `UnavailableRepository`. |
