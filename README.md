@@ -100,3 +100,23 @@ permanecem no armazenamento demonstrativo, separados por conta e condomínio.
 
 ## Testes e builds
 
+```sh
+./gradlew :domain:desktopTest :demo:desktopTest :app:desktopTest
+./gradlew :androidApp:assembleDebug
+./gradlew :app:linkDebugFrameworkIosSimulatorArm64
+./gradlew :app:linkReleaseFrameworkIosArm64
+python3 scripts/check-history.py
+```
+
+Testes Compose geram capturas em `app/build/validation/`.
+Relatórios ficam em `<módulo>/build/reports/tests/`.
+A CI verifica lógica, transporte HTTP com respostas controladas, UI, Android,
+frameworks Apple e compilação Windows. A execução em cada runner depende do próprio ambiente.
+
+## White-label e ambientes
+
+```sh
+./gradlew -Pbrand=viva :app:run
+./gradlew -Pbrand=viva :androidApp:assembleDebug
+./gradlew -PappEnvironment=production :app:run
+```
