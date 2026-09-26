@@ -102,6 +102,10 @@ class AppController(
         val id = activeId ?: return@runAction
         val outcome = repository.execute(id, command)
         if (version != contextVersion) return@runAction
+        val samePage = navigation == navigationVersion
+        mutable.update { it.copy(snapshot = outcome.snapshot, code = outcome.code.takeIf { samePage },
+            showCode = samePage && outcome.code != null, stale = false, message = success.takeIf { samePage }) }
+        if (samePage) after?.invoke()
     }
     fun dismissCode() = mutable.update { it.copy(showCode = false, code = null) }
     fun saveAccount(name: String, phone: String) = runAction {
