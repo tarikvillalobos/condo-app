@@ -30,7 +30,6 @@ object Brands {
         "viva", "Viva Morar", Color(0xFF375CB3), Color(0xFF183466), "V",
         Module.entries.toSet() - Module.CAMERAS, "ajuda@example.invalid",
         "Mais vida em comunidade.",
-        condo.privacy, condo.terms, emptyMap(),
     )
     val current: Brand get() = if (BRAND_ID == "viva") viva else condo
 }
