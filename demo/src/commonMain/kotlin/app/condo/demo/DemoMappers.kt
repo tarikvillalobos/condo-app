@@ -58,3 +58,23 @@ internal fun Snapshot.toRows(): List<DemoRow> = buildList {
             "endsAt" to value.endsAt,
             "cancelled" to value.cancelled,
         ))
+    }
+    requests.forEach { value ->
+        add(row("requests",
+            "id" to value.id,
+            "category" to value.category,
+            "subject" to value.subject,
+            "description" to value.description,
+            "createdAt" to value.createdAt,
+            "status" to value.status,
+        ))
+    }
+    notices.forEach { value ->
+        add(row("notices",
+            "id" to value.id,
+            "title" to value.title,
+            "target" to value.target,
+            "read" to value.read,
+        ))
+    }
+    vehicles.forEach { value ->
