@@ -30,7 +30,6 @@ fun BookingsScreen(controller: AppController, state: AppState) {
         }
         AdaptiveGrid(dates, minimum = 52.dp, maximumColumns = 7) { day ->
             FilterChip(date == day, { controller.field("booking.date", day.toString()) },
-                { Text(day.day.toString()) }, modifier = Modifier.heightIn(min = Tokens.touch))
         }
         FlowRow(horizontalArrangement = Arrangement.spacedBy(Tokens.sm)) {
             listOf(10, 14, 18).forEach { startHour ->
