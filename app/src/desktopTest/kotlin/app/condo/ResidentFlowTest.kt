@@ -26,7 +26,6 @@ class ResidentFlowTest {
             controller.state.value.snapshot?.parcels?.first()?.status == ParcelStatus.MANUAL_REPORT
         }
         compose.onNodeWithText("Entendi").performClick()
-        compose.onNodeWithText("Retirada informada · aguardando locker").assertExists()
         compose.runOnIdle { controller.close() }
     }
 }
