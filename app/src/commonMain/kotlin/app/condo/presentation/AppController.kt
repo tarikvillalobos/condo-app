@@ -32,6 +32,7 @@ class AppController(
     fun clearMessage() = mutable.update { it.copy(message = null, error = null) }
     fun message(value: String) = mutable.update { it.copy(message = value) }
     fun navigate(route: Route, id: String? = null) {
+        if (route.module != null && route.module !in state.value.snapshot?.membership?.modules.orEmpty().intersect(Brands.current.modules)) {
             message("Este módulo não está disponível neste condomínio.")
             return
         }
