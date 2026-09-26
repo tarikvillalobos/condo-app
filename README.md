@@ -77,6 +77,8 @@ xcodebuild -project iosApp/CondoApp.xcodeproj -scheme CondoApp \
   -configuration Debug ARCHS=arm64 ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=NO build
 ```
 
+O target de simulador iOS configurado é ARM64.
+
 ## Testar a demonstração
 
 Use **Entrar na demonstração**, ou `alex@condo.demo` / `Demo1234!`.
