@@ -142,6 +142,7 @@ class AppController(
     }
     fun logout() {
         contextVersion++
+        navigationVersion++
         loadingJob?.cancel()
         activeId = null
         platform.vault.clear()
