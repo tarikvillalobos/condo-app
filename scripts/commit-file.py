@@ -18,3 +18,23 @@ def commit_file(name, message):
     offset = 0
     part = 0
     def save():
+        nonlocal part
+        blob = git('hash-object','-w','--stdin',data=''.join(current).encode()).strip().decode()
+        mode = '100755' if path.stat().st_mode & 0o111 else '100644'
+        git('update-index','--add','--cacheinfo',mode,blob,name)
+        rows = git('diff','--cached','--numstat').decode().splitlines()
+        assert len(rows) == 1, rows
+        added, removed, changed = rows[0].split('\t')
+        assert changed == name and int(added) + int(removed) <= 20, rows
+        part += 1
+        git('commit','-m',f'{message} ({part})')
+    for tag, a, b, c, d in changes:
+        if tag == 'equal': continue
+        pos = a + offset
+        remaining = b - a
+        while remaining:
+            count = min(20,remaining)
+            del current[pos:pos+count]
+            offset -= count
+            remaining -= count
+            save()
