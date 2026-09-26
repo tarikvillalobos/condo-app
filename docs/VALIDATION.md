@@ -24,7 +24,7 @@ não equivale a liberar uma versão para produção.
 | Host Swift e UI iPhone | Compilação e 1 XCTest aprovados | iPhone 17 Pro, iOS 26.2: login, encomenda e troca de condomínio. |
 | UI iPad | 1 XCTest aprovado e capturas revisadas | iPad Pro 11 (M5), iOS 26.2: login, encomenda e troca de condomínio. |
 | Framework iOS físico | Release compilado | Target `iosArm64`; execução física e assinatura pendentes. |
-| Host iOS físico | Debug `iphoneos` ARM64 compilado sem assinatura | O iPhone foi pareado por cabo; instalação bloqueada pelo Modo Desenvolvedor desativado e ausência de conta/perfil no Xcode. |
+| Host iOS físico | Debug `iphoneos` ARM64 compilado sem assinatura | Aparelho pareado por cabo e Modo Desenvolvedor ativo; assinatura bloqueada por `No Account for Team` e ausência de perfil no Xcode. |
 | Frameworks Apple na CI | Debug simulador e release físico aprovados | Runner macOS ARM64; resultado dos frameworks é separado do host Swift. |
 | Host Swift na CI | `xcodebuild` aprovado | Simulador ARM64; distribuição assinada e execução física continuam pendentes. |
 | Produção | 7 testes e Android release aprovados | Inspeção do DEX do APK confirma ausência de `Lapp/condo/demo` e presença de `UnavailableRepository`. |
@@ -204,7 +204,7 @@ Windows, testes desktop Linux, builds Android e frameworks/host Apple foram apro
 - Biometria real, push remoto, vídeo/câmeras e operações de portaria/locker aguardam integração.
 - Autenticação, autorização, expiração e cache de dados reais dependem do contrato da API externa.
 - Assinaturas, notarização, lojas e ambientes de homologação não foram validados.
-- O build `iphoneos` sem assinatura passou. Após pareamento por cabo, Xcode retornou `Developer Mode disabled`; a instalação também requer perfil criado pela conta Apple no Xcode.
+- O build `iphoneos` sem assinatura passou. Após ativar o Modo Desenvolvedor, Xcode alcançou o aparelho; a assinatura ainda falhou com `No Account for Team` e ausência de perfil de desenvolvimento.
 
 Nenhum APK, `.app`, framework, screenshot ou outro binário faz parte desta
 documentação versionada. Consulte [o progresso](PROGRESS.md) e
