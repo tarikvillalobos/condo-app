@@ -15,6 +15,17 @@ Consulte [validações](docs/VALIDATION.md) e [pendências](docs/PROGRESS.md).
 
 ## Recursos
 
+- Login, recuperação, primeiro acesso por convite e logout.
+- Condomínios vinculados e troca de contexto sem manter dados da unidade anterior.
+- Encomendas, indicadores dos últimos 30 dias, histórico e retirada por QR Code.
+- Distinção entre retirada informada pelo morador e evento simulado de locker.
+- Câmeras com filtros, permissões e disponibilidade demonstrativa explícita.
+- Visitantes, prestadores, convites com validade, edição, revogação e uso único.
+- Pets, vacinação, cadastro, edição e alertas de perdidos e encontrados.
+- Reservas, conflitos demonstrativos, cancelamento e agenda de eventos.
+- Perfil, moradores, veículos, preferências, privacidade e suporte.
+- Avisos, notificações lidas/não lidas, solicitações e ocorrências.
+- Duas marcas configuráveis, com módulos por cliente e por condomínio.
 
 Additional features may be added depending on each client's needs.
 
