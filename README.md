@@ -57,5 +57,7 @@ Android, com emulador ou dispositivo conectado:
 adb shell am start -n app.condo.resident/app.condo.android.MainActivity
 ```
 
+Para gerar apenas o APK, use `./gradlew :androidApp:assembleDebug`.
+A saída fica em `androidApp/build/outputs/apk/debug/`.
 
 Private and proprietary software.
