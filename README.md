@@ -103,6 +103,7 @@ permanecem no armazenamento demonstrativo, separados por conta e condomínio.
 ```sh
 ./gradlew :domain:desktopTest :demo:desktopTest :app:desktopTest
 ./gradlew :androidApp:assembleDebug
+./gradlew :androidApp:connectedDebugAndroidTest
 ./gradlew :app:linkDebugFrameworkIosSimulatorArm64
 ./gradlew :app:linkReleaseFrameworkIosArm64
 python3 scripts/check-history.py
