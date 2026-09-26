@@ -58,3 +58,17 @@ class ResidentInstrumentedTest {
         waitForText("Visita salva na demonstração.")
         compose.onNodeWithText("Entendi").performClick()
         compose.onNodeWithText("Agendadas").performScrollTo().performClick()
+        waitForText("Nina Instrumentação")
+        compose.onNodeWithText("Nina Instrumentação").performScrollTo().assertIsDisplayed()
+    }
+
+    private fun field(label: String) = compose.onNode(hasSetTextAction() and hasText(label))
+    private fun enter(label: String, value: String) {
+        field(label).performScrollTo().performClick().performTextReplacement(value)
+    }
+    private fun waitForText(value: String) {
+        compose.waitUntil(10_000) {
+            compose.onAllNodesWithText(value).fetchSemanticsNodes().isNotEmpty()
+        }
+    }
+}
