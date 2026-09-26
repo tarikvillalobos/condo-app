@@ -29,6 +29,13 @@ Consulte [validações](docs/VALIDATION.md) e [pendências](docs/PROGRESS.md).
 
 ## Pré-requisitos
 
+JDK 21, Python 3, acesso inicial à internet e Git. Para Android: SDK 36,
+build-tools 36 e `ANDROID_HOME` ou `local.properties` com `sdk.dir`.
+Para iOS: macOS, Xcode e XcodeGen (`brew install xcodegen`).
+O catálogo `gradle/libs.versions.toml` centraliza Kotlin 2.4.20, Compose 1.12.0,
+AGP 9.2.0, Ktor Client 3.5.2 e bibliotecas. Gradle está fixado em 9.4.1.
+As versões foram conferidas nas documentações oficiais, com links em
+[arquitetura](docs/ARCHITECTURE.md). Resultados com o Xcode local constam em validações.
 
 This project is designed to support multiple condominiums, brands, and clients.
 
