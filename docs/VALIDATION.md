@@ -106,6 +106,8 @@ Na raiz do projeto, com os pré-requisitos do [README](../README.md):
 
 Os testes de UI desktop precisam de sessão gráfica. `createDistributable`
 produz a imagem de aplicação do host em `app/build/compose/binaries/main/app/`.
+Esses resultados macOS não validam empacotamento Windows/Linux. A CI executou
+testes de UI Linux com Xvfb e compilou o desktop Windows, nos limites registrados acima.
 
 ### Android
 
