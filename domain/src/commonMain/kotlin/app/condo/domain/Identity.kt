@@ -18,3 +18,23 @@ interface SessionVault {
     val available: Boolean
     fun read(): String?
     fun write(value: String): Boolean
+    fun clear()
+}
+enum class Module(val label: String) {
+    PARCELS("Encomendas"), CAMERAS("Câmeras"), VISITS("Visitas"),
+    PETS("Pets"), BOOKINGS("Reservas"), NOTICES("Avisos"),
+    SERVICES("Solicitações"), EVENTS("Agenda"), CONCIERGE("Portaria")
+}
+data class Account(val id: String, val name: String, val email: String, val phone: String)
+data class Membership(
+    val id: String,
+    val name: String,
+    val unit: String,
+    val modules: Set<Module> = Module.entries.toSet(),
+    val cameraAccess: Boolean = true,
+    val recordingAccess: Boolean = false,
+)
+data class Session(val account: Account, val memberships: List<Membership>)
+data class Preferences(
+    val parcels: Boolean = true,
+    val visits: Boolean = true,
