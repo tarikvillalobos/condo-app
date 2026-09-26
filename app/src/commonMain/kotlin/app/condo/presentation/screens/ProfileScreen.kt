@@ -78,3 +78,23 @@ fun ProfileScreen(controller: AppController, state: AppState) {
             }
         }
         Route.CONDOMINIUMS -> {
+            Text("Escolha qual condomínio você quer ver agora")
+            session.memberships.forEach { member ->
+                MenuRow(member.name, member.unit, Glyph.BUILDING) { controller.switchMembership(member.id) }
+            }
+            Heading("Vincular outro condomínio")
+            FormField(controller, "link.invitation", "Código do convite")
+            Muted("Convite demonstrativo: VINCULAR-DEMO")
+            PrimaryButton("Vincular condomínio", !state.submitting) { controller.link(state.forms["link.invitation"].orEmpty()) }
+        }
+        Route.SECURITY -> {
+            Heading("Alterar senha")
+            FormField(controller, "security.current", "Senha atual", secret = true)
+            FormField(controller, "security.new", "Nova senha", secret = true)
+            PrimaryButton("Alterar senha", !state.submitting) { controller.password(state.forms["security.current"].orEmpty(), state.forms["security.new"].orEmpty()) }
+            Heading("Biometria")
+            Text(controller.platform.biometricStatus)
+            Muted("Ativação de login biométrico depende do contrato de sessão da API. Nenhum dado biométrico é coletado pelo app.")
+        }
+        Route.PRIVACY -> {
+            Heading("Seus dados, suas escolhas")
