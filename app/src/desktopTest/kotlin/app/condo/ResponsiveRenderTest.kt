@@ -16,6 +16,23 @@ class ResponsiveRenderTest {
     @Test fun renderReferenceScreensAtAllRequestedWidths() = runBlocking(Dispatchers.Main) {
         val clock = AppClock { Instant.parse("2026-09-26T12:00:00Z") }
         val platform = TestServices()
+        val demo = DemoRepository(platform.store, clock, 0)
+        var extendedLists = false
+        val repository = object : CondoRepository by demo {
+            override suspend fun load(membershipId: String): Snapshot {
+                val snapshot = demo.load(membershipId)
+                if (!extendedLists) return snapshot
+                return snapshot.copy(
+                    parcels = List(60) { index -> snapshot.parcels.first().copy(
+                        id = "long-$index", carrier = "Transportadora com nome extenso para validar o cartão $index",
+                    ) },
+                    cameras = List(12) { index -> snapshot.cameras.first().copy(
+                        id = "camera-$index", name = "Área comum com identificação extensa $index",
+                    ) },
+                )
+            }
+        }
+        val controller = AppController(repository, platform, clock, storageDispatcher = Dispatchers.Main.immediate)
         val folder = File("build/validation").apply { mkdirs() }
         fun render(name: String, width: Int, height: Int, scale: Float = 1f) {
             val scene = ImageComposeScene(width, height, Density(1f, scale)) { CondoApp(controller) }
