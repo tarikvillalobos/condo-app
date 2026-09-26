@@ -53,3 +53,8 @@ schemes:
         CondoAppUITests: [test]
     run:
       config: Debug
+    test:
+      config: Debug
+      targets:
+        - name: CondoAppUITests
+          parallelizable: false
