@@ -38,3 +38,23 @@ fun ProfileScreen(controller: AppController, state: AppState) {
                     controller.execute(Command.SavePreferences(prefs.copy(notices = it)))
                 }
                 Muted(controller.platform.notificationStatus)
+                Muted("Preferências salvas no app. Serviço de push externo ainda não configurado.")
+                TextButton({ controller.message(controller.platform.openNotificationSettings()) }) { Text("Configurações do sistema") }
+            }
+            Heading("Conta e segurança")
+            listOf(Route.PROFILE_FORM, Route.SECURITY, Route.PRIVACY, Route.HELP).forEach { route ->
+                MenuRow(route.title, glyph = if (route == Route.SECURITY) Glyph.LOCK else Glyph.USER) { controller.navigate(route) }
+            }
+            TextButton(controller::logout) { Text("Sair da conta", color = Tokens.danger) }
+        }
+        Route.PROFILE_FORM -> {
+            FormField(controller, "profile.name", "Nome", session.account.name)
+            FormField(controller, "profile.phone", "Telefone", session.account.phone)
+            Muted("E-mail: ${session.account.email}. Alterações de e-mail dependem de verificação pela API.")
+            PrimaryButton("Salvar dados", !state.submitting) {
+                controller.saveAccount(state.forms["profile.name"] ?: session.account.name, state.forms["profile.phone"] ?: session.account.phone)
+            }
+        }
+        Route.MEMBERS -> {
+            Text(snapshot.membership.unit)
+            snapshot.members.forEach { MenuRow(it.name, it.relationship, Glyph.USER) {
