@@ -119,4 +119,12 @@ class DemoRepositoryTest {
         val r = repo()
         r.signIn()
         r.linkMembership("VINCULAR-DEMO")
+        assertFailsWith<AppFailure> { r.linkMembership("VINCULAR-DEMO") }
+        r.updateAccount("Novo Exemplo", "0000")
+        val restarted = repo()
+        val session = restarted.signIn()
+        assertEquals("Novo Exemplo", session.account.name)
+        assertEquals(3, session.memberships.size)
+    }
+
 }
