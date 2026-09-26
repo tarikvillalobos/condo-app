@@ -3,6 +3,8 @@ package app.condo
 import app.condo.demo.DemoRepository
 import app.condo.domain.*
 import app.condo.presentation.*
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import org.junit.Rule
