@@ -1,6 +1,7 @@
 package app.condo.android
 
 import android.content.Context
+import android.view.inputmethod.InputMethodManager
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.espresso.Espresso.closeSoftKeyboard
