@@ -18,6 +18,7 @@ fun ProfileScreen(controller: AppController, state: AppState) {
                 AppIcon(Glyph.USER)
                 Heading(session.account.name)
                 Muted(session.account.email)
+                if (controller.repository.isDemo) SecondaryButton("Editar perfil") { controller.navigate(Route.PROFILE_FORM) }
             }
             AdaptiveGrid(listOf(
                 Triple(Route.MEMBERS, "${snapshot.members.size} na unidade", Glyph.PEOPLE),
