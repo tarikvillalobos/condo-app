@@ -38,7 +38,6 @@ fun ProfileScreen(controller: AppController, state: AppState) {
                     controller.execute(Command.SavePreferences(prefs.copy(notices = it)))
                 }
                 Muted(controller.platform.notificationStatus)
-                Muted("Preferências salvas no app. Serviço de push externo ainda não configurado.")
                 TextButton({ controller.message(controller.platform.openNotificationSettings()) }) { Text("Configurações do sistema") }
             }
             Heading("Conta e segurança")
