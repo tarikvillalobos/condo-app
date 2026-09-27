@@ -107,4 +107,24 @@ class ApiRepositoryTest {
         assertNotNull(idempotency)
         transport.close()
     }
+    @Test fun updatingInviteSendsOnlyFieldsAllowedByPatchSchema() = runTest {
+        var patchBody: String? = null
+        val engine = MockEngine { request ->
+            when (request.url.encodedPath) {
+                "/v1/auth/password/login" -> respond("""{"brandId":"condo","accessToken":"a","refreshToken":"r"}""")
+                "/v1/me" -> respond("""{"id":"u","name":"Ana"}""")
+                "/v1/me/memberships" -> respond("""{"items":[{"id":"m","locationName":"Condo","unitLabel":""}]}""")
+                "/v1/memberships/m/access-invites/i" -> if (request.method == HttpMethod.Get)
+                    respond("""{"id":"i","version":3,"visitor":{"id":"v","version":2,"kind":"visitor"}}""")
+                    else {
+                        patchBody = (request.body as io.ktor.http.content.TextContent).text
+                        respond("", HttpStatusCode.UnprocessableEntity)
+                    }
+                "/v1/memberships/m/visitors/v" -> respond("""{"id":"v","version":3}""")
+                else -> error("Unexpected path: ${request.url}")
+            }
+        }
+        val transport = ApiTransport(engine, config)
+        val repository = ApiRepository(transport)
+        repository.login("ana@example.test", "password")
 }
