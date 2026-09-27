@@ -126,6 +126,7 @@ private fun privacyRequest(controller: AppController, subject: String) {
 private fun PreferenceRow(title: String, subtitle: String, checked: Boolean, enabled: Boolean, changed: (Boolean) -> Unit) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Column(Modifier.weight(1f)) { Text(title); Muted(subtitle) }
+        Switch(checked, changed, enabled = enabled)
     }
 }
 @Composable
