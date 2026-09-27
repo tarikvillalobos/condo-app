@@ -40,6 +40,8 @@ interface CondoRepository {
     suspend fun linkMembership(invitation: String): Session
     suspend fun activate(invitation: String, name: String, password: String): Session
     suspend fun recover(identifier: String): String
+    suspend fun verifyRecovery(challengeId: String, code: String, newPassword: String): Session =
+        throw AppFailure(FailureKind.UNAVAILABLE, "Verificação de recuperação indisponível.")
     suspend fun changePassword(current: String, replacement: String): String
     suspend fun logout()
     fun scenario(value: DemoScenario)
