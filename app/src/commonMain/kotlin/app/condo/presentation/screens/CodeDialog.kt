@@ -45,7 +45,6 @@ fun CodeDialog(controller: AppController, state: AppState) {
                         SecondaryButton("Compartilhar convite") {
                             controller.message(controller.platform.share("Convite · válido até ${code.expiresAt.fullLabel()} · ${code.payload}"))
                         }
-                        SecondaryButton("Simular uso único na portaria") {
                             controller.execute(Command.ConsumeVisitCode(code.payload), "Entrada registrada apenas na demonstração.")
                         }
                     }
