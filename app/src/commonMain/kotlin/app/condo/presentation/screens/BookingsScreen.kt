@@ -64,6 +64,7 @@ fun BookingsScreen(controller: AppController, state: AppState) {
             Text("${booking.startsAt.fullLabel()} – ${booking.endsAt.timeLabel()}")
             StatusChip(if (booking.cancelled) "Cancelada" else if (controller.repository.isDemo) "Confirmada na demonstração" else "Reservada")
             if (!booking.cancelled && booking.startsAt > controller.clock.now()) {
+                SecondaryButton("Cancelar reserva") { controller.execute(Command.CancelBooking(booking.id), if (controller.repository.isDemo) "Reserva cancelada na demonstração." else "Reserva cancelada.") }
             }
         }
     }
