@@ -132,6 +132,7 @@ frameworks Apple e compilação Windows. A execução em cada runner depende do 
 Para conectar a API de staging, passe a URL HTTPS com `/v1`:
 
 ```sh
+./gradlew -PappEnvironment=staging -PapiBaseUrl=https://api.exemplo.com/v1 -PapiBrandId=condo :app:run
 ```
 Marca de distribuição e condomínios vinculados são conceitos separados.
 Veja [como configurar marca, módulos e ambiente](docs/ARCHITECTURE.md).
