@@ -45,7 +45,6 @@ fun CamerasScreen(controller: AppController, state: AppState) {
         if (cameras.isEmpty()) EmptyState("Nenhuma câmera neste local", "Selecione outra localização.", Glyph.CAMERA)
         AdaptiveGrid(cameras, minimum = 220.dp, maximumColumns = 3) { camera ->
             Panel {
-                if (camera.online) CameraPreview(camera.name)
                 else EmptyState("Offline", "Sinal indisponível", Glyph.CAMERA)
                 Heading(camera.name)
                 SecondaryButton("Visualizar câmera") { controller.navigate(Route.CAMERA_DETAIL, camera.id) }
