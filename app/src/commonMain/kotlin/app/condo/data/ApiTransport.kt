@@ -11,8 +11,6 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.json.Json
 
-/** Transport infrastructure only. Routes, DTOs and auth await the external contract. */
-data class ApiConfiguration(val baseUrl: String, val environment: String) {
     init {
         require(baseUrl.startsWith("https://")) { "External API requires HTTPS." }
         require(environment in setOf("staging", "production"))
