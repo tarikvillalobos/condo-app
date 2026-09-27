@@ -113,6 +113,7 @@ class AppController(
         val account = repository.updateAccount(name, phone)
         if (version != contextVersion) return@runAction
         mutable.update { it.copy(session = it.session?.copy(account = account)) }
+        if (navigation == navigationVersion) { message(if (repository.isDemo) "Dados salvos na demonstração." else "Dados salvos."); back() }
     }
     fun link(invitation: String) = runAction { version, navigation ->
         val session = repository.linkMembership(invitation)
