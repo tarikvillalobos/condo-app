@@ -48,7 +48,6 @@ fun VisitsScreen(controller: AppController, state: AppState) {
             if (visit.status in setOf(VisitStatus.SCHEDULED, VisitStatus.AUTHORIZED) && visit.expiresAt > now) {
                 PrimaryButton("Ver convite", !state.submitting && !state.stale) { controller.execute(Command.IssueVisitCode(visit.id)) }
                 SecondaryButton("Editar visita") { controller.beginVisit(visit) }
-                TextButton({ controller.execute(Command.SetVisitStatus(visit.id, VisitStatus.REVOKED), "Convite revogado na demonstração.") }) { Text("Revogar convite") }
             }
         }
     }
