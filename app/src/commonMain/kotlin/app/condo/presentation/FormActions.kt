@@ -65,6 +65,7 @@ fun AppController.submitVehicle() {
     field("vehicle.id", id)
     val submittedFields = state.value.forms
     execute(Command.SaveVehicle(Vehicle(id, formValue("vehicle.model"), formValue("vehicle.plate").uppercase())),
+        if (repository.isDemo) "Veículo salvo na demonstração." else "Veículo salvo.") {
         if (state.value.forms == submittedFields) listOf("id", "model", "plate").forEach { field("vehicle.$it", "") }
     }
 }
