@@ -212,3 +212,12 @@ Windows, testes desktop Linux, builds Android e frameworks/host Apple foram apro
 Nenhum APK, `.app`, framework, screenshot ou outro binário faz parte desta
 documentação versionada. Consulte [o progresso](PROGRESS.md) e
 [as dependências de integração](API-INTEGRATION.md) antes de planejar distribuição.
+
+## Atualização de 27/09/2026: contrato e rotas
+
+O OpenAPI 1.1.0-draft foi adicionado em `api/openapi.yaml`. O adaptador do
+morador foi compilado em desktop, Android e iOS simulator com uma URL de teste
+`.invalid`, sem conectar a um servidor real. `:app:desktopTest` passou em
+staging com testes MockEngine para login, bearer, marca, paginação e refresh.
+Os testes de domínio, demo e app desktop também passaram em modo demo.
+Ainda não há homologação com URL de API ou conta real.
