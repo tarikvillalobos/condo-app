@@ -71,7 +71,6 @@ private fun VisitForm(controller: AppController, state: AppState) {
         FormField(controller, "visit.time", "Horário de início · HH:MM")
         FormField(controller, "visit.endDate", "Data final · AAAA-MM-DD")
         FormField(controller, "visit.endTime", "Horário final · HH:MM")
-        Muted("Horários de Brasília · validade máxima demonstrativa de 7 dias.")
         Row(verticalAlignment = Alignment.CenterVertically) {
             Checkbox(state.forms["visit.frequent"] == "true", { controller.field("visit.frequent", it.toString()) })
             Text("Salvar como visitante frequente")
