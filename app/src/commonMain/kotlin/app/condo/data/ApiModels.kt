@@ -17,6 +17,7 @@ internal object ApiModels {
     fun membership(o: JsonObject): Membership {
         val flags = o.value("modules")
         val available = if (flags.isEmpty()) {
+            setOf(Module.PARCELS)
         } else buildSet {
             if (flags.flag("parcels")) add(Module.PARCELS)
             if (flags.flag("cameras")) add(Module.CAMERAS)
