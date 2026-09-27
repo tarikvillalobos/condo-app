@@ -72,7 +72,6 @@ fun CommunityScreen(controller: AppController, state: AppState) {
                 AppIcon(Glyph.SHIELD)
                 Heading("Estamos por perto")
                 Text(snapshot.membership.name)
-                Muted("Atendimento demonstrativo · nenhum contato real configurado.")
                 PrimaryButton("Contato da portaria") { controller.message("O telefone da portaria ainda não foi informado pela API deste condomínio.") }
                 SecondaryButton("Criar solicitação") { controller.navigate(Route.REQUEST_FORM) }
             }
