@@ -25,7 +25,6 @@ internal object ApiModels {
             if (flags.flag("pets")) add(Module.PETS)
             if (flags.flag("reservations")) add(Module.BOOKINGS)
             if (flags.flag("announcements")) add(Module.NOTICES)
-            if (flags.flag("requests")) add(Module.SERVICES)
             if (flags.flag("events")) add(Module.EVENTS)
         }
         val permissions = o["permissions"]?.jsonArray?.map { it.jsonPrimitive.content }.orEmpty()
