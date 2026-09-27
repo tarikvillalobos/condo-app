@@ -56,6 +56,7 @@ internal object ApiModels {
     fun petAlert(o: JsonObject) = PetAlert(o.text("id"), o.text("description"), o.whenAt("createdAt")!!)
     fun facility(o: JsonObject) = Facility(o.text("id"), o.text("name"), o.text("description"), "")
     fun booking(o: JsonObject) = Booking(o.text("id"), o.value("space").text("id"),
+        o.whenAt("startsAt")!!, o.whenAt("endsAt")!!, o.text("status") in setOf("cancelled", "rejected"), o.text("status"))
     fun camera(o: JsonObject) = Camera(o.text("id"), o.text("name"), o.text("area"),
         o.text("status") == "online", o.flag("liveAllowed"))
     fun announcement(o: JsonObject) = Bulletin(o.text("id"), o.text("title"), o.text("body"), o.whenAt("publishedAt")!!)
