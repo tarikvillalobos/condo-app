@@ -32,6 +32,7 @@ class AppController(
             if (version != contextVersion) return@runAction
             val session = repository.restore(reference)
             if (version != contextVersion) return@runAction
+            session.sessionReference?.let { vault { platform.vault.write(it) } }
             mutable.update { it.copy(session = session) }
             switchMembership(session.memberships.first().id)
         }
