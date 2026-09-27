@@ -8,6 +8,8 @@ O adaptador `ApiRepository` usa as rotas de morador desse contrato. Ele envia
 quando o contrato exige versão. Refresh rotativo usa o cofre seguro quando a
 sessão é persistida. Paginação por cursor mantém a consulta até a última página.
 
+Staging/produção precisam de `-PapiBaseUrl=https://.../v1`; `-PapiBrandId`
+pode indicar o identificador da marca na API. Sem URL, usam
 `UnavailableRepository`; nunca recorrem aos dados demonstrativos. O hostname
 no OpenAPI é somente placeholder e não foi usado como servidor real.
 
