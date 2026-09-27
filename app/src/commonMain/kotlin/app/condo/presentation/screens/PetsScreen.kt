@@ -27,6 +27,8 @@ fun PetsScreen(controller: AppController, state: AppState) {
             }
             FormField(controller, "pet.alert", "Descreva o pet, local e se está perdido ou foi encontrado", multiline = true)
             PrimaryButton(if (controller.repository.isDemo) "Publicar alerta demonstrativo" else "Publicar alerta", !state.submitting) {
+                controller.execute(Command.ReportPet(state.forms["pet.alert"].orEmpty(),
+                    if (state.forms["pet.alert.kind"] == "Encontrado") "found" else "lost"), if (controller.repository.isDemo) "Alerta salvo localmente na demonstração." else "Alerta publicado.")
             }
             snapshot.petAlerts.forEach { Panel { Text(it.description); Muted(it.createdAt.fullLabel()) } }
             if (snapshot.petAlerts.isEmpty()) EmptyState("Nenhum alerta ativo", "Alertas de pets perdidos e encontrados aparecerão aqui.", Glyph.PAW)
