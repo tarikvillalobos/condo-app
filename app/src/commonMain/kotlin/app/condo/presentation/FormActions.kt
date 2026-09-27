@@ -75,5 +75,4 @@ fun AppController.reserve(facility: String, date: String, hour: Int) = parseActi
         it.facilityId == facility && it.startsAt == start && it.cancelled
     } ?: 0
     val operation = "booking:$facility:$date:$hour:$attempt"
-    execute(Command.Reserve(facility, start, start + 4.hours, operation), "Reserva confirmada apenas na demonstração.")
 }
