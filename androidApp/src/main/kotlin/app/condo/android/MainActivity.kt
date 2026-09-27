@@ -20,6 +20,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         controller = lastCustomNonConfigurationInstance as? AppController ?: run {
             val platform = AndroidServices(applicationContext)
+            AppController(createRepository(platform.store, SystemAppClock, platform.vault), platform)
         }
         setContent {
             val state by controller.state.collectAsState()
