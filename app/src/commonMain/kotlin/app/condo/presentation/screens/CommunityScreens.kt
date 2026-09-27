@@ -45,7 +45,6 @@ fun CommunityScreen(controller: AppController, state: AppState) {
             }
             FormField(controller, "request.subject", "Assunto")
             FormField(controller, "request.body", "Descreva o que aconteceu", multiline = true)
-            Muted("Não inclua senhas ou códigos de acesso. Na demonstração, o registro fica somente neste dispositivo.")
             PrimaryButton("Registrar", !state.submitting, controller::submitRequest)
         }
         Route.REQUEST_DETAIL -> snapshot.requests.find { it.id == state.destination.id }?.let {
