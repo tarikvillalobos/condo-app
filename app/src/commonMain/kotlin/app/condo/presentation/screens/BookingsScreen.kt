@@ -41,7 +41,6 @@ fun BookingsScreen(controller: AppController, state: AppState) {
             }
         }
         Text(facility.rules, style = MaterialTheme.typography.bodySmall)
-        PrimaryButton("Confirmar reserva demonstrativa", !state.submitting && !state.stale) {
             controller.reserve(facility.id, date.toString(), hour)
         }
         Muted("Disponibilidade local simulada. Reservas reais dependem de confirmação da API externa.")
