@@ -80,4 +80,24 @@ class ApiRepositoryTest {
         assertEquals(1, refreshes)
         transport.close()
     }
+    @Test fun manualPickupUsesStrongVersionAndIdempotencyKey() = runTest {
+        var ifMatch: String? = null
+        var idempotency: String? = null
+        val engine = MockEngine { request ->
+            when (request.url.encodedPath) {
+                "/v1/auth/password/login" -> respond("""{"brandId":"condo","accessToken":"a","refreshToken":"r"}""")
+                "/v1/me" -> respond("""{"id":"u","name":"Ana"}""")
+                "/v1/me/memberships" -> respond("""{"items":[{"id":"m","locationName":"Condo","unitLabel":""}]}""")
+                "/v1/memberships/m/parcels/p" -> respond("""{"version":3}""")
+                "/v1/memberships/m/parcels/p/manual-pickup" -> {
+                    ifMatch = request.headers["If-Match"]
+                    idempotency = request.headers["Idempotency-Key"]
+                    respond("", HttpStatusCode.Conflict)
+                }
+                else -> error("Unexpected path: ${request.url}")
+            }
+        }
+        val transport = ApiTransport(engine, config)
+        val repository = ApiRepository(transport)
+        repository.login("ana@example.test", "password")
 }
