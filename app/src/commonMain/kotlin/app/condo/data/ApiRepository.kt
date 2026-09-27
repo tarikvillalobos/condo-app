@@ -98,3 +98,23 @@ class ApiRepository(private val transport: ApiTransport, private val clock: AppC
         val announcements = if (Module.NOTICES in m.modules) list("announcements").map(ApiModels::announcement) else emptyList()
         val events = if (Module.EVENTS in m.modules) list("events").map(ApiModels::event) else emptyList()
         val inbox = if (Module.NOTICES in m.modules) list("inbox").map(ApiModels::notice) else emptyList()
+        val requests = if (Module.SERVICES in m.modules) list("requests").map(ApiModels::request) else emptyList()
+        val vehicles = if (m.unit.isNotBlank()) list("vehicles").map(ApiModels::vehicle) else emptyList()
+        val residents = if (m.unit.isNotBlank()) call(ApiRoutes.collection(membershipId, "unit"))
+            .items("residents").map { UnitMember(it.text("name"), it.text("role")) } else emptyList()
+        return Snapshot(m, parcels, invites, pets, petAlerts, spaces, bookings, cameras,
+            announcements + events, inbox, requests, vehicles, residents, updatedAt = clock.now())
+    }
+    private fun unsupported(): Nothing = throw AppFailure(FailureKind.UNAVAILABLE,
+        "Esta ação requer um fluxo ou permissão que o app ainda não oferece.")
+    private suspend fun version(route: ApiRoutes.Route): String = call(route).number("version").toString()
+    override suspend fun execute(membershipId: String, command: Command): Outcome {
+        var credential: AccessCode? = null
+        when (command) {
+            is Command.ReportCollected -> call(ApiRoutes.manualPickup(membershipId, command.parcelId), mutation = true)
+            is Command.IssuePickupCode -> credential = code(call(ApiRoutes.pickup(membershipId, command.parcelId)), "pickup:${command.parcelId}")
+            is Command.IssueVisitCode -> credential = code(call(ApiRoutes.credential(membershipId, command.visitId)), "visit:${command.visitId}")
+            is Command.CancelBooking -> call(ApiRoutes.cancelReservation(membershipId, command.bookingId), mutation = true)
+            is Command.ReadNotice -> call(ApiRoutes.action(membershipId, "inbox", command.noticeId, "read"), mutation = true)
+            is Command.CreateRequest -> when (command.category) {
+                "Privacidade" -> call(ApiRoutes.dataRequests(),
