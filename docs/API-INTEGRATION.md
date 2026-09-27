@@ -8,6 +8,26 @@ O adaptador `ApiRepository` usa as rotas de morador desse contrato. Ele envia
 quando o contrato exige versão. Refresh rotativo usa o cofre seguro quando a
 sessão é persistida. Paginação por cursor mantém a consulta até a última página.
 
+Staging/produção precisam de `-PapiBaseUrl=https://.../v1`. Sem URL, usam
+`UnavailableRepository`; nunca recorrem aos dados demonstrativos. O hostname
+no OpenAPI é somente placeholder e não foi usado como servidor real.
+
+O app não chama `/ops` nem `/admin`. Códigos de retirada e convites são obtidos
+pela API; eventos físicos continuam exclusivos do backend/equipamento. Vídeo
+ao vivo não é mostrado como real até existir um player autorizado.
+
+## Limitações ainda visíveis
+
+- Primeiro acesso exige CPF e `acceptedTermsVersion`, que a tela atual não coleta.
+- Alteração de contato exige desafio e verificação; a edição simples de perfil
+  fica indisponível no adaptador.
+- Preferências da tela são por assunto, mas o contrato define canais
+  (`inApp`, `sms`, `whatsapp`); a gravação fica indisponível até alinhar a UI.
+- Disponibilidade de espaços precisa ser consultada antes da reserva; o servidor
+  ainda decide conflitos no POST de reservas.
+- Falta URL de homologação e contas reais para validar respostas e permissões.
+
+## Rotas principais
 |---|---|
 | Interface com dados fictícios | Implementada |
 | Repositórios demonstrativos locais | Implementados e isolados |
