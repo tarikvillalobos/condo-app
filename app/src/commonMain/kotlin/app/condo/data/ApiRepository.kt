@@ -151,6 +151,7 @@ class ApiRepository(private val transport: ApiTransport, private val clock: AppC
                 put("name", visit.name); put("kind", if (visit.provider) "service_provider" else "visitor")
                 put("notes", visit.purpose)
             }
+            if (visit.id.isBlank()) put("singleUse", true)
             put("validFrom", visit.startsAt.toString()); put("validUntil", visit.expiresAt.toString())
             put("singleUse", true)
         }.toString()
