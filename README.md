@@ -129,6 +129,11 @@ frameworks Apple e compilação Windows. A execução em cada runner depende do 
 ```
 
 `condo` mantém a paleta da referência; `viva` usa azul e desabilita câmeras.
+Para conectar a API de staging, passe a URL HTTPS com `/v1`:
+
+```sh
+./gradlew -PappEnvironment=staging -PapiBaseUrl=https://api.exemplo.com/v1 :app:run
+```
 Marca de distribuição e condomínios vinculados são conceitos separados.
 Veja [como configurar marca, módulos e ambiente](docs/ARCHITECTURE.md).
 Veja [o que falta para integrar a API](docs/API-INTEGRATION.md).
