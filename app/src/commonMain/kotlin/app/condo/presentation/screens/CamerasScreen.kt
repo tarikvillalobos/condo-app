@@ -23,6 +23,11 @@ fun CamerasScreen(controller: AppController, state: AppState) {
     if (state.destination.route == Route.CAMERA_DETAIL) {
         val camera = snapshot.cameras.find { it.id == state.destination.id }
         if (camera == null || !camera.permitted) { EmptyState("Acesso negado", "Câmera indisponível para esta conta.", Glyph.LOCK); return }
+        if (!controller.repository.isDemo) {
+            Heading(camera.name)
+            EmptyState("Vídeo indisponível", "A transmissão desta câmera ainda não está configurada no app.", Glyph.CAMERA)
+            return
+        }
         var connecting by remember(camera.id) { mutableStateOf(true) }
         LaunchedEffect(camera.id) { delay(650); connecting = false }
         Heading(camera.name)
