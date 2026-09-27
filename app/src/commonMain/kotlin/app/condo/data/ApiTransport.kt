@@ -55,6 +55,7 @@ class ApiTransport(engine: HttpClientEngine, private val config: ApiConfiguratio
             val response = client.request(config.baseUrl.trimEnd('/') + contractPath) {
                 method = contractMethod
                 contractHeaders.forEach { (name, value) -> header(name, value) }
+                contractBody?.let { contentType(ContentType.Application.Json); setBody(it) }
             }
             val dto = ApiResponseDto(response.status.value, response.bodyAsText())
             when (dto.status) {
