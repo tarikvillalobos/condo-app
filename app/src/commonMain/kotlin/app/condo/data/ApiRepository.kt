@@ -159,6 +159,8 @@ class ApiRepository(private val transport: ApiTransport, private val clock: AppC
             val route = ApiRoutes.item(id, "access-invites", visit.id)
             val existing = call(route)
             val visitor = existing.value("visitor")
+            requireInput((visitor.text("kind") == "service_provider") == visit.provider,
+                "O tipo de visitante não pode ser alterado. Crie outro convite.")
             call(ApiRoutes.patch(id, "visitors", visitor.text("id")),
                 body("name" to visit.name, "notes" to visit.purpose), mutation = true,
                 ifMatch = "\"${visitor.number("version")}\"")
