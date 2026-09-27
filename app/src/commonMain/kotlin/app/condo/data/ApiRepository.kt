@@ -180,6 +180,11 @@ class ApiRepository(private val transport: ApiTransport, private val clock: AppC
         if (pet.id.isBlank()) call(ApiRoutes.create(id, "pets"), payload, mutation = true)
         else {
             val route = ApiRoutes.item(id, "pets", pet.id)
+            val existing = call(route)
+            requireInput(existing.text("species") == species,
+                "A espécie não pode ser alterada. Cadastre outro pet.")
+            call(ApiRoutes.patch(id, "pets", pet.id), payload, mutation = true,
+                ifMatch = "\"${existing.number("version")}\"")
         }
     }
     private suspend fun saveVehicle(id: String, vehicle: Vehicle) {
