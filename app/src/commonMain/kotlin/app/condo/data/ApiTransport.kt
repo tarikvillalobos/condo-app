@@ -21,6 +21,7 @@ data class ApiConfiguration(val baseUrl: String, val environment: String, val br
 }
 data class ApiResponseDto(val status: Int, val body: String)
 class ApiTransport(engine: HttpClientEngine, private val config: ApiConfiguration) {
+    internal val brandId get() = config.brandId
     private val client = HttpClient(engine) {
         expectSuccess = false
         followRedirects = false
