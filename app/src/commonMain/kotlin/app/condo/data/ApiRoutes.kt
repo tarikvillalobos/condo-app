@@ -18,3 +18,22 @@ internal object ApiRoutes {
     fun invitation(code: String) = Route(HttpMethod.Get, "/auth/invitations/${id(code)}")
     fun accept(code: String) = Route(HttpMethod.Post, "/auth/invitations/${id(code)}/accept")
     fun link(code: String) = Route(HttpMethod.Post, "/me/invitations/${id(code)}/link")
+    fun mePreferences() = Route(HttpMethod.Patch, "/me/preferences")
+    fun dataRequests() = Route(HttpMethod.Post, "/me/data-requests")
+    private fun membership(id: String) = "/memberships/${id(id)}"
+    fun collection(id: String, name: String) = Route(HttpMethod.Get, "${membership(id)}/$name")
+    fun item(id: String, name: String, itemId: String) =
+        Route(HttpMethod.Get, "${membership(id)}/$name/${id(itemId)}")
+    fun create(id: String, name: String) = Route(HttpMethod.Post, "${membership(id)}/$name")
+    fun patch(id: String, name: String, itemId: String) =
+        Route(HttpMethod.Patch, "${membership(id)}/$name/${id(itemId)}")
+    fun delete(id: String, name: String, itemId: String) =
+        Route(HttpMethod.Delete, "${membership(id)}/$name/${id(itemId)}")
+    fun action(id: String, name: String, itemId: String, action: String, method: HttpMethod = HttpMethod.Post) =
+        Route(method, "${membership(id)}/$name/${id(itemId)}/$action")
+    fun pickup(id: String, parcelId: String) = action(id, "parcels", parcelId, "pickup-credential", HttpMethod.Get)
+    fun manualPickup(id: String, parcelId: String) = action(id, "parcels", parcelId, "manual-pickup")
+    fun credential(id: String, inviteId: String) = action(id, "access-invites", inviteId, "credential", HttpMethod.Get)
+    fun readAnnouncement(id: String, announcementId: String) = action(id, "announcements", announcementId, "read")
+    fun cancelReservation(id: String, reservationId: String) = action(id, "reservations", reservationId, "cancel")
+}
