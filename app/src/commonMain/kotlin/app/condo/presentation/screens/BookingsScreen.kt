@@ -62,7 +62,6 @@ fun BookingsScreen(controller: AppController, state: AppState) {
         Panel {
             Heading(snapshot.facilities.find { it.id == booking.facilityId }?.name ?: "Área comum")
             Text("${booking.startsAt.fullLabel()} – ${booking.endsAt.timeLabel()}")
-            StatusChip(if (booking.cancelled) "Cancelada" else "Confirmada na demonstração")
             if (!booking.cancelled && booking.startsAt > controller.clock.now()) {
                 SecondaryButton("Cancelar reserva") { controller.execute(Command.CancelBooking(booking.id), "Reserva cancelada na demonstração.") }
             }
