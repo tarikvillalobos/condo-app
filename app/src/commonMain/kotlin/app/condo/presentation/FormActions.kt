@@ -59,6 +59,7 @@ fun AppController.submitPet() = parseAction {
 fun AppController.submitRequest() = execute(Command.CreateRequest(
     formValue("request.category").ifBlank { "Solicitação" },
     formValue("request.subject"), formValue("request.body"),
+), if (repository.isDemo) "Solicitação registrada localmente." else "Solicitação registrada.") { back() }
 fun AppController.submitVehicle() {
     val id = formValue("vehicle.id").ifBlank { "vehicle-${clock.now().toEpochMilliseconds()}-${Random.nextLong()}" }
     field("vehicle.id", id)
