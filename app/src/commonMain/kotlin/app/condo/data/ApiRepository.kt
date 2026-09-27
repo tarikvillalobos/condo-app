@@ -99,6 +99,8 @@ class ApiRepository(private val transport: ApiTransport, private val clock: AppC
         val events = if (Module.EVENTS in m.modules) list("events").map(ApiModels::event) else emptyList()
         val inbox = if (Module.NOTICES in m.modules) list("inbox").map(ApiModels::notice) else emptyList()
         val requests = if (Module.SERVICES in m.modules) list("requests").map(ApiModels::request) else emptyList()
+        val vehicles = if (m.unit.isNotBlank() && Module.VEHICLES in m.modules)
+            list("vehicles").map(ApiModels::vehicle) else emptyList()
         val residents = if (m.unit.isNotBlank()) call(ApiRoutes.collection(membershipId, "unit"))
             .items("residents").map { UnitMember(it.text("name"), it.text("role")) } else emptyList()
         return Snapshot(m, parcels, invites, pets, petAlerts, spaces, bookings, cameras,
