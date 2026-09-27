@@ -59,6 +59,7 @@ fun CodeDialog(controller: AppController, state: AppState) {
 fun QrCode(payload: String) {
     val matrix = remember(payload) { encodeQr(payload) }
     Canvas(Modifier.fillMaxWidth().aspectRatio(1f).background(Color.White).semantics {
+        contentDescription = "QR Code; código numérico disponível abaixo"
     }) {
         val cell = size.minDimension / (matrix.size + 8)
         matrix.forEachIndexed { y, row -> row.forEachIndexed { x, dark ->
