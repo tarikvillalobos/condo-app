@@ -38,6 +38,8 @@ fun ProfileScreen(controller: AppController, state: AppState) {
                     controller.execute(Command.SavePreferences(prefs.copy(notices = it)))
                 }
                 Muted(controller.platform.notificationStatus)
+                Muted(if (controller.repository.isDemo) "Preferências salvas no app." else
+                    "Preferências por assunto ainda não disponíveis nesta API.")
                 TextButton({ controller.message(controller.platform.openNotificationSettings()) }) { Text("Configurações do sistema") }
             }
             Heading("Conta e segurança")
