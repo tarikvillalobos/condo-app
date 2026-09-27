@@ -19,6 +19,7 @@ fun VisitsScreen(controller: AppController, state: AppState) {
     PrimaryButton("+ Nova visita", !state.submitting) { controller.beginVisit() }
     Panel(color = Tokens.tint) {
         Heading("Convite com QR Code")
+        Muted(if (controller.repository.isDemo) "Agende uma visita demonstrativa; o código não libera acesso real." else "Agende uma visita e compartilhe um convite com validade.")
     }
     val filter = state.filters["visits"] ?: "Hoje"
     FilterChips(listOf("Hoje", "Agendadas", "Histórico"), filter) { controller.filter("visits", it) }
