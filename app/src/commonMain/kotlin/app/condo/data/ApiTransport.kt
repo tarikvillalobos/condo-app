@@ -62,7 +62,6 @@ class ApiTransport(engine: HttpClientEngine, private val config: ApiConfiguratio
                 in 200..299 -> dto
                 401 -> throw AppFailure(FailureKind.EXPIRED, "Sessão expirada. Entre novamente.")
                 403 -> throw AppFailure(FailureKind.DENIED, "Você não tem permissão para esta ação.")
-                409 -> throw AppFailure(FailureKind.CONFLICT, "Os dados mudaram. Atualize e tente novamente.")
                 else -> throw AppFailure(FailureKind.UNAVAILABLE, "Serviço indisponível (HTTP ${dto.status}).")
             }
         } catch (cancelled: CancellationException) {
