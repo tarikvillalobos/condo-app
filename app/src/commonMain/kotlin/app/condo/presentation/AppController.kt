@@ -129,7 +129,6 @@ class AppController(
     }
     fun recover(identifier: String) = runAction { version, navigation ->
         val result = repository.recover(identifier)
-        if (version == contextVersion && navigation == navigationVersion) message(result)
     }
     fun password(current: String, replacement: String) = runAction { version, navigation ->
         val result = repository.changePassword(current, replacement)
