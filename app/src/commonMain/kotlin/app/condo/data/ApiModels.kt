@@ -58,3 +58,11 @@ internal object ApiModels {
     fun announcement(o: JsonObject) = Bulletin(o.text("id"), o.text("title"), o.text("body"), o.whenAt("publishedAt")!!)
     fun event(o: JsonObject) = Bulletin(o.text("id"), o.text("title"), o.text("description"), o.whenAt("startsAt")!!, true)
     fun notice(o: JsonObject) = Notice(o.text("id"), o.text("title"), "", o.optional("readAt") != null)
+    fun request(o: JsonObject) = ServiceRequest(o.text("id"), o.text("category"), o.text("title"),
+        o.text("description"), o.whenAt("createdAt")!!, o.text("status"))
+    fun vehicle(o: JsonObject) = Vehicle(o.text("id"), o.text("model"), o.text("plate"))
+    fun code(o: JsonObject, owner: String) = AccessCode(owner, o.text("qrPayload"), o.text("code"), o.whenAt("expiresAt")!!)
+    fun body(vararg fields: Pair<String, String>): String = buildJsonObject {
+        fields.forEach { (key, value) -> put(key, value) }
+    }.toString()
+}
