@@ -64,7 +64,6 @@ class AppController(
         vault { platform.vault.clear() }
         if (version != contextVersion) return@runAction
         if (remember) {
-            val reference = "demo|${session.account.id}|${(clock.now() + 7.days).toEpochMilliseconds()}"
             val saved = vault { platform.vault.write(reference) }
             if (version != contextVersion) return@runAction
             if (!saved) message("Armazenamento seguro indisponível. A sessão durará apenas enquanto o app estiver aberto.")
