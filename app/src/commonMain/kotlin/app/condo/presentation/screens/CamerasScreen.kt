@@ -38,7 +38,6 @@ fun CamerasScreen(controller: AppController, state: AppState) {
         else CameraPreview(camera.name)
         Muted("Esta imagem é ilustrativa. Transmissão real depende das URLs, credenciais e permissões fornecidas pela API.")
     } else {
-        StatusChip("${snapshot.cameras.count { it.online }} online no cenário demonstrativo")
         val filter = state.filters["cameras"] ?: "Todas"
         FilterChips(listOf("Todas", "Portaria", "Garagem", "Lazer"), filter) { controller.filter("cameras", it) }
         val cameras = snapshot.cameras.filter { filter == "Todas" || it.location == filter }
