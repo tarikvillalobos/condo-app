@@ -9,6 +9,7 @@ data class Booking(
     val startsAt: Instant,
     val endsAt: Instant,
     val cancelled: Boolean = false,
+    val status: String = "confirmed",
 )
 fun Booking.overlaps(start: Instant, end: Instant): Boolean =
     !cancelled && startsAt < end && start < endsAt
