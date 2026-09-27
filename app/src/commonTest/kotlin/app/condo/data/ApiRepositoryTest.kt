@@ -39,4 +39,24 @@ class ApiRepositoryTest {
         assertEquals(HttpMethod.Post, ApiRoutes.cancelReservation("m", "r").method)
         assertEquals("/me/invitations/a%2Fb/link", ApiRoutes.link("a/b").path)
     }
+    @Test fun snapshotFollowsCursorWithinMembership() = runTest {
+        val paths = mutableListOf<String>()
+        val engine = MockEngine { request ->
+            val path = request.url.encodedPath + request.url.encodedQuery.let { if (it.isBlank()) "" else "?$it" }
+            paths += path
+            val response = when (request.url.encodedPath) {
+                "/v1/auth/password/login" -> """{"brandId":"condo","accessToken":"a","refreshToken":"r"}"""
+                "/v1/me" -> """{"id":"u","name":"Ana"}"""
+                "/v1/me/memberships" -> """{"items":[{"id":"m","locationName":"Condo","unitLabel":"","modules":{"parcels":true}}]}"""
+                "/v1/memberships/m/parcels" -> if (request.url.parameters["cursor"] == null)
+                    """{"items":[{"id":"p1","carrier":"C","locker":{"name":"L"},"compartment":"1","depositedAt":"2026-09-01T00:00:00Z","deadline":"2026-10-01T00:00:00Z","status":"waiting"}],"pageInfo":{"nextCursor":"next"}}"""
+                    else """{"items":[{"id":"p2","carrier":"C","locker":{"name":"L"},"compartment":"2","depositedAt":"2026-09-02T00:00:00Z","deadline":"2026-10-02T00:00:00Z","status":"waiting"}],"pageInfo":{"nextCursor":null}}"""
+                else -> error("Unexpected path: $path")
+            }
+            respond(response)
+        }
+        val transport = ApiTransport(engine, config)
+        val repository = ApiRepository(transport)
+        repository.login("ana@example.test", "password")
+        assertEquals(listOf("p1", "p2"), repository.load("m").parcels.map { it.id })
 }
