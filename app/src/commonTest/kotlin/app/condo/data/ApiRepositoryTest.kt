@@ -38,3 +38,5 @@ class ApiRepositoryTest {
         assertEquals("/memberships/a%2Fb/parcels/x%2Fy/pickup-credential", ApiRoutes.pickup("a/b", "x/y").path)
         assertEquals(HttpMethod.Post, ApiRoutes.cancelReservation("m", "r").method)
         assertEquals("/me/invitations/a%2Fb/link", ApiRoutes.link("a/b").path)
+    }
+}
