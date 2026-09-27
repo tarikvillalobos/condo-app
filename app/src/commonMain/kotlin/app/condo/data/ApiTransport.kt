@@ -32,6 +32,18 @@ class ApiTransport(engine: HttpClientEngine, private val config: ApiConfiguratio
         }
     }
     private val json = Json { ignoreUnknownKeys = true }
+    internal suspend fun request(route: ApiRoutes.Route, bearer: String? = null, body: String? = null,
+                        idempotencyKey: String? = null, ifMatch: String? = null): ApiResponseDto {
+        val headers = buildMap {
+            put("X-Brand-Id", config.brandId)
+            put("Accept", "application/json")
+            if (body != null) put("Content-Type", "application/json")
+            if (bearer != null) put("Authorization", "Bearer $bearer")
+            if (idempotencyKey != null) put("Idempotency-Key", idempotencyKey)
+            if (ifMatch != null) put("If-Match", ifMatch)
+        }
+        return request(route.path, route.method, headers, body)
+    }
     suspend fun request(
         contractPath: String,
         contractMethod: HttpMethod,
