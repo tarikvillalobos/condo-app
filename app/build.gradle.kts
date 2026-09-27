@@ -25,7 +25,6 @@ val generateConfig by tasks.registering {
         val factory = if (environment == "demo") {
             "app.condo.demo.DemoRepository(storage, clock)"
         } else {
-            "app.condo.data.UnavailableRepository()"
         }
         file.writeText("""
             package app.condo
