@@ -44,6 +44,7 @@ fun BookingsScreen(controller: AppController, state: AppState) {
         PrimaryButton(if (controller.repository.isDemo) "Confirmar reserva demonstrativa" else "Solicitar reserva", !state.submitting && !state.stale) {
             controller.reserve(facility.id, date.toString(), hour)
         }
+        Muted(if (controller.repository.isDemo) "Disponibilidade local simulada." else "Horários sujeitos à disponibilidade confirmada pelo servidor.")
     }
     Heading("Áreas comuns")
     AdaptiveGrid(snapshot.facilities, minimum = 200.dp) { area ->
