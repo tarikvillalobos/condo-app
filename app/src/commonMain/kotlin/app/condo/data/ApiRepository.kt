@@ -199,8 +199,6 @@ class ApiRepository(private val transport: ApiTransport, private val clock: AppC
     override suspend fun recover(identifier: String): String {
         val challenge = anonymous(ApiRoutes.recovery(), body("identifier" to identifier,
             "channel" to if (identifier.contains("@")) "email" else "sms"), mutation = true)
-        return "Se a conta existir, você receberá instruções de recuperação."
-    }
     override suspend fun changePassword(current: String, replacement: String): String {
         call(ApiRoutes.password(), body("currentPassword" to current, "newPassword" to replacement), mutation = true)
         return "Senha alterada."
