@@ -36,6 +36,7 @@ fun CodeDialog(controller: AppController, state: AppState) {
                     SecondaryButton("Copiar código") {
                         controller.platform.copy(code.numericCode)
                     }
+                    if (controller.repository.isDemo && code.ownerId.startsWith("pickup")) {
                         SecondaryButton("Simular leitura no locker") {
                             controller.execute(Command.ConsumePickupCode(code.payload), "Retirada registrada pelo simulador, sem hardware real.")
                         }
