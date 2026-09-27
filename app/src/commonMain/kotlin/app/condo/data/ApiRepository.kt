@@ -78,3 +78,23 @@ class ApiRepository(private val transport: ApiTransport, private val clock: AppC
             val path = route.path + (cursor?.let { "?cursor=${it.encodeURLParameter()}" } ?: "")
             val result = call(route.copy(path = path))
             all += result.items()
+            cursor = result.value("page").optional("nextCursor")
+                ?: result.value("pageInfo").optional("nextCursor")
+            if (cursor == null) return all
+        }
+        throw AppFailure(FailureKind.UNAVAILABLE, "A lista excedeu o limite de páginas suportado.")
+    }
+    override suspend fun load(membershipId: String): Snapshot {
+        val m = currentSession?.memberships?.firstOrNull { it.id == membershipId }
+            ?: throw AppFailure(FailureKind.DENIED, "Vínculo não autorizado.")
+        suspend fun list(name: String) = page(ApiRoutes.collection(membershipId, name))
+        val parcels = if (Module.PARCELS in m.modules) list("parcels").map(ApiModels::parcel) else emptyList()
+        val invites = if (Module.VISITS in m.modules) list("access-invites").map(ApiModels::visit) else emptyList()
+        val pets = if (Module.PETS in m.modules) list("pets").map(ApiModels::pet) else emptyList()
+        val petAlerts = if (Module.PETS in m.modules) list("pet-alerts").map(ApiModels::petAlert) else emptyList()
+        val spaces = if (Module.BOOKINGS in m.modules) list("spaces").map(ApiModels::facility) else emptyList()
+        val bookings = if (Module.BOOKINGS in m.modules) list("reservations").map(ApiModels::booking) else emptyList()
+        val cameras = if (Module.CAMERAS in m.modules) list("cameras").map(ApiModels::camera) else emptyList()
+        val announcements = if (Module.NOTICES in m.modules) list("announcements").map(ApiModels::announcement) else emptyList()
+        val events = if (Module.EVENTS in m.modules) list("events").map(ApiModels::event) else emptyList()
+        val inbox = if (Module.NOTICES in m.modules) list("inbox").map(ApiModels::notice) else emptyList()
