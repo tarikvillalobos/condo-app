@@ -31,26 +31,6 @@ ao vivo não é mostrado como real até existir um player autorizado.
 
 | Fluxo | Caminhos do contrato |
 |---|---|
-| Interface com dados fictícios | Implementada |
-| Repositórios demonstrativos locais | Implementados e isolados |
-| Infraestrutura Ktor Client | Implementada; testes com respostas controladas |
-| DTOs/mappers da API de negócio | Aguardam documentação |
-| Autenticação/renovação/paginação reais | Aguardam contrato |
-| Integração com homologação | Não realizada |
-| Lockers, portaria, câmeras, push, e-mail/SMS/WhatsApp | Não integrados |
-
-## Informações necessárias
-
-1. Especificação versionada e URL de homologação por marca/ambiente.
-2. Autenticação, expiração, renovação, logout e política de armazenamento de tokens.
-3. Identificadores e regras de escopo por cliente, usuário, unidade e condomínio.
-4. Formatos de sucesso/erro, paginação, limites e política de idempotência.
-5. Contratos de reserva, disponibilidade, confirmação e conflitos concorrentes.
-6. Convites/códigos: payload, validade, escopo, revogação e consumo.
-7. Estado físico de lockers, reconciliação e eventos duplicados/fora de ordem.
-8. Permissões de câmeras, reprodução/gravações e URLs autorizadas.
-9. Registro de dispositivos para push, preferências e consentimentos necessários.
-10. Conteúdo institucional, contatos e política de privacidade por distribuição.
 
 ## Adaptador a implementar após receber o contrato
 
