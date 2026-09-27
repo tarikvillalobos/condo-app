@@ -44,7 +44,6 @@ Preferência de push, permissão do sistema e serviço de push são apresentados
 
 Brands em `app/design/Brand.kt` centraliza nome, cores, módulos, monograma,
 contato, textos institucionais, termos, privacidade e mapa de URLs de ambiente.
-URLs permanecem vazias até serem fornecidas pelo cliente. Nunca insira segredos.
 Para adicionar marca: cadastrar Brand, permitir seu id na configuração Gradle,
 definir applicationId/bundle identifier e substituir assets de marca.
 A logo nativa é vetorial e selecionada por Brand.logo (prédio em Condo, casa em Viva). A fonte é obtida por download com integridade verificada.
