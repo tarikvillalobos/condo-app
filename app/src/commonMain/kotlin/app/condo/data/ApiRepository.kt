@@ -198,3 +198,17 @@ class ApiRepository(private val transport: ApiTransport, private val clock: AppC
     override suspend fun activate(invitation: String, name: String, password: String): Session = unsupported()
     override suspend fun recover(identifier: String): String {
         anonymous(ApiRoutes.recovery(), body("identifier" to identifier,
+            "channel" to if (identifier.contains("@")) "email" else "sms"), mutation = true)
+        return "Se a conta existir, você receberá instruções de recuperação."
+    }
+    override suspend fun changePassword(current: String, replacement: String): String {
+        call(ApiRoutes.password(), body("currentPassword" to current, "newPassword" to replacement), mutation = true)
+        return "Senha alterada."
+    }
+    override suspend fun logout() {
+        if (tokens != null) try { call(ApiRoutes.logout()) }
+        catch (_: AppFailure) { /* Local logout still completes. */ }
+        finally { tokens = null; currentSession = null }
+    }
+    override fun scenario(value: DemoScenario) = Unit
+}
