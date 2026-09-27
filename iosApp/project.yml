@@ -36,6 +36,7 @@ targets:
         basedOnDependencyAnalysis: false
         script: |
           cd "$SRCROOT/.."
+          ./gradlew -Pbrand="$CONDO_BRAND" -PappEnvironment="$CONDO_ENVIRONMENT" -PapiBaseUrl="$CONDO_API_BASE_URL" -PapiBrandId="$CONDO_API_BRAND_ID" :app:embedAndSignAppleFrameworkForXcode
   CondoAppUITests:
     type: bundle.ui-testing
     platform: iOS
