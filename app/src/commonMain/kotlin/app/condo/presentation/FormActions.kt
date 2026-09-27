@@ -35,7 +35,6 @@ fun AppController.submitVisit() = parseAction {
         instant("visit.date", "visit.time"), instant("visit.endDate", "visit.endTime"),
         old?.status ?: VisitStatus.SCHEDULED, formValue("visit.frequent").toBoolean(),
     )
-    execute(Command.SaveVisit(visit), "Visita salva na demonstração.") { back() }
 }
 fun AppController.beginPet(pet: Pet? = null) {
     mapOf(
