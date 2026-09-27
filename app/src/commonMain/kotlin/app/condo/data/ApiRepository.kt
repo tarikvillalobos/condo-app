@@ -153,7 +153,6 @@ class ApiRepository(private val transport: ApiTransport, private val clock: AppC
             }
             if (visit.id.isBlank()) put("singleUse", true)
             put("validFrom", visit.startsAt.toString()); put("validUntil", visit.expiresAt.toString())
-            put("singleUse", true)
         }.toString()
         if (visit.id.isBlank()) call(ApiRoutes.create(id, "access-invites"), payload, mutation = true)
         else {
