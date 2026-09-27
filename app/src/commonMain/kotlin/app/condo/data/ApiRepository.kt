@@ -18,3 +18,23 @@ import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
 /** Resident API adapter; only the secure session vault receives refresh credentials. */
+@OptIn(ExperimentalUuidApi::class)
+class ApiRepository(private val transport: ApiTransport, private val clock: AppClock = SystemAppClock,
+                    private val vault: SessionVault? = null) : CondoRepository {
+    override val isDemo = false
+    private var tokens: JsonObject? = null
+    private val refreshMutex = Mutex()
+    private var currentSession: Session? = null
+    private val access: String get() = tokens?.text("accessToken")?.takeIf(String::isNotBlank)
+        ?: throw AppFailure(FailureKind.EXPIRED, "Sessão expirada. Entre novamente.")
+    private fun key() = Uuid.random().toString()
+    private suspend fun call(route: ApiRoutes.Route, payload: String? = null, mutation: Boolean = false,
+                             ifMatch: String? = null): JsonObject {
+        val idempotency = if (mutation) key() else null
+        val oldAccess = access
+        val response = try { transport.request(route, oldAccess, payload, idempotency, ifMatch) }
+        catch (failure: AppFailure) {
+            if (failure.kind != FailureKind.EXPIRED) throw failure
+            refreshMutex.withLock {
+                if (tokens?.text("accessToken") == oldAccess) refreshTokens()
+            }
