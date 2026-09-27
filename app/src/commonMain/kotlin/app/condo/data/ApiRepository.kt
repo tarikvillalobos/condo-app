@@ -116,7 +116,6 @@ class ApiRepository(private val transport: ApiTransport, private val clock: AppC
             is Command.IssuePickupCode -> credential = code(call(ApiRoutes.pickup(membershipId, command.parcelId)), "pickup:${command.parcelId}")
             is Command.IssueVisitCode -> credential = code(call(ApiRoutes.credential(membershipId, command.visitId)), "visit:${command.visitId}")
             is Command.CancelBooking -> call(ApiRoutes.cancelReservation(membershipId, command.bookingId), mutation = true)
-            is Command.ReadNotice -> call(ApiRoutes.action(membershipId, "inbox", command.noticeId, "read"), mutation = true)
             is Command.CreateRequest -> when (command.category) {
                 "Privacidade" -> call(ApiRoutes.dataRequests(),
                     body("kind" to if (command.subject.contains("exclusão", true)) "deletion" else "export"), mutation = true)
