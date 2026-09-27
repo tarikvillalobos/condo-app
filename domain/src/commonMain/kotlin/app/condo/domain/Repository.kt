@@ -13,6 +13,7 @@ sealed interface Command {
     data class IssueVisitCode(val visitId: String) : Command
     data class ConsumeVisitCode(val payload: String) : Command
     data class SavePet(val pet: Pet) : Command
+    data class ReportPet(val description: String, val kind: String = "lost") : Command
     data class Reserve(
         val facilityId: String,
         val startsAt: Instant,
