@@ -8,6 +8,7 @@ import androidx.compose.ui.window.ComposeUIViewController
 
 fun MainViewController() = ComposeUIViewController {
     val platform = remember { IosServices() }
+    val controller = remember { AppController(createRepository(platform.store, SystemAppClock, platform.vault), platform) }
     DisposableEffect(controller) { onDispose { controller.close() } }
     CondoApp(controller)
 }
