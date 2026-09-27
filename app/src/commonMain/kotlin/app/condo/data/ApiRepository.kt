@@ -158,3 +158,23 @@ class ApiRepository(private val transport: ApiTransport, private val clock: AppC
             val existing = call(route)
             val visitor = existing.value("visitor")
             call(ApiRoutes.patch(id, "visitors", visitor.text("id")),
+                body("name" to visit.name, "notes" to visit.purpose), mutation = true,
+                ifMatch = "\"${visitor.number("version")}\"")
+            call(ApiRoutes.patch(id, "access-invites", visit.id), payload, mutation = true,
+                ifMatch = "\"${existing.number("version")}\"")
+        }
+    }
+    private suspend fun savePet(id: String, pet: Pet) {
+        val species = when (pet.species.lowercase()) { "cão", "cao", "dog" -> "dog"; "gato", "cat" -> "cat"; "pássaro", "bird" -> "bird"; else -> "other" }
+        val payload = buildJsonObject {
+            put("name", pet.name)
+            if (pet.id.isBlank()) { put("species", species); put("sex", "unknown") }
+            if (pet.breed.isNotBlank()) put("breed", pet.breed)
+            if (pet.birthDate.isNotBlank()) put("birthDate", pet.birthDate)
+            if (pet.microchip.isNotBlank()) put("microchip", pet.microchip)
+        }.toString()
+        if (pet.id.isBlank()) call(ApiRoutes.create(id, "pets"), payload, mutation = true)
+        else {
+            val route = ApiRoutes.item(id, "pets", pet.id)
+            call(ApiRoutes.patch(id, "pets", pet.id), payload, mutation = true, ifMatch = "\"${version(route)}\"")
+        }
