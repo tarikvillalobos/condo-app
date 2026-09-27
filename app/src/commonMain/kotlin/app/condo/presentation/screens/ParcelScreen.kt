@@ -78,6 +78,7 @@ private fun ParcelDetail(controller: AppController, state: AppState, parcel: Par
         Text("✓ Depositada · ${parcel.receivedAt.fullLabel()}")
         Text("✓ Aviso disponível no aplicativo")
         Text("◷ Prazo · ${parcel.deadline.fullLabel()}")
+        parcel.collectedAt?.let { Text("✓ Retirada confirmada · ${it.fullLabel()}") }
         if (parcel.status == ParcelStatus.MANUAL_REPORT) Muted("Você informou a retirada. Nenhuma confirmação física real foi recebida.")
     }
     if (parcel.status == ParcelStatus.WAITING) SecondaryButton("Já retirei a encomenda") {
