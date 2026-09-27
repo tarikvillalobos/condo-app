@@ -32,24 +32,6 @@ ao vivo não é mostrado como real até existir um player autorizado.
 | Fluxo | Caminhos do contrato |
 |---|---|
 
-## Adaptador a implementar após receber o contrato
-
-Criar DTOs na camada data separados das entidades; mapeá-los em funções explícitas.
-Implementar CondoRepository sobre ApiTransport e substituir UnavailableRepository na factory.
-As URLs vêm de Brand.apiUrls; HTTPS é obrigatório. Não usar query string para tokens.
-Headers, método, corpo e caminho devem ser definidos a partir do contrato recebido.
-O transporte possui timeouts, cancelamento, serialização e mapeamento genérico de
-status HTTP 401/403/409, sem mostrar corpo de erro arbitrário ao usuário.
-Nenhum retry automático de mutações ou interceptor de autenticação foi presumido.
-Nenhum logger imprime headers, corpos, códigos QR, senhas ou identificadores pessoais.
-O transporte não segue redirecionamentos automaticamente.
-
-Só adicionar renovação de token e idempotência conforme regras da API.
-Os adaptadores de armazenamento seguro e capacidades nativas já têm contratos separados.
-VideoAdapter retorna indisponibilidade até existir um fornecedor autorizado;
-as imagens de câmera atuais são ilustrações nativas marcadas SIMULAÇÃO.
-Não se conecta o app diretamente a equipamentos ou serviços por suposição.
-
 ## Contrato exclusivamente demonstrativo
 
 Payload QR: `condo-demo:v1:<condomínio>:<pickup|visit>:<registro>:<nonce>`.
