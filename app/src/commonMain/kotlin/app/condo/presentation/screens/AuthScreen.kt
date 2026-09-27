@@ -21,7 +21,6 @@ fun AuthScreen(controller: AppController, state: AppState) {
             when (route) {
                 Route.RECOVERY -> {
                     FormField(controller, "identity", "CPF ou e-mail")
-                    PrimaryButton("Recuperar acesso", !state.submitting) { controller.recover(state.forms["identity"].orEmpty()) }
                     SecondaryButton("Voltar ao login", controller::back)
                 }
                 Route.ACTIVATE -> {
