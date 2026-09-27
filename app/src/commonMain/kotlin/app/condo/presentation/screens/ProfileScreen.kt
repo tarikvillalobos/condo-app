@@ -34,7 +34,6 @@ fun ProfileScreen(controller: AppController, state: AppState) {
                 PreferenceRow("Visitas", "Entrada e chegada de visitantes", prefs.visits, controller.repository.isDemo) {
                     controller.execute(Command.SavePreferences(prefs.copy(visits = it)))
                 }
-                PreferenceRow("Avisos do condomínio", "Comunicados da administração", prefs.notices) {
                     controller.execute(Command.SavePreferences(prefs.copy(notices = it)))
                 }
                 Muted(controller.platform.notificationStatus)
