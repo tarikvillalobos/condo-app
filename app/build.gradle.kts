@@ -34,6 +34,7 @@ val generateConfig by tasks.registering {
             import app.condo.domain.*
             const val APP_ENVIRONMENT = "$environment"
             const val BRAND_ID = "$brandName"
+            fun createRepository(storage: LocalStore, clock: AppClock, vault: SessionVault? = null): CondoRepository = $factory
         """.trimIndent())
     }
 }
