@@ -17,7 +17,6 @@ fun Instant.fullLabel() = "${dateLabel()} às ${timeLabel()}"
 fun Parcel.statusLabel() = when (status) {
     ParcelStatus.WAITING -> "Aguardando retirada"
     ParcelStatus.MANUAL_REPORT -> "Retirada informada · aguardando locker"
-    ParcelStatus.COLLECTED -> "Retirada confirmada no simulador"
 }
 fun Visit.statusLabel(now: Instant): String = if (expiresAt <= now && status != VisitStatus.ENTERED) {
     "Expirado"
