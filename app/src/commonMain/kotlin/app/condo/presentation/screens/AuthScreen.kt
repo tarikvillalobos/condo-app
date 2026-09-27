@@ -25,6 +25,7 @@ fun AuthScreen(controller: AppController, state: AppState) {
                     SecondaryButton("Voltar ao login", controller::back)
                 }
                 Route.ACTIVATE -> {
+                    if (controller.repository.isDemo) Muted("Demonstração: use o convite PRIMEIRO-DEMO, válido para uma ativação local.")
                     FormField(controller, "invitation", "Código do convite")
                     FormField(controller, "name", "Seu nome")
                     FormField(controller, "password", "Crie uma senha", secret = true)
