@@ -17,6 +17,7 @@ val generatedSource = layout.buildDirectory.dir("generated/config")
 val generateConfig by tasks.registering {
     inputs.property("environment", environment)
     inputs.property("brand", brandName)
+    inputs.property("apiBaseUrl", apiBaseUrl)
     outputs.dir(generatedSource)
     doLast {
         val file = generatedSource.get().file("app/condo/BuildConfig.kt").asFile
