@@ -127,4 +127,19 @@ class ApiRepositoryTest {
         val transport = ApiTransport(engine, config)
         val repository = ApiRepository(transport)
         repository.login("ana@example.test", "password")
+        val visit = app.condo.domain.Visit("i", "João", "Visita", false,
+            kotlin.time.Instant.parse("2026-10-01T12:00:00Z"), kotlin.time.Instant.parse("2026-10-01T13:00:00Z"))
+        assertFailsWith<app.condo.domain.AppFailure> {
+            repository.execute("m", app.condo.domain.Command.SaveVisit(visit))
+        }
+        assertNotNull(patchBody)
+        assertFalse(patchBody.contains("singleUse"))
+        transport.close()
+    }
+    @Test fun membershipModulesDoNotEnableUnavailableRoutes() {
+        val withoutModules = ApiModels.membership(ApiModels.parse("""{"id":"m","locationName":"Condo"}"""))
+        assertEquals(setOf(app.condo.domain.Module.PARCELS), withoutModules.modules)
+        val disabledVehicles = ApiModels.membership(ApiModels.parse("""{"id":"m","locationName":"Condo","unitLabel":"101","modules":{"parcels":true,"vehicles":false}}"""))
+        assertFalse(app.condo.domain.Module.VEHICLES in disabledVehicles.modules)
+    }
 }
