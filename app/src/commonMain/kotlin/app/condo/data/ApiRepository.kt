@@ -38,3 +38,23 @@ class ApiRepository(private val transport: ApiTransport, private val clock: AppC
             refreshMutex.withLock {
                 if (tokens?.text("accessToken") == oldAccess) refreshTokens()
             }
+            transport.request(route, access, payload, idempotency, ifMatch)
+        }
+        return if (response.body.isBlank()) JsonObject(emptyMap()) else ApiModels.parse(response.body)
+    }
+    private suspend fun anonymous(route: ApiRoutes.Route, payload: String, mutation: Boolean = false): JsonObject {
+        val response = transport.request(route, body = payload, idempotencyKey = if (mutation) key() else null)
+        return ApiModels.parse(response.body)
+    }
+    private suspend fun refreshTokens() {
+        val refreshToken = tokens?.text("refreshToken") ?: throw AppFailure(FailureKind.EXPIRED, "Sessão expirada.")
+        val rotated = anonymous(ApiRoutes.refresh(), body("refreshToken" to refreshToken))
+        requireInput(rotated.text("brandId") == transport.brandId, "Marca da sessão inválida.")
+        tokens = rotated
+        if (vault?.read() != null) vault.write(rotated.toString())
+    }
+    private suspend fun session(newTokens: JsonObject): Session {
+        requireInput(newTokens.text("brandId") == transport.brandId, "Marca da sessão inválida.")
+        tokens = newTokens
+        val profile = call(ApiRoutes.profile())
+        val memberships = call(ApiRoutes.memberships()).items().map(::membership)
