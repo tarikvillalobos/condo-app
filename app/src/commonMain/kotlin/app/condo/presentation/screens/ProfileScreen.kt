@@ -43,7 +43,6 @@ fun ProfileScreen(controller: AppController, state: AppState) {
                 TextButton({ controller.message(controller.platform.openNotificationSettings()) }) { Text("Configurações do sistema") }
             }
             Heading("Conta e segurança")
-            listOf(Route.PROFILE_FORM, Route.SECURITY, Route.PRIVACY, Route.HELP).forEach { route ->
                 MenuRow(route.title, glyph = if (route == Route.SECURITY) Glyph.LOCK else Glyph.USER) { controller.navigate(route) }
             }
             TextButton(controller::logout) { Text("Sair da conta", color = Tokens.danger) }
