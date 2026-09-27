@@ -100,4 +100,11 @@ class ApiRepositoryTest {
         val transport = ApiTransport(engine, config)
         val repository = ApiRepository(transport)
         repository.login("ana@example.test", "password")
+        assertFailsWith<app.condo.domain.AppFailure> {
+            repository.execute("m", app.condo.domain.Command.ReportCollected("p"))
+        }
+        assertEquals("\"3\"", ifMatch)
+        assertNotNull(idempotency)
+        transport.close()
+    }
 }
