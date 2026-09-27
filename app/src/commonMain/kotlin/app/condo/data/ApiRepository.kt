@@ -178,3 +178,23 @@ class ApiRepository(private val transport: ApiTransport, private val clock: AppC
             val route = ApiRoutes.item(id, "pets", pet.id)
             call(ApiRoutes.patch(id, "pets", pet.id), payload, mutation = true, ifMatch = "\"${version(route)}\"")
         }
+    }
+    private suspend fun saveVehicle(id: String, vehicle: Vehicle) {
+        val current = page(ApiRoutes.collection(id, "vehicles")).firstOrNull { it.text("id") == vehicle.id }
+        val payload = body("plate" to vehicle.plate, "model" to vehicle.model, "kind" to "car")
+        if (current == null) call(ApiRoutes.create(id, "vehicles"), payload, mutation = true)
+        else {
+            requireInput(current.text("plate") == vehicle.plate, "Para trocar a placa, cadastre outro veículo.")
+            call(ApiRoutes.patch(id, "vehicles", vehicle.id), body("model" to vehicle.model),
+                mutation = true, ifMatch = "\"${current.number("version")}\"")
+        }
+    }
+    override suspend fun updateAccount(name: String, phone: String): Account = unsupported()
+    override suspend fun linkMembership(invitation: String): Session {
+        call(ApiRoutes.link(invitation), mutation = true)
+        val renewed = session(tokens ?: unsupported())
+        return renewed
+    }
+    override suspend fun activate(invitation: String, name: String, password: String): Session = unsupported()
+    override suspend fun recover(identifier: String): String {
+        anonymous(ApiRoutes.recovery(), body("identifier" to identifier,
