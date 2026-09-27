@@ -31,6 +31,7 @@ DemoRow mapeia entidades explicitamente, sem introduzir dependência de serializ
 As chaves incluem marca/ambiente no adaptador e conta/condomínio no repositório.
 Desktop grava arquivos por substituição atômica. Android usa preferências privadas,
 e iOS usa um domínio específico de NSUserDefaults para os registros fictícios.
+Dados reais não são gravados em `LocalStore`; só a referência de sessão pode ir ao cofre seguro.
 
 Credenciais: Android Keystore/AES-GCM, iOS Keychain device-only, macOS Keychain,
 Linux Secret Service quando instalado. Ausência de cofre desabilita Manter conectado;
