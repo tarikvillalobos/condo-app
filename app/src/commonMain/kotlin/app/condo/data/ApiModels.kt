@@ -38,3 +38,23 @@ internal object ApiModels {
     fun visit(o: JsonObject): Visit {
         val visitor = o.value("visitor")
         val status = when (o.text("status")) {
+            "active" -> VisitStatus.AUTHORIZED; "used" -> VisitStatus.ENTERED
+            "revoked" -> VisitStatus.REVOKED; else -> VisitStatus.SCHEDULED
+        }
+        return Visit(o.text("id"), visitor.text("name"), visitor.text("notes"),
+            visitor.text("kind") == "service_provider", o.whenAt("validFrom")!!,
+            o.whenAt("validUntil")!!, status)
+    }
+    fun pet(o: JsonObject) = Pet(o.text("id"), o.text("name"), o.text("species"), o.text("breed"),
+        o.text("birthDate"), "", "", o.text("microchip"),
+        o.items("vaccinations").firstOrNull()?.text("vaccine").orEmpty(),
+        o.items("vaccinations").firstOrNull()?.text("nextDueAt").orEmpty())
+    fun petAlert(o: JsonObject) = PetAlert(o.text("id"), o.text("description"), o.whenAt("createdAt")!!)
+    fun facility(o: JsonObject) = Facility(o.text("id"), o.text("name"), o.text("description"), "")
+    fun booking(o: JsonObject) = Booking(o.text("id"), o.value("space").text("id"),
+        o.whenAt("startsAt")!!, o.whenAt("endsAt")!!, o.text("status") == "cancelled")
+    fun camera(o: JsonObject) = Camera(o.text("id"), o.text("name"), o.text("area"),
+        o.text("status") == "online", o.flag("liveAllowed"))
+    fun announcement(o: JsonObject) = Bulletin(o.text("id"), o.text("title"), o.text("body"), o.whenAt("publishedAt")!!)
+    fun event(o: JsonObject) = Bulletin(o.text("id"), o.text("title"), o.text("description"), o.whenAt("startsAt")!!, true)
+    fun notice(o: JsonObject) = Notice(o.text("id"), o.text("title"), "", o.optional("readAt") != null)
