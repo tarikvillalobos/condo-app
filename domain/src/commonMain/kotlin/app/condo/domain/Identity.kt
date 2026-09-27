@@ -23,7 +23,6 @@ interface SessionVault {
 enum class Module(val label: String) {
     PARCELS("Encomendas"), CAMERAS("Câmeras"), VISITS("Visitas"),
     PETS("Pets"), BOOKINGS("Reservas"), NOTICES("Avisos"),
-    SERVICES("Solicitações"), EVENTS("Agenda"), CONCIERGE("Portaria")
 }
 data class Account(val id: String, val name: String, val email: String, val phone: String)
 data class Membership(
