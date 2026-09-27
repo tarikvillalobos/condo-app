@@ -79,4 +79,5 @@ class ApiRepositoryTest {
         assertEquals("Ana", ApiRepository(transport).login("ana@example.test", "password").account.name)
         assertEquals(1, refreshes)
         transport.close()
+    }
 }
