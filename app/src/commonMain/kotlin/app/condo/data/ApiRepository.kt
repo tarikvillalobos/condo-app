@@ -48,7 +48,6 @@ class ApiRepository(private val transport: ApiTransport, private val clock: AppC
     }
     private suspend fun refreshTokens() {
         val refreshToken = tokens?.text("refreshToken") ?: throw AppFailure(FailureKind.EXPIRED, "Sessão expirada.")
-        val rotated = anonymous(ApiRoutes.refresh(), body("refreshToken" to refreshToken))
         requireInput(rotated.text("brandId") == transport.brandId, "Marca da sessão inválida.")
         tokens = rotated
         if (vault?.read() != null) vault.write(rotated.toString())
