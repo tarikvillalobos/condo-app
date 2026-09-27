@@ -81,6 +81,7 @@ fun ProfileScreen(controller: AppController, state: AppState) {
             }
             Heading("Vincular outro condomínio")
             FormField(controller, "link.invitation", "Código do convite")
+            if (controller.repository.isDemo) Muted("Convite demonstrativo: VINCULAR-DEMO")
             PrimaryButton("Vincular condomínio", !state.submitting) { controller.link(state.forms["link.invitation"].orEmpty()) }
         }
         Route.SECURITY -> {
