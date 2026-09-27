@@ -10,6 +10,7 @@ import androidx.compose.ui.window.*
 
 fun main() = application {
     val platform = remember { DesktopServices() }
+    val controller = remember { AppController(createRepository(platform.store, SystemAppClock, platform.vault), platform) }
     DisposableEffect(controller) { onDispose { controller.close() } }
     Window(
         onCloseRequest = ::exitApplication,
