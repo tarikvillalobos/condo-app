@@ -135,6 +135,7 @@ class ApiRepository(private val transport: ApiTransport, private val clock: AppC
             } else unsupported()
             is Command.SavePet -> savePet(membershipId, command.pet)
             is Command.ReportPet -> call(ApiRoutes.create(membershipId, "pet-alerts"),
+                body("kind" to command.kind, "description" to command.description, "species" to "other"), mutation = true)
             is Command.SaveVehicle -> saveVehicle(membershipId, command.vehicle)
             is Command.SavePreferences -> unsupported()
             is Command.ConsumePickupCode, is Command.DepositParcel, is Command.ApplyLockerEvent,
