@@ -34,7 +34,6 @@ data class Membership(
     val cameraAccess: Boolean = true,
     val recordingAccess: Boolean = false,
 )
-data class Session(val account: Account, val memberships: List<Membership>)
 data class Preferences(
     val parcels: Boolean = true,
     val visits: Boolean = true,
