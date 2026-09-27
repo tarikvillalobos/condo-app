@@ -59,4 +59,24 @@ class ApiRepositoryTest {
         val repository = ApiRepository(transport)
         repository.login("ana@example.test", "password")
         assertEquals(listOf("p1", "p2"), repository.load("m").parcels.map { it.id })
+        assertTrue(paths.contains("/v1/memberships/m/parcels?cursor=next"))
+        transport.close()
+    }
+    @Test fun rotatesTokenAndRetriesProtectedReadOnce() = runTest {
+        var refreshes = 0
+        val engine = MockEngine { request ->
+            when (request.url.encodedPath) {
+                "/v1/auth/password/login" -> respond("""{"brandId":"condo","accessToken":"old","refreshToken":"r1"}""")
+                "/v1/auth/refresh" -> { refreshes++; respond("""{"brandId":"condo","accessToken":"new","refreshToken":"r2"}""") }
+                "/v1/me" -> if (request.headers[HttpHeaders.Authorization] == "Bearer old")
+                    respond("", HttpStatusCode.Unauthorized)
+                    else respond("""{"id":"u","name":"Ana"}""")
+                "/v1/me/memberships" -> respond("""{"items":[{"id":"m","locationName":"Condo","unitLabel":""}]}""")
+                else -> error("Unexpected path: ${request.url}")
+            }
+        }
+        val transport = ApiTransport(engine, config)
+        assertEquals("Ana", ApiRepository(transport).login("ana@example.test", "password").account.name)
+        assertEquals(1, refreshes)
+        transport.close()
 }
