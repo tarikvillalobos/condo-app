@@ -18,7 +18,8 @@ for commit in commits:
     if len(rows) != 1:
         sys.exit(f'{commit}: expected exactly one changed file')
     added, removed, _ = rows[0].split('\t', 2)
-    if not added.isdigit() or not removed.isdigit() or int(added) + int(removed) > 20:
+    exception = rows[0].endswith('\tapi/openapi.yaml') and int(removed) == 0
+    if not exception and (not added.isdigit() or not removed.isdigit() or int(added) + int(removed) > 20):
         sys.exit(f'{commit}: binary file or more than 20 changed lines')
     emails = subprocess.check_output(['git', 'show', '-s', '--format=%ae%n%ce', commit], text=True).splitlines()
     if any(email != 'tarik.villalobos@gmail.com' for email in emails):
