@@ -21,6 +21,15 @@ fun AuthScreen(controller: AppController, state: AppState) {
             when (route) {
                 Route.RECOVERY -> {
                     FormField(controller, "identity", "CPF ou e-mail")
+                    PrimaryButton("Enviar código", !state.submitting) { controller.recover(state.forms["identity"].orEmpty()) }
+                    if (!controller.repository.isDemo && !state.forms["recovery.challengeId"].isNullOrBlank()) {
+                        FormField(controller, "recovery.code", "Código recebido")
+                        FormField(controller, "recovery.password", "Nova senha", secret = true)
+                        PrimaryButton("Definir nova senha", !state.submitting) {
+                            controller.finishRecovery(state.forms["recovery.code"].orEmpty(),
+                                state.forms["recovery.password"].orEmpty())
+                        }
+                    }
                     SecondaryButton("Voltar ao login", controller::back)
                 }
                 Route.ACTIVATE -> {
