@@ -16,6 +16,9 @@ internal object ApiModels {
     fun JsonObject.number(key: String): Int = this[key]?.jsonPrimitive?.intOrNull ?: 0
     fun membership(o: JsonObject): Membership {
         val flags = o.value("modules")
+        val available = if (flags.isEmpty()) {
+            if (o.text("role") == "locker_user") setOf(Module.PARCELS) else Module.entries.toSet()
+        } else buildSet {
             if (flags.flag("parcels")) add(Module.PARCELS)
             if (flags.flag("cameras")) add(Module.CAMERAS)
             if (flags.flag("visitors")) add(Module.VISITS)
