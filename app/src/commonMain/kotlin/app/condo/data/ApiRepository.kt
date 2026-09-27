@@ -58,3 +58,23 @@ class ApiRepository(private val transport: ApiTransport, private val clock: AppC
         tokens = newTokens
         val profile = call(ApiRoutes.profile())
         val memberships = call(ApiRoutes.memberships()).items().map(::membership)
+        requireInput(memberships.isNotEmpty(), "Nenhum vínculo ativo para esta conta.")
+        return Session(account(profile), memberships, newTokens.toString()).also { currentSession = it }
+    }
+    override suspend fun login(identifier: String, password: String) =
+        session(anonymous(ApiRoutes.login(), body("identifier" to identifier, "password" to password)))
+    override suspend fun restore(sessionReference: String): Session {
+        val old = try { ApiModels.parse(sessionReference) } catch (_: Exception) {
+            throw AppFailure(FailureKind.EXPIRED, "Sessão expirada. Entre novamente.")
+        }
+        val refreshToken = old.text("refreshToken")
+        requireInput(refreshToken.isNotBlank(), "Sessão expirada. Entre novamente.")
+        return session(anonymous(ApiRoutes.refresh(), body("refreshToken" to refreshToken)))
+    }
+    private suspend fun page(route: ApiRoutes.Route): List<JsonObject> {
+        val all = mutableListOf<JsonObject>()
+        var cursor: String? = null
+        repeat(100) {
+            val path = route.path + (cursor?.let { "?cursor=${it.encodeURLParameter()}" } ?: "")
+            val result = call(route.copy(path = path))
+            all += result.items()
