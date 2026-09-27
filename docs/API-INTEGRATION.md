@@ -31,6 +31,11 @@ ao vivo não é mostrado como real até existir um player autorizado.
 
 | Fluxo | Caminhos do contrato |
 |---|---|
+| Sessão | `/auth/password/login`, `/auth/refresh`, `/auth/logout`, `/me`, `/me/memberships` |
+| Encomendas | `/memberships/{membershipId}/parcels`, `/pickup-credential`, `/manual-pickup` |
+| Visitas | `/visitors`, `/access-invites`, `/credential`, `/revoke` |
+| Comunidade | `/pets`, `/pet-alerts`, `/spaces`, `/reservations`, `/announcements`, `/inbox`, `/requests` |
+| Perfil | `/unit`, `/vehicles`, `/me/password`, `/me/invitations/{code}/link` |
 
 ## Contrato exclusivamente demonstrativo
 
