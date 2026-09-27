@@ -69,6 +69,7 @@ class ApiRepository(private val transport: ApiTransport, private val clock: AppC
         }
         val refreshToken = old.text("refreshToken")
         requireInput(refreshToken.isNotBlank(), "Sessão expirada. Entre novamente.")
+        return session(anonymous(ApiRoutes.refresh(), body("refreshToken" to refreshToken), mutation = true))
     }
     private suspend fun page(route: ApiRoutes.Route): List<JsonObject> {
         val all = mutableListOf<JsonObject>()
