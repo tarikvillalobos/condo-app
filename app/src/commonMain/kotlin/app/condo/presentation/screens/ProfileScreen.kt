@@ -28,7 +28,6 @@ fun ProfileScreen(controller: AppController, state: AppState) {
             Heading("Notificações")
             Panel {
                 val prefs = snapshot.preferences
-                PreferenceRow("Encomendas", "Avisos de novas entregas", prefs.parcels) {
                     controller.execute(Command.SavePreferences(prefs.copy(parcels = it)))
                 }
                 PreferenceRow("Visitas", "Entrada e chegada de visitantes", prefs.visits) {
