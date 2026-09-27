@@ -129,6 +129,17 @@ class AppController(
     }
     fun recover(identifier: String) = runAction { version, navigation ->
         val result = repository.recover(identifier)
+        if (version == contextVersion && navigation == navigationVersion) {
+            if (repository.isDemo) message(result)
+            else { field("recovery.challengeId", result); message("Se a conta existir, um código foi enviado. Digite-o abaixo.") }
+        }
+    }
+    fun finishRecovery(code: String, newPassword: String) = runAction { version, _ ->
+        val challengeId = state.value.forms["recovery.challengeId"].orEmpty()
+        val session = repository.verifyRecovery(challengeId, code, newPassword)
+        if (version != contextVersion) return@runAction
+        mutable.update { it.copy(session = session, forms = emptyMap(), destination = Destination()) }
+        switchMembership(session.memberships.first().id)
     }
     fun password(current: String, replacement: String) = runAction { version, navigation ->
         val result = repository.changePassword(current, replacement)
