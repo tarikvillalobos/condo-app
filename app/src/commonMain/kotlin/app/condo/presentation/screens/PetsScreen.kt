@@ -22,6 +22,9 @@ fun PetsScreen(controller: AppController, state: AppState) {
         }
         Route.PET_ALERTS -> {
             Heading("Ajude a encontrar um amigo")
+            FilterChips(listOf("Perdido", "Encontrado"), state.forms["pet.alert.kind"] ?: "Perdido") {
+                controller.field("pet.alert.kind", it)
+            }
             FormField(controller, "pet.alert", "Descreva o pet, local e se está perdido ou foi encontrado", multiline = true)
             PrimaryButton(if (controller.repository.isDemo) "Publicar alerta demonstrativo" else "Publicar alerta", !state.submitting) {
                 controller.execute(Command.ReportPet(state.forms["pet.alert"].orEmpty()), if (controller.repository.isDemo) "Alerta salvo localmente na demonstração." else "Alerta publicado.")
