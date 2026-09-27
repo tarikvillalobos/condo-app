@@ -32,7 +32,6 @@ fun CodeDialog(controller: AppController, state: AppState) {
                     Text(code.numericCode.chunked(3).joinToString(" "), style = MaterialTheme.typography.headlineLarge,
                         modifier = Modifier.semantics { contentDescription = "Código numérico ${code.numericCode.toList().joinToString(" ")}" })
                     Text("Válido até ${code.expiresAt.fullLabel()}")
-                    Muted("Código demonstrativo. Não abre lockers ou portarias reais.")
                     SecondaryButton("Copiar código") {
                         controller.platform.copy(code.numericCode)
                     }
