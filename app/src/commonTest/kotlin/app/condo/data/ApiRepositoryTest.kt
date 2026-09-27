@@ -18,3 +18,23 @@ class ApiRepositoryTest {
                     respond("""{"brandId":"condo","accessToken":"access","refreshToken":"refresh"}""",
                         headers = headersOf(HttpHeaders.ContentType, "application/json"))
                 }
+                "/v1/me" -> {
+                    assertEquals("Bearer access", request.headers[HttpHeaders.Authorization])
+                    respond("""{"id":"user","name":"Ana","email":"ana@example.test","phone":""}""")
+                }
+                "/v1/me/memberships" -> respond("""{"items":[{"id":"member","locationName":"Condo","unitLabel":"101","modules":{"parcels":true}}]}""")
+                else -> error("Unexpected route: ${request.url}")
+            }
+        }
+        val transport = ApiTransport(engine, config)
+        val session = ApiRepository(transport).login("ana@example.test", "password")
+        assertEquals("Ana", session.account.name)
+        assertEquals("member", session.memberships.single().id)
+        assertEquals(listOf("POST /v1/auth/password/login condo", "GET /v1/me condo",
+            "GET /v1/me/memberships condo"), requests)
+        transport.close()
+    }
+    @Test fun routeParametersAreEncoded() {
+        assertEquals("/memberships/a%2Fb/parcels/x%2Fy/pickup-credential", ApiRoutes.pickup("a/b", "x/y").path)
+        assertEquals(HttpMethod.Post, ApiRoutes.cancelReservation("m", "r").method)
+        assertEquals("/me/invitations/a%2Fb/link", ApiRoutes.link("a/b").path)
