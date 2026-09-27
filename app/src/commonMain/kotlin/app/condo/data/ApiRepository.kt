@@ -210,7 +210,6 @@ class ApiRepository(private val transport: ApiTransport, private val clock: AppC
         return "Senha alterada."
     }
     override suspend fun logout() {
-        if (tokens != null) try { call(ApiRoutes.logout()) }
         catch (_: AppFailure) { /* Local logout still completes. */ }
         finally { tokens = null; currentSession = null }
     }
