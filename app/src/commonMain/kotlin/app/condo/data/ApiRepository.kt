@@ -111,6 +111,8 @@ class ApiRepository(private val transport: ApiTransport, private val clock: AppC
     override suspend fun execute(membershipId: String, command: Command): Outcome {
         var credential: AccessCode? = null
         when (command) {
+            is Command.ReportCollected -> call(ApiRoutes.manualPickup(membershipId, command.parcelId),
+                mutation = true, ifMatch = "\"${version(ApiRoutes.item(membershipId, "parcels", command.parcelId))}\"")
             is Command.IssuePickupCode -> credential = code(call(ApiRoutes.pickup(membershipId, command.parcelId)), "pickup:${command.parcelId}")
             is Command.IssueVisitCode -> credential = code(call(ApiRoutes.credential(membershipId, command.visitId)), "visit:${command.visitId}")
             is Command.CancelBooking -> call(ApiRoutes.cancelReservation(membershipId, command.bookingId), mutation = true)
