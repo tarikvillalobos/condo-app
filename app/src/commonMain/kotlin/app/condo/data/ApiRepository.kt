@@ -118,3 +118,23 @@ class ApiRepository(private val transport: ApiTransport, private val clock: AppC
             is Command.ReadNotice -> call(ApiRoutes.action(membershipId, "inbox", command.noticeId, "read"), mutation = true)
             is Command.CreateRequest -> when (command.category) {
                 "Privacidade" -> call(ApiRoutes.dataRequests(),
+                    body("kind" to if (command.subject.contains("exclusão", true)) "deletion" else "export"), mutation = true)
+                "Ocorrência" -> call(ApiRoutes.create(membershipId, "occurrences"),
+                    buildJsonObject { put("category", "other"); put("description", command.body)
+                        put("occurredAt", clock.now().toString()); put("anonymous", false) }.toString(), mutation = true)
+                else -> call(ApiRoutes.create(membershipId, "requests"),
+                    body("category" to "other", "title" to command.subject,
+                        "description" to command.body), mutation = true)
+            }
+            is Command.Reserve -> call(ApiRoutes.create(membershipId, "reservations"),
+                body("spaceId" to command.facilityId, "startsAt" to command.startsAt.toString(),
+                    "endsAt" to command.endsAt.toString()), mutation = true)
+            is Command.SaveVisit -> saveVisit(membershipId, command.visit)
+            is Command.SetVisitStatus -> if (command.status == VisitStatus.REVOKED) {
+                call(ApiRoutes.action(membershipId, "access-invites", command.visitId, "revoke"), mutation = true)
+            } else unsupported()
+            is Command.SavePet -> savePet(membershipId, command.pet)
+            is Command.ReportPet -> call(ApiRoutes.create(membershipId, "pet-alerts"),
+                body("kind" to "lost", "description" to command.description, "species" to "other"), mutation = true)
+            is Command.SaveVehicle -> saveVehicle(membershipId, command.vehicle)
+            is Command.SavePreferences -> unsupported()
