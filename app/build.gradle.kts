@@ -10,6 +10,8 @@ plugins {
 val environment = providers.gradleProperty("appEnvironment").orElse("demo").get()
 val brandName = providers.gradleProperty("brand").orElse("condo").get()
 val apiBaseUrl = providers.gradleProperty("apiBaseUrl").orNull.orEmpty()
+val apiBrandId = providers.gradleProperty("apiBrandId").orElse(brandName).get()
+require(apiBrandId.matches(Regex("[A-Za-z0-9._-]+")))
 require(apiBaseUrl.isEmpty() || Regex("^https://[A-Za-z0-9.-]+(:[0-9]+)?(/[A-Za-z0-9._~-]+)*/v1/?$").matches(apiBaseUrl))
 require(environment in listOf("demo", "staging", "production"))
 require(brandName in listOf("condo", "viva"))
