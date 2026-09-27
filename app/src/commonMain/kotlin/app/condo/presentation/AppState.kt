@@ -11,6 +11,7 @@ enum class Route(val title: String, val module: Module? = null) {
     PET_DETAIL("Detalhes do pet", Module.PETS), PET_ALERTS("Pets perdidos e achados", Module.PETS),
     BOOKINGS("Reservas", Module.BOOKINGS), EVENTS("Agenda", Module.EVENTS),
     PROFILE("Perfil"), PROFILE_FORM("Dados pessoais"), MEMBERS("Moradores da unidade"),
+    VEHICLES("Veículos", Module.VEHICLES), CONDOMINIUMS("Seus condomínios"), NOTIFICATIONS("Notificações"),
     NOTICES("Avisos", Module.NOTICES), BULLETIN("Detalhes do aviso", Module.NOTICES),
     SERVICES("Solicitações", Module.SERVICES), REQUEST_FORM("Nova solicitação", Module.SERVICES),
     REQUEST_DETAIL("Acompanhamento", Module.SERVICES), CONCIERGE("Portaria", Module.CONCIERGE),
