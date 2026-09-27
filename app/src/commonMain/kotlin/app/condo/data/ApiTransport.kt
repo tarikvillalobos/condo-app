@@ -16,6 +16,7 @@ data class ApiConfiguration(val baseUrl: String, val environment: String, val br
     init {
         require(baseUrl.startsWith("https://")) { "External API requires HTTPS." }
         require(environment in setOf("staging", "production"))
+        require(brandId.isNotBlank())
     }
 }
 data class ApiResponseDto(val status: Int, val body: String)
