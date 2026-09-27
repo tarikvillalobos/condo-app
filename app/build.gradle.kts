@@ -30,7 +30,6 @@ val generateConfig by tasks.registering {
         } else {
             if (apiBaseUrl.isBlank()) "app.condo.data.UnavailableRepository()" else
                 "app.condo.data.ApiRepository(app.condo.data.ApiTransport(app.condo.data.createApiEngine(), " +
-                    "app.condo.data.ApiConfiguration(\"$apiBaseUrl\", \"$environment\", \"$brandName\")), clock, vault)"
         }
         file.writeText("""
             package app.condo
