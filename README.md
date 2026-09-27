@@ -137,7 +137,6 @@ Para conectar a API de staging, passe a URL HTTPS com `/v1`:
 Marca de distribuição e condomínios vinculados são conceitos separados.
 Veja [como configurar marca, módulos e ambiente](docs/ARCHITECTURE.md).
 Veja [o que falta para integrar a API](docs/API-INTEGRATION.md).
-Não há endpoints nem credenciais de servidor inventados.
 
 ## Distribuição
 
