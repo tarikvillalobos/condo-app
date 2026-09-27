@@ -30,7 +30,6 @@ internal object ApiModels {
         }
         val permissions = o["permissions"]?.jsonArray?.map { it.jsonPrimitive.content }.orEmpty()
         return Membership(o.text("id"), o.optional("condominiumName") ?: o.text("locationName"),
-            o.text("unitLabel"), available, Module.CAMERAS in available, Module.CAMERAS in available)
     }
     fun account(o: JsonObject) = Account(o.text("id"), o.text("name"), o.text("email"), o.text("phone"))
     fun parcel(o: JsonObject) = Parcel(o.text("id"), o.text("carrier"), o.optional("tracking"),
