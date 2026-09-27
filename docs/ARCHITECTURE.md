@@ -44,6 +44,8 @@ Preferência de push, permissão do sistema e serviço de push são apresentados
 
 Brands em `app/design/Brand.kt` centraliza nome, cores, módulos, monograma,
 contato, textos institucionais, termos, privacidade e mapa de URLs de ambiente.
+A URL real da API é injetada por `-PapiBaseUrl` e a marca por `-PapiBrandId`.
+Nunca insira segredos.
 Para adicionar marca: cadastrar Brand, permitir seu id na configuração Gradle,
 definir applicationId/bundle identifier e substituir assets de marca.
 A logo nativa é vetorial e selecionada por Brand.logo (prédio em Condo, casa em Viva). A fonte é obtida por download com integridade verificada.
