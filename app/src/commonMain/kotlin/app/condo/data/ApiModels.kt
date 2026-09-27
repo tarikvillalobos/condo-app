@@ -28,6 +28,7 @@ internal object ApiModels {
             if (flags.flag("requests")) add(Module.SERVICES)
             if (flags.flag("events")) add(Module.EVENTS)
         }
+        val permissions = o["permissions"]?.jsonArray?.map { it.jsonPrimitive.content }.orEmpty()
         return Membership(o.text("id"), o.optional("condominiumName") ?: o.text("locationName"),
             o.text("unitLabel"), available, Module.CAMERAS in available, Module.CAMERAS in available)
     }
