@@ -28,6 +28,8 @@ ao vivo não é mostrado como real até existir um player autorizado.
 - Falta URL de homologação e contas reais para validar respostas e permissões.
 
 ## Rotas principais
+
+| Fluxo | Caminhos do contrato |
 |---|---|
 | Interface com dados fictícios | Implementada |
 | Repositórios demonstrativos locais | Implementados e isolados |
