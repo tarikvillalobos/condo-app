@@ -11,6 +11,8 @@
 A injeção é por construtor no AppController. A factory de ambiente é gerada pelo
 Gradle e escolhe a implementação de repositório em tempo de build.
 `-PappEnvironment=production` ou `staging` nem inclui `:demo` em settings.
+Com `apiBaseUrl` configurada, a factory usa `ApiRepository` e o OpenAPI em
+`api/openapi.yaml`. Sem URL, `UnavailableRepository` falha explicitamente.
 Não há servidor, banco central, migrações de backend ou hospedagem neste repositório.
 
 AppState é imutável, exposto por StateFlow. Composables emitem ações ao controller;
