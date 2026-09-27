@@ -54,7 +54,6 @@ fun AppController.submitPet() = parseAction {
     val pet = Pet(state.value.destination.id.orEmpty(), formValue("pet.name"), formValue("pet.species"),
         formValue("pet.breed"), formValue("pet.birth"), formValue("pet.size"),
         formValue("pet.weight").replace(',', '.'), formValue("pet.microchip"), formValue("pet.vaccine"), formValue("pet.due"))
-    execute(Command.SavePet(pet), "Pet salvo na demonstração.") { back() }
 }
 fun AppController.submitRequest() = execute(Command.CreateRequest(
     formValue("request.category").ifBlank { "Solicitação" },
