@@ -138,3 +138,23 @@ class ApiRepository(private val transport: ApiTransport, private val clock: AppC
                 body("kind" to "lost", "description" to command.description, "species" to "other"), mutation = true)
             is Command.SaveVehicle -> saveVehicle(membershipId, command.vehicle)
             is Command.SavePreferences -> unsupported()
+            is Command.ConsumePickupCode, is Command.DepositParcel, is Command.ApplyLockerEvent,
+            is Command.ConsumeVisitCode -> unsupported()
+        }
+        return Outcome(load(membershipId), credential)
+    }
+    private suspend fun saveVisit(id: String, visit: Visit) {
+        val payload = buildJsonObject {
+            if (visit.id.isBlank()) putJsonObject("visitor") {
+                put("name", visit.name); put("kind", if (visit.provider) "service_provider" else "visitor")
+                put("notes", visit.purpose)
+            }
+            put("validFrom", visit.startsAt.toString()); put("validUntil", visit.expiresAt.toString())
+            put("singleUse", true)
+        }.toString()
+        if (visit.id.isBlank()) call(ApiRoutes.create(id, "access-invites"), payload, mutation = true)
+        else {
+            val route = ApiRoutes.item(id, "access-invites", visit.id)
+            val existing = call(route)
+            val visitor = existing.value("visitor")
+            call(ApiRoutes.patch(id, "visitors", visitor.text("id")),
