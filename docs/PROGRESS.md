@@ -26,6 +26,7 @@
 - [ ] Validar execução/distribuição nativa Windows e Linux e distribuição assinada móvel/macOS.
 - [ ] Auditar leitores de tela, fluxos manuais em dispositivos físicos e condições nativas não cobertas pelas capturas.
 - [x] OpenAPI 1.1.0-draft recebido e adicionado em `api/openapi.yaml`.
+- [x] Rotas principais de morador integradas ao adaptador de staging/produção, com testes HTTP controlados.
 - [ ] Homologação com API real: falta URL e conta de teste.
 
 O modo demonstrativo não representa autenticação, autorização, retirada
