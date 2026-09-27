@@ -7,6 +7,11 @@ Kotlin Multiplatform e Compose Multiplatform para Android, iOS e desktop.
 
 Em desenvolvimento. As nove telas de referência e seus fluxos auxiliares
 usam repositórios demonstrativos persistentes executados dentro do app.
+**Não existe backend próprio.** O contrato recebido está em `api/openapi.yaml`.
+Há um adaptador de rotas do morador para staging e produção, com autenticação
+por senha, renovação de sessão e leitura dos módulos principais. Falta uma URL
+real de homologação para validar a integração ponta a ponta. Sem `apiBaseUrl`,
+o build não conecta a um servidor nem usa dados fictícios.
 Consulte [validações](docs/VALIDATION.md) e [pendências](docs/PROGRESS.md).
 
 ## Recursos
