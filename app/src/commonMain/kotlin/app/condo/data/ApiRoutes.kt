@@ -15,6 +15,7 @@ internal object ApiRoutes {
     fun memberships() = Route(HttpMethod.Get, "/me/memberships")
     fun password() = Route(HttpMethod.Post, "/me/password")
     fun recovery() = Route(HttpMethod.Post, "/auth/password/recovery")
+    fun verifyRecovery(id: String) = Route(HttpMethod.Post, "/auth/password/recovery/${id(id)}/verify")
     fun invitation(code: String) = Route(HttpMethod.Get, "/auth/invitations/${id(code)}")
     fun accept(code: String) = Route(HttpMethod.Post, "/auth/invitations/${id(code)}/accept")
     fun link(code: String) = Route(HttpMethod.Post, "/me/invitations/${id(code)}/link")
