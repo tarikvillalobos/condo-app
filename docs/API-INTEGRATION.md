@@ -51,6 +51,7 @@ Essas regras são fixtures para exercitar UI; não garantem segurança nem dispo
 
 ## Homologação pendente
 
+Com a URL real: testar contas de unidades distintas, expiração e revogação real,
 conflitos simultâneos entre clientes, códigos expirados/consumidos, paginação,
 falhas de rede, respostas atrasadas após troca de contexto, cache e logout.
 A aprovação dessas regras no cliente não substitui verificações no backend externo.
