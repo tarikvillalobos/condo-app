@@ -54,8 +54,6 @@ fun CommunityScreen(controller: AppController, state: AppState) {
             Muted("Protocolo ${it.id} · ${it.createdAt.fullLabel()}")
             Panel { Text(it.description) }
             Heading("Histórico")
-            Text("✓ ${it.createdAt.fullLabel()} · Registro demonstrativo criado")
-            Muted("Respostas da administração dependem da integração real.")
         }
         Route.SERVICES -> {
             PrimaryButton("+ Nova solicitação ou ocorrência") { controller.navigate(Route.REQUEST_FORM) }
