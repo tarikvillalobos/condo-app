@@ -25,8 +25,6 @@
 - [x] Aplicativo macOS empacotado iniciou sem erros no smoke test de processo.
 - [ ] Validar execução/distribuição nativa Windows e Linux e distribuição assinada móvel/macOS.
 - [ ] Auditar leitores de tela, fluxos manuais em dispositivos físicos e condições nativas não cobertas pelas capturas.
-- [ ] Contrato da API externa: solicitado ao usuário; não disponível.
-- [ ] Integração real e homologação: dependem do contrato e do ambiente.
 
 O modo demonstrativo não representa autenticação, autorização, retirada
 física ou confirmação de disponibilidade por um servidor real.
