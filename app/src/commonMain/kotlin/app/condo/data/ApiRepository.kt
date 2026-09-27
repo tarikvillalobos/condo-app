@@ -197,7 +197,6 @@ class ApiRepository(private val transport: ApiTransport, private val clock: AppC
     }
     override suspend fun activate(invitation: String, name: String, password: String): Session = unsupported()
     override suspend fun recover(identifier: String): String {
-        anonymous(ApiRoutes.recovery(), body("identifier" to identifier,
             "channel" to if (identifier.contains("@")) "email" else "sms"), mutation = true)
         return "Se a conta existir, você receberá instruções de recuperação."
     }
