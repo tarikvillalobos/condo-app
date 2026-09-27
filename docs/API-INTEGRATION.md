@@ -2,10 +2,6 @@
 
 ## Situação atual
 
-Não foram encontrados OpenAPI/Swagger, coleções, URLs, regras de autenticação,
-exemplos de resposta ou erros no repositório original. A documentação foi solicitada.
-Nenhuma rota, campo de negócio, token, paginação ou endpoint de fornecedor foi inventado.
-Os caminhos e DTOs em testes MockEngine são fixtures de teste, sem significado de produção.
 
 | Camada | Estado |
 |---|---|
