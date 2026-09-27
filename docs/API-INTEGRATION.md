@@ -8,7 +8,6 @@ O adaptador `ApiRepository` usa as rotas de morador desse contrato. Ele envia
 quando o contrato exige versão. Refresh rotativo usa o cofre seguro quando a
 sessão é persistida. Paginação por cursor mantém a consulta até a última página.
 
-| Camada | Estado |
 |---|---|
 | Interface com dados fictícios | Implementada |
 | Repositórios demonstrativos locais | Implementados e isolados |
