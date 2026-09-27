@@ -2,6 +2,11 @@
 
 ## Situação atual
 
+O contrato versionado está em `api/openapi.yaml` (Condo Platform 1.1.0-draft).
+O adaptador `ApiRepository` usa as rotas de morador desse contrato. Ele envia
+`X-Brand-Id`, bearer, `Idempotency-Key` nas mutações pertinentes e `If-Match`
+quando o contrato exige versão. Refresh rotativo usa o cofre seguro quando a
+sessão é persistida. Paginação por cursor mantém a consulta até a última página.
 
 | Camada | Estado |
 |---|---|
