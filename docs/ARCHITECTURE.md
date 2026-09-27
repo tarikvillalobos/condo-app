@@ -37,7 +37,6 @@ Credenciais: Android Keystore/AES-GCM, iOS Keychain device-only, macOS Keychain,
 Linux Secret Service quando instalado. Ausência de cofre desabilita Manter conectado;
 não há fallback de credenciais em texto puro. Leia VALIDATION para plataformas efetivamente testadas.
 A referência de sessão demo expira em sete dias e nunca é uma credencial de API.
-Renovação, revogação remota e login biométrico aguardam contrato externo.
 Preferência de push, permissão do sistema e serviço de push são apresentados separadamente.
 
 ## Marca e ambiente
