@@ -11,6 +11,8 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.json.Json
 
+/** HTTPS transport for the versioned Condo Platform contract. */
+data class ApiConfiguration(val baseUrl: String, val environment: String, val brandId: String = "condo") {
     init {
         require(baseUrl.startsWith("https://")) { "External API requires HTTPS." }
         require(environment in setOf("staging", "production"))
